@@ -18,7 +18,7 @@
   },
   "plugins": ["react"],
   "rules": {
-    "prettier/prettier": ["error", {}, { "usePrettierrc": true }],
-    "no-unused-vars": ["error", { "vars": "all", "args": "after-used" }]
+    "prettier/prettier": ["warn", {}, { "usePrettierrc": true }],
+    "no-unused-vars": ["warn", { "vars": "all", "args": "after-used" }]
   }
 }
