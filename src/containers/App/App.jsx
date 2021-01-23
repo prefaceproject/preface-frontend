@@ -9,6 +9,7 @@ import * as exampleSelectors from '../../store/example/selectors'
 import * as exampleActions from '../../store/example/actions'
 
 import './styles.css'
+import 'semantic-ui-css/semantic.min.css'
 
 function App() {
   // initialize dispatch
@@ -48,8 +49,8 @@ function App() {
 
   return (
     <div className="App">
-      <Router>
-        <div>
+      <div style={{ height: '100%' }}>
+        <Router>
           <Switch>
             <Route path="/register">
               <Registration />
@@ -58,8 +59,8 @@ function App() {
               <Login />
             </Route>
           </Switch>
-        </div>
-      </Router>
+        </Router>
+      </div>
     </div>
   )
 }
