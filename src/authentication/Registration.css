@@ -1,0 +1,55 @@
+.Registration {
+  background-color: #48c0ea;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.registration-form {
+  width: 35%;
+  min-height: 530px;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 8px;
+}
+
+.logo {
+  width: 54%;
+  margin: 39px;
+}
+
+.semantics-form {
+  width: 66%;
+}
+
+.semantics-form.login {
+  margin-top: 58px;
+}
+
+.semantics-form .field {
+  margin-bottom: 17px;
+}
+
+.semantics-form .field div {
+  font-weight: 600;
+  margin-bottom: 7px;
+}
+
+.semantics-form input {
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  border: 1px solid #48c0ea;
+  height: 30px;
+  border-radius: 4px;
+}
+
+.button-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+}
