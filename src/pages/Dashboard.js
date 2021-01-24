@@ -2,6 +2,8 @@ import React from "react";
 import Layout from "../components/Layout";
 import CardContainer from "../components/CardContainer";
 import StudentCard from "../components/Dashboard/StudentCard";
+import SessionPageHeader from "../components/SessionsPageHeader";
+import { connect } from "react-redux";
 
 const students = [
   {
@@ -36,7 +38,7 @@ const students = [
   },
 ];
 
-const Dashboard = () => {
+const Dashboard = ({ user }) => {
   const cards = students.map((student) => {
     return <StudentCard student={student} key={student._id}></StudentCard>;
   });
@@ -44,16 +46,21 @@ const Dashboard = () => {
   return (
     <>
       <Layout>
-        <div style={{ height: "100%" }}>
-          <h2>Dashboard</h2>
+        <div style={{ height: "100%", paddingTop: "24px" }}>
+          <SessionPageHeader></SessionPageHeader>
+          <h1>{`Welcome${user ? ` ${user.firstName}` : ""}`}</h1>
           <CardContainer
             title={"List of participating students"}
             cards={cards}
-          ></CardContainer>
+          />
         </div>
       </Layout>
     </>
   );
 };
 
-export default Dashboard;
+const mapStateToProps = (state) => ({
+  user: state.user.data,
+});
+
+export default connect(mapStateToProps)(Dashboard);
