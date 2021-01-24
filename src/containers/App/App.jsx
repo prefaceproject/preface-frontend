@@ -11,7 +11,7 @@ import Registration from "../../authentication/Registration";
 import Login from "../../authentication/Login";
 import Dashboard from "../../pages/Dashboard";
 import Sessions from "../../pages/Sessions";
-import Card from '../../components/Card'
+import Card from "../../components/Card";
 
 import * as exampleSelectors from "../../store/example/selectors";
 import * as exampleActions from "../../store/example/actions";
@@ -77,17 +77,17 @@ function App() {
               )}
             </Route>
             <Route path="/login">
-              {user ? (
-                <Redirect to="/dashboard" />
-              ) : (
-                <Login />
-              )}
+              {user ? <Redirect to="/dashboard" /> : <Login />}
             </Route>
             <Route path="/dashboard">
               {user ? <Dashboard /> : <Redirect to="/login" />}
             </Route>
             <Route path="/Card">
               <Card />
+            </Route>
+
+            <Route path="/sessions">
+              {user ? <Sessions /> : <Redirect to="/login" />}
             </Route>
           </Switch>
         </Router>
