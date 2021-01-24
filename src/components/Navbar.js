@@ -3,11 +3,9 @@ import { connect } from "react-redux";
 import Logo from "../assets/small_white_logo.png";
 import { Popup, Button } from "semantic-ui-react";
 
-import "./Header.css";
+import "./Navbar.css";
 
-const Header = (props) => {
-  console.log("props", props);
-  const { firstName, lastName } = props;
+const Navbar = ({ firstName, lastName }) => {
   const username = "Peter";
 
   const signOut = () => {};
@@ -15,10 +13,12 @@ const Header = (props) => {
   const signOutButton = <Button>Sign Out</Button>;
 
   return (
-    <header className="header">
-      <img className="header-logo" src={Logo} alt="" />
+    <header className="navbar">
+      <img className="navbar-logo" src={Logo} alt="" />
       <div className="profile">
-        <span className="username">{`${firstName} ${lastName}`}</span>
+        <span className="username">
+          {firstName && lastName ? `${firstName} ${lastName}` : null}
+        </span>
         <Popup
           disabled
           basic
@@ -37,4 +37,4 @@ const mapStateToProps = (state) => ({
   lastName: state.user.data.lastName,
 });
 
-export default connect(mapStateToProps)(Header);
+export default connect(mapStateToProps)(Navbar);
