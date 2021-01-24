@@ -17,6 +17,9 @@
 .env.development.local
 .env.test.local
 .env.production.local
+.eslintrc.json
+.eslintcache
+.eslintrc.json
 
 npm-debug.log*
 yarn-debug.log*
