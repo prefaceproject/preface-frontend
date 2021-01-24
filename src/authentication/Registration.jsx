@@ -6,6 +6,8 @@ import Logo from '../assets/logo.png'
 
 import './Registration.css'
 
+import { backend_url } from '../constants/url'
+
 const Registration = (props) => {
   let [firstName, setFirstName] = useState('')
   let [lastName, setLastName] = useState('')
@@ -16,7 +18,7 @@ const Registration = (props) => {
   const handleSubmit = () => {
     const user = { email, firstName, lastName, password }
 
-    fetch('http://localhost:5000/api/auth/register', {
+    fetch(`${backend_url}/api/auth/register`, {
       method: 'POST',
       mode: 'cors',
       credentials: 'same-origin',
