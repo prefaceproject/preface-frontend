@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+} from 'react-router-dom'
 
 import Registration from '../../authentication/Registration'
 import Login from '../../authentication/Login'
@@ -52,6 +57,9 @@ function App() {
       <div style={{ height: '100%' }}>
         <Router>
           <Switch>
+            <Route exact path="/">
+              <Redirect to="/login" />
+            </Route>
             <Route path="/register">
               <Registration />
             </Route>
