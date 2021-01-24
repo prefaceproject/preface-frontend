@@ -1,15 +1,16 @@
-import React from 'react'
-import Header from './Header'
-import Footer from './Footer'
+import React from "react";
+import Navbar from "./Navbar";
+import Footer from "./Footer";
+import "./Layout.css";
 
-const Layout = ({ children }) => {
+const Layout = ({ children, navbar = true, footer = true, white = true }) => {
   return (
-    <>
-      <Header></Header>
-      <main>{children}</main>
-      <Footer></Footer>
-    </>
-  )
-}
+    <div className="Layout">
+      {navbar ? <Navbar className="Navbar"></Navbar> : null}
+      <main className={`Main ${white ? "white" : ""}`}>{children}</main>
+      {footer ? <Footer className="Footer"></Footer> : null}
+    </div>
+  );
+};
 
-export default Layout
+export default Layout;
