@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 
-import Registration from '../../authentication/Registration'
-import Login from '../../authentication/Login'
+import Registration from '../../pages/Registration'
+import Login from '../../pages/Login'
 import Dashboard from '../../pages/Dashboard'
 
 import * as exampleSelectors from '../../store/example/selectors'
@@ -50,21 +50,19 @@ function App() {
 
   return (
     <div className="App">
-      <div style={{ height: '100%' }}>
-        <Router>
-          <Switch>
-            <Route path="/register">
-              <Registration />
-            </Route>
-            <Route path="/login">
-              <Login />
-            </Route>
-            <Route path="/dashboard">
-              <Dashboard />
-            </Route>
-          </Switch>
-        </Router>
-      </div>
+      <Router>
+        <Switch>
+          <Route path="/register">
+            <Registration />
+          </Route>
+          <Route path="/login">
+            <Login />
+          </Route>
+          <Route path="/dashboard">
+            <Dashboard />
+          </Route>
+        </Switch>
+      </Router>
     </div>
   )
 }
