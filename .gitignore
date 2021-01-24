@@ -20,6 +20,8 @@
 .eslintrc.json
 .eslintcache
 .eslintrc.json
+.prettierignore
+.prettierrc
 
 npm-debug.log*
 yarn-debug.log*
