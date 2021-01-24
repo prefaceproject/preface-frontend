@@ -1,0 +1,4 @@
+.sessions-page-header {
+  display: flex;
+  justify-content: space-between;
+}
