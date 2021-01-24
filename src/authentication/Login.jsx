@@ -8,6 +8,8 @@ import Cookies from 'js-cookie';
 
 import './Registration.css'
 
+import { backend_url } from '../constants/url'
+
 const Login = (props) => {
   let [email, setEmail] = useState('')
   let [password, setPassword] = useState('')
@@ -17,7 +19,7 @@ const Login = (props) => {
     const token = !(Cookies.get('token') === null);
     const userToken = token ? Cookies.get('token') : '';
 
-    fetch('http://localhost:5000/api/auth/current', {
+    fetch(`${backend_url}/api/auth/current`, {
       method: 'GET', 
       mode: 'cors',
       credentials: 'same-origin',
@@ -40,7 +42,7 @@ const Login = (props) => {
     console.log('handling submit')
     const user = { email, password }
 
-    fetch('http://localhost:5000/api/auth/login', {
+    fetch(`${backend_url}/api/auth/login`, {
       method: 'POST',
       mode: 'cors',
       credentials: 'same-origin',
@@ -59,8 +61,6 @@ const Login = (props) => {
           Cookies.set('token', res.user.token, { expires: 1 });
           props.setUser(res.user)
         }
-        console.log(res.success == true)
-        console.log(Cookies.get('token'))
       })
   }
 
