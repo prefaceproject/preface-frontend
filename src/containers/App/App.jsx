@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 
 import Registration from '../../authentication/Registration'
 import Login from '../../authentication/Login'
+import Dashboard from '../../pages/Dashboard'
 
 import * as exampleSelectors from '../../store/example/selectors'
 import * as exampleActions from '../../store/example/actions'
@@ -57,6 +58,9 @@ function App() {
             </Route>
             <Route path="/login">
               <Login />
+            </Route>
+            <Route path="/dashboard">
+              <Dashboard />
             </Route>
           </Switch>
         </Router>

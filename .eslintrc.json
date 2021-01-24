@@ -18,6 +18,7 @@
   "plugins": ["react"],
   "rules": {
     "prettier/prettier": ["warn", {}, { "usePrettierrc": true }],
-    "no-unused-vars": ["warn", { "vars": "all", "args": "after-used" }]
+    "no-unused-vars": ["warn", { "vars": "all", "args": "after-used" }],
+    "react/prop-types": 0
   }
 }
