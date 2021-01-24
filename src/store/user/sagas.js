@@ -1,21 +1,32 @@
 import Axios from "axios";
-import { call, put, takeLatest } from "redux-saga/effects";
+import { all, call, put, takeLatest } from "redux-saga/effects";
 import * as actionTypes from "./actionTypes";
 import * as actions from "./actions";
+import { backend_url } from "../../constants/url";
 
-// sagas are used to trigger side effects (e.g. requests)
-// uses generator functions as a way to deal with asynchronous code without using async-await
-const requestExampleData = function* (_action, _payload) {
+import Cookies from 'js-cookie';
+
+const loginUser = function* ({ payload }) {
   try {
-    const response = yield call(Axios.get, "/example_saga_request");
-
-    // put allows a saga to trigger another action
-    yield put(actions.exampleReceiveData(response.data.message));
+    const headerParams = {
+      mode: 'cors',
+      credentials: 'same-origin'
+    };
+    const response = yield call(
+      Axios.post,
+      backend_url + "/api/auth/login",
+      payload,
+      headerParams
+    );
+    if (response.data.success) {
+      yield put(actions.setUser(response.data.user))
+      Cookies.set('token', response.data.user.token, { expires: 1 });
+    }
   } catch (err) {
-    yield put(actions.exampleSetError(err));
+    console.log(err)
   }
 };
 
-export default function* ExampleSaga() {
-  yield takeLatest(actionTypes.EXAMPLE_REQUEST_DATA, requestExampleData);
+export default function* UserSaga() {
+  yield takeLatest(actionTypes.LOGIN_USER, loginUser);
 }

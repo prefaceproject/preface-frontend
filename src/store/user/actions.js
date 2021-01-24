@@ -2,8 +2,8 @@ import { action } from "typesafe-actions";
 
 import * as actionTypes from "./actionTypes";
 
-export const setUser = () =>
-  action(actionTypes.SET_USER);
+export const setUser = (data) =>
+  action(actionTypes.SET_USER, data);
 
-export const getUser = (data) =>
-  action(actionTypes.GET_USER, data);
+export const loginUser = (data) => 
+  action(actionTypes.LOGIN_USER, data);

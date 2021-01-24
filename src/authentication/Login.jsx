@@ -1,21 +1,22 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import { Button, Form } from 'semantic-ui-react'
 import { BrowserRouter as Redirect } from 'react-router-dom'
-
+import { useDispatch, useSelector } from "react-redux";
 import Logo from '../assets/logo.png'
 
+import * as userActions from "../store/user/actions";
 import Cookies from 'js-cookie';
 
 import './Registration.css'
 
 import { backend_url } from '../constants/url'
 
-const Login = (props) => {
+const Login = () => {
+  const dispatch = useDispatch();
   let [email, setEmail] = useState('')
   let [password, setPassword] = useState('')
 
   useEffect(() => {
-    
     const token = !(Cookies.get('token') === null);
     const userToken = token ? Cookies.get('token') : '';
 
@@ -32,8 +33,7 @@ const Login = (props) => {
     }).then((res) => {
       console.log(res)
       if (res.success) {
-        props.setUser(res.user)
-
+        dispatch(userActions.setUser(res.user));
       }
     });
   }, [])
@@ -41,27 +41,7 @@ const Login = (props) => {
   const handleSubmit = () => {
     console.log('handling submit')
     const user = { email, password }
-
-    fetch(`${backend_url}/api/auth/login`, {
-      method: 'POST',
-      mode: 'cors',
-      credentials: 'same-origin',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        user: user,
-      }),
-    })
-      .then((res) => {
-        return res.json()
-      })
-      .then((res) => {
-        if (res.success == true) {
-          Cookies.set('token', res.user.token, { expires: 1 });
-          props.setUser(res.user)
-        }
-      })
+    dispatch(userActions.loginUser({user: user}))
   }
 
   return (
