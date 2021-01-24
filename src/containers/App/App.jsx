@@ -1,11 +1,29 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+} from "react-router-dom";
+
+import Registration from "../../authentication/Registration";
+import Login from "../../authentication/Login";
+import Dashboard from "../../pages/Dashboard";
+import Sessions from "../../pages/Sessions";
+import Card from '../../components/Card'
 
 import * as exampleSelectors from "../../store/example/selectors";
 import * as exampleActions from "../../store/example/actions";
+
 import "./styles.css";
+import "semantic-ui-css/semantic.min.css";
+
+import Cookies from "js-cookie";
 
 function App() {
+  let [user, setUser] = useState("");
+  let [registerSuccess, setRegisterSuccess] = useState(false);
   // initialize dispatch
   const dispatch = useDispatch();
   // read redux state
@@ -43,12 +61,35 @@ function App() {
 
   return (
     <div className="App">
-      <p className="App-intro">{data}</p>
-      {exampleReduxError ? (
-        <div>Redux Error: {exampleReduxError.message}</div>
-      ) : (
-        <p className="App-intro">{exampleReduxData}</p>
-      )}
+      <div style={{ height: "100%" }}>
+        <Router>
+          <Switch>
+            <Route exact path="/">
+              <Redirect to="/login" />
+            </Route>
+            <Route path="/register">
+              {registerSuccess ? (
+                <Redirect to="/login" />
+              ) : (
+                <Registration setRegisterSuccess={setRegisterSuccess} />
+              )}
+            </Route>
+            <Route path="/login">
+              {user ? (
+                <Redirect to="/dashboard" />
+              ) : (
+                <Login setUser={setUser} />
+              )}
+            </Route>
+            <Route path="/dashboard">
+              {user ? <Dashboard /> : <Redirect to="/login" />}
+            </Route>
+            <Route path="/Card">
+              <Card />
+            </Route>
+          </Switch>
+        </Router>
+      </div>
     </div>
   );
 }
