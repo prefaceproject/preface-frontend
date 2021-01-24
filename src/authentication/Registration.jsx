@@ -15,7 +15,6 @@ const Registration = () => {
 
   const handleSubmit = () => {
     const user = { email, firstName, lastName, password }
-    // fetch("localhost:5000/api/auth/register", user).then((response)=> {response.json()})
 
     fetch('http://localhost:5000/api/auth/register', {
       method: 'POST', // *GET, POST, PUT, DELETE, etc.
@@ -34,8 +33,6 @@ const Registration = () => {
       .then((res) => {
         console.log(res)
       })
-
-    // return response.json(); // parses JSON response into native JavaScript objects
   }
   return (
     <div className="Registration">
