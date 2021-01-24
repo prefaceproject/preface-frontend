@@ -11,10 +11,11 @@ import Registration from "../../authentication/Registration";
 import Login from "../../authentication/Login";
 import Dashboard from "../../pages/Dashboard";
 import Sessions from "../../pages/Sessions";
-import Card from '../../components/Card'
+import Card from "../../components/Card";
 
 import * as exampleSelectors from "../../store/example/selectors";
 import * as exampleActions from "../../store/example/actions";
+import * as userSelectors from "../../store/user/selectors";
 
 import "./styles.css";
 import "semantic-ui-css/semantic.min.css";
@@ -22,7 +23,7 @@ import "semantic-ui-css/semantic.min.css";
 import Cookies from "js-cookie";
 
 function App() {
-  let [user, setUser] = useState("");
+  // let [user, setUser] = useState("");
   let [registerSuccess, setRegisterSuccess] = useState(false);
   // initialize dispatch
   const dispatch = useDispatch();
@@ -30,6 +31,7 @@ function App() {
   const exampleReduxData = useSelector(exampleSelectors.getExampleData);
   const exampleReduxLoading = useSelector(exampleSelectors.getExampleLoading);
   const exampleReduxError = useSelector(exampleSelectors.getExampleError);
+  const user = useSelector(userSelectors.getUser);
 
   // local state
   const [data, setData] = useState(null);
@@ -75,17 +77,17 @@ function App() {
               )}
             </Route>
             <Route path="/login">
-              {user ? (
-                <Redirect to="/dashboard" />
-              ) : (
-                <Login setUser={setUser} />
-              )}
+              {user ? <Redirect to="/dashboard" /> : <Login />}
             </Route>
             <Route path="/dashboard">
               {user ? <Dashboard /> : <Redirect to="/login" />}
             </Route>
             <Route path="/Card">
               <Card />
+            </Route>
+
+            <Route path="/sessions">
+              {user ? <Sessions /> : <Redirect to="/login" />}
             </Route>
           </Switch>
         </Router>
