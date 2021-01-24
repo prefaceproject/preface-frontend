@@ -2,7 +2,6 @@ import React from "react";
 import Layout from "../components/Layout";
 import CardContainer from "../components/CardContainer";
 import StudentCard from "../components/Dashboard/StudentCard";
-import { Container } from "semantic-ui-react";
 
 const students = [
   {

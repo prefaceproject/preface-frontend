@@ -1,4 +1,4 @@
-.header {
+.navbar {
   display: flex;
   justify-content: space-between;
   background-color: #48c0ea;
@@ -6,7 +6,7 @@
   min-height: 100px;
 }
 
-.header-logo {
+.navbar-logo {
   height: 46px;
   margin-left: 68px;
 }
