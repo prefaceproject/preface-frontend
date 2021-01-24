@@ -6,10 +6,10 @@ import Logo from '../assets/logo.png'
 
 import './Registration.css'
 
-const Registration = () => {
+const Registration = (props) => {
   let [firstName, setFirstName] = useState('')
   let [lastName, setLastName] = useState('')
-  let [password, setPawssword] = useState('')
+  let [password, setPassword] = useState('')
   let [email, setEmail] = useState('')
   let [confirmPassword, setconfirmPassword] = useState('')
 
@@ -17,21 +17,23 @@ const Registration = () => {
     const user = { email, firstName, lastName, password }
 
     fetch('http://localhost:5000/api/auth/register', {
-      method: 'POST', // *GET, POST, PUT, DELETE, etc.
-      mode: 'cors', // no-cors, *cors, same-origin
-      credentials: 'same-origin', // include, *same-origin, omit
+      method: 'POST',
+      mode: 'cors',
+      credentials: 'same-origin',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
         user: user,
-      }), // body data type must match "Content-Type" header
+      }),
     })
       .then((res) => {
         return res.json()
       })
       .then((res) => {
-        console.log(res)
+        if (res.success) {
+          props.setRegisterSuccess(true)
+        }
       })
   }
   return (
@@ -67,7 +69,7 @@ const Registration = () => {
             <div>Password</div>
             <input
               onChange={(e) => {
-                setPawssword(e.target.value)
+                setPassword(e.target.value)
               }}
             />
           </Form.Field>
