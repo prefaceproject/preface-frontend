@@ -5,22 +5,13 @@ import * as actionTypes from "./actionTypes";
 export const initialState = {
   data: null,
   error: null,
-  loading: true,
 };
 
 const reducerActions = {
   [actionTypes.SET_USER](state, action) {
     return {
       ...state.user,
-      error: action.payload,
-      loading: false,
-    };
-  },
-  [actionTypes.GET_USER](state, action) {
-    return {
-      ...state.user,
       data: action.payload,
-      loading: false,
     };
   },
 };

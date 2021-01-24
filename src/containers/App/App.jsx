@@ -15,6 +15,7 @@ import Card from '../../components/Card'
 
 import * as exampleSelectors from "../../store/example/selectors";
 import * as exampleActions from "../../store/example/actions";
+import * as userSelectors from "../../store/user/selectors";
 
 import "./styles.css";
 import "semantic-ui-css/semantic.min.css";
@@ -22,7 +23,7 @@ import "semantic-ui-css/semantic.min.css";
 import Cookies from "js-cookie";
 
 function App() {
-  let [user, setUser] = useState("");
+  // let [user, setUser] = useState("");
   let [registerSuccess, setRegisterSuccess] = useState(false);
   // initialize dispatch
   const dispatch = useDispatch();
@@ -30,6 +31,7 @@ function App() {
   const exampleReduxData = useSelector(exampleSelectors.getExampleData);
   const exampleReduxLoading = useSelector(exampleSelectors.getExampleLoading);
   const exampleReduxError = useSelector(exampleSelectors.getExampleError);
+  const user = useSelector(userSelectors.getUser);
 
   // local state
   const [data, setData] = useState(null);
@@ -78,7 +80,7 @@ function App() {
               {user ? (
                 <Redirect to="/dashboard" />
               ) : (
-                <Login setUser={setUser} />
+                <Login />
               )}
             </Route>
             <Route path="/dashboard">
