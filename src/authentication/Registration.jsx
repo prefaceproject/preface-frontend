@@ -1,12 +1,21 @@
-import React from 'react'
+import React, {useState} from 'react'
 import { Button, Form, Grid, Image } from 'semantic-ui-react'
+import axios from 'axios'
 
 import Logo from '../assets/logo.png'
 
 import './Registration.css'
 
 const Registration = () => {
+  let [firstName, setFirstName] = useState("")
+  let [lastName, setLastName] = useState("")
+  let [password, setPawssword] = useState("")
+  let [email, setEmail] = useState("")
+  let [confirmPassword, setconfirmPassword] = useState("")
+
   const handleSubmit = () => {
+    const user = {email, firstName, lastName, password}
+    axios.post("localhost:5000/api/auth/register", user).then((response)=> {console.log(response)})
     console.log('handling submit')
   }
   return (
@@ -16,23 +25,23 @@ const Registration = () => {
         <Form className="semantics-form" onSubmit={handleSubmit}>
           <Form.Field>
             <div>First Name</div>
-            <input />
+            <input onChange={(e)=> {setFirstName(e.target.value)}}/>
           </Form.Field>
           <Form.Field>
             <div>Last Name</div>
-            <input />
+            <input onChange={(e)=> {setLastName(e.target.value)}}/>
           </Form.Field>
           <Form.Field>
             <div>Email</div>
-            <input />
+            <input onChange={(e)=> {setEmail(e.target.value)}}/>
           </Form.Field>
           <Form.Field>
             <div>Password</div>
-            <input />
+            <input onChange={(e)=> {setPawssword(e.target.value)}}/>
           </Form.Field>
           <Form.Field>
             <div>Confirm Password</div>
-            <input />
+            <input onChange={(e)=> {setconfirmPassword(e.target.value)}}/>
           </Form.Field>
           <div className="button-container">
             <Button type="submit" className="blue">
