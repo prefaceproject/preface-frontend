@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import React from 'react'
 import { Button, Header, Form, Modal, Radio, TextArea, Dropdown } from 'semantic-ui-react'
 import SemanticDatepicker from 'react-semantic-ui-datepickers';
