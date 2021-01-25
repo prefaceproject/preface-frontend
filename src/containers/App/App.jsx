@@ -4,6 +4,8 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 
 import Registration from '../../authentication/Registration'
 import Login from '../../authentication/Login'
+import CreateSessionModal from '../../components/Modals/CreateSessionModal'
+import ProfileModal from '../../components/Modals/ProfileModal'
 
 import * as exampleSelectors from '../../store/example/selectors'
 import * as exampleActions from '../../store/example/actions'
@@ -57,6 +59,10 @@ function App() {
             </Route>
             <Route path="/login">
               <Login />
+            </Route>
+            <Route path="/modal">
+              <CreateSessionModal />
+              <ProfileModal />
             </Route>
           </Switch>
         </Router>
