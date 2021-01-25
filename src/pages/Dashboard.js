@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import Layout from "../components/Layout";
+import { Button } from "semantic-ui-react";
 import CardContainer from "../components/CardContainer";
 import StudentCard from "../components/Dashboard/StudentCard";
 import SessionPageHeader from "../components/SessionsPageHeader";
 import { connect } from "react-redux";
+import ModalTemplate from "../components/Modal/ModalTemplate";
 
 const students = [
   {
@@ -39,6 +41,12 @@ const students = [
 ];
 
 const Dashboard = ({ user }) => {
+  const [modelOpen, setModelOpen] = useState(false);
+
+  const closeModal = () => {
+    setModelOpen(false);
+  };
+
   const cards = students.map((student) => {
     return <StudentCard student={student} key={student._id}></StudentCard>;
   });
@@ -54,6 +62,14 @@ const Dashboard = ({ user }) => {
             cards={cards}
           />
         </div>
+        <Button
+          content="Click Me"
+          onClick={() => {
+            setModelOpen(true);
+          }}
+        ></Button>
+
+        <ModalTemplate open={modelOpen} closeModal={closeModal}></ModalTemplate>
       </Layout>
     </>
   );
