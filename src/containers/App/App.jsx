@@ -7,11 +7,13 @@ import {
   Redirect,
 } from "react-router-dom";
 
-import Registration from "../../authentication/Registration";
-import Login from "../../authentication/Login";
+import Registration from '../../authentication/Registration'
+import Login from '../../authentication/Login'
+import CreateSessionModal from '../../components/Modals/CreateSessionModal'
+import ProfileModal from '../../components/Modals/ProfileModal'
 import Dashboard from "../../pages/Dashboard";
 import Sessions from "../../pages/Sessions";
-import Card from "../../components/Card";
+import StudentCard from "../../components/StudentCard";
 
 import * as exampleSelectors from "../../store/example/selectors";
 import * as exampleActions from "../../store/example/actions";
@@ -83,11 +85,14 @@ function App() {
               {user ? <Dashboard /> : <Redirect to="/login" />}
             </Route>
             <Route path="/Card">
-              <Card />
+              <StudentCard />
             </Route>
-
             <Route path="/sessions">
-              {user ? <Sessions /> : <Redirect to="/login" />}
+              {<Sessions />}
+            </Route>
+            <Route path="/modal">
+              <CreateSessionModal />
+              <ProfileModal />
             </Route>
           </Switch>
         </Router>
