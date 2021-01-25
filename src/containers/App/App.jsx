@@ -7,8 +7,10 @@ import {
   Redirect,
 } from "react-router-dom";
 
-import Registration from "../../authentication/Registration";
-import Login from "../../authentication/Login";
+import Registration from '../../authentication/Registration'
+import Login from '../../authentication/Login'
+import CreateSessionModal from '../../components/Modals/CreateSessionModal'
+import ProfileModal from '../../components/Modals/ProfileModal'
 import Dashboard from "../../pages/Dashboard";
 import Sessions from "../../pages/Sessions";
 import StudentCard from "../../components/StudentCard";
@@ -87,6 +89,10 @@ function App() {
             </Route>
             <Route path="/sessions">
               {<Sessions />}
+            </Route>
+            <Route path="/modal">
+              <CreateSessionModal />
+              <ProfileModal />
             </Route>
           </Switch>
         </Router>
