@@ -13,6 +13,8 @@ import CreateSessionModal from '../../components/Modals/CreateSessionModal'
 import ProfileModal from '../../components/Modals/ProfileModal'
 import Dashboard from "../../pages/Dashboard";
 import Sessions from "../../pages/Sessions";
+import Card from "../../components/Card";
+import Profile from "../../pages/Profile";
 import StudentCard from "../../components/StudentCard";
 
 import * as exampleSelectors from "../../store/example/selectors";
@@ -83,6 +85,9 @@ function App() {
             </Route>
             <Route path="/dashboard">
               {user ? <Dashboard /> : <Redirect to="/login" />}
+            </Route>
+            <Route path="/profile">
+              <Profile />
             </Route>
             <Route path="/Card">
               <StudentCard />

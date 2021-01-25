@@ -5,9 +5,7 @@ import { Popup, Button } from "semantic-ui-react";
 
 import "./Navbar.css";
 
-const Navbar = ({ firstName, lastName }) => {
-  const username = "Peter";
-
+const Navbar = ({ user }) => {
   const signOut = () => {};
 
   const signOutButton = <Button>Sign Out</Button>;
@@ -17,7 +15,7 @@ const Navbar = ({ firstName, lastName }) => {
       <img className="navbar-logo" src={Logo} alt="" />
       <div className="profile">
         <span className="username">
-          {firstName && lastName ? `${firstName} ${lastName}` : null}
+          {user ? `${user.firstName} ${user.lastName}` : null}
         </span>
         <Popup
           disabled
@@ -33,8 +31,7 @@ const Navbar = ({ firstName, lastName }) => {
 };
 
 const mapStateToProps = (state) => ({
-  firstName: state.user.data.firstName,
-  lastName: state.user.data.lastName,
+  user: state.user.data,
 });
 
 export default connect(mapStateToProps)(Navbar);
