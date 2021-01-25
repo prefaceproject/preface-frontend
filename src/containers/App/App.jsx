@@ -13,7 +13,7 @@ import CreateSessionModal from '../../components/Modals/CreateSessionModal'
 import ProfileModal from '../../components/Modals/ProfileModal'
 import Dashboard from "../../pages/Dashboard";
 import Sessions from "../../pages/Sessions";
-import Card from "../../components/Card";
+import Card from "../../components/CardContainer";
 import Profile from "../../pages/Profile";
 import StudentCard from "../../components/StudentCard";
 
