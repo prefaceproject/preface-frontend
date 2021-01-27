@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import Layout from "../components/Layout";
 import { Button } from "semantic-ui-react";
 import CardContainer from "../components/CardContainer";
@@ -6,6 +5,10 @@ import StudentCard from "../components/Dashboard/StudentCard";
 import SessionPageHeader from "../components/SessionsPageHeader";
 import { connect } from "react-redux";
 import ModalTemplate from "../components/Modal/ModalTemplate";
+import * as userSelectors from "../store/user/selectors";
+import { useDispatch, useSelector } from "react-redux";
+import React, { useState, useEffect, useCallback } from "react";
+import * as userActions from "../store/user/actions";
 
 const students = [
   {
@@ -40,8 +43,18 @@ const students = [
   },
 ];
 
-const Dashboard = ({ user }) => {
+const Dashboard = ({  }) => {
   const [modelOpen, setModelOpen] = useState(false);
+  const dispatch = useDispatch();
+  const user = useSelector(userSelectors.getUser);
+  // const ambassadorList = useSelector(userSelectors.getAllAmbassadors);
+
+  useEffect(() => {
+    dispatch(userActions.fetchAllAmbassadors({role: 'ambassador'}))
+    dispatch(userActions.fetchAllTeachers({role: 'teacher'}))
+    dispatch(userActions.fetchAllStudents())
+  }, [])
+
 
   const closeModal = () => {
     setModelOpen(false);

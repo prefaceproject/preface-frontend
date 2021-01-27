@@ -3,6 +3,7 @@ import { Button, Form } from 'semantic-ui-react'
 import { BrowserRouter as Redirect } from 'react-router-dom'
 import { useDispatch, useSelector } from "react-redux";
 import Logo from '../assets/logo.png'
+import * as userSelectors from "../store/user/selectors";
 
 import * as userActions from "../store/user/actions";
 import Cookies from 'js-cookie';
@@ -10,11 +11,13 @@ import Cookies from 'js-cookie';
 import './Registration.css'
 
 import { backend_url } from '../constants/url'
+import { delay } from 'redux-saga/effects';
 
 const Login = () => {
   const dispatch = useDispatch();
   let [email, setEmail] = useState('')
   let [password, setPassword] = useState('')
+  const user = useSelector(userSelectors.getUser);
 
   useEffect(() => {
     const token = !(Cookies.get('token') === null);
@@ -40,8 +43,8 @@ const Login = () => {
 
   const handleSubmit = () => {
     console.log('handling submit')
-    const user = { email, password }
-    dispatch(userActions.loginUser({user: user}))
+    const loginUser = { email, password }
+    dispatch(userActions.loginUser({user: loginUser}))
   }
 
   return (
