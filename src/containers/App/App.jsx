@@ -16,10 +16,12 @@ import Sessions from "../../pages/Sessions";
 import Card from "../../components/CardContainer";
 import Profile from "../../pages/Profile";
 import StudentCard from "../../components/StudentCard";
+import Book from "../../pages/Books";
 
 import * as exampleSelectors from "../../store/example/selectors";
 import * as exampleActions from "../../store/example/actions";
 import * as userSelectors from "../../store/user/selectors";
+import * as bookSelectors from "../../store/books/selectors";
 
 import "./styles.css";
 import "semantic-ui-css/semantic.min.css";
@@ -98,6 +100,9 @@ function App() {
             <Route path="/modal">
               <CreateSessionModal />
               <ProfileModal />
+            </Route>
+            <Route path="/Book">
+              <Book/>
             </Route>
           </Switch>
         </Router>
