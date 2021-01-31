@@ -7,10 +7,9 @@ import {
   Redirect,
 } from "react-router-dom";
 
-import Registration from '../../authentication/Registration'
-import Login from '../../authentication/Login'
-import CreateSessionModal from '../../components/Modals/CreateSessionModal'
-import ProfileModal from '../../components/Modals/ProfileModal'
+import Registration from "../../authentication/Registration";
+import Login from "../../authentication/Login";
+import ProfileModal from "../../components/Modals/ProfileModal";
 import Dashboard from "../../pages/Dashboard";
 import Sessions from "../../pages/Sessions";
 import Card from "../../components/CardContainer";
@@ -92,11 +91,8 @@ function App() {
             <Route path="/Card">
               <StudentCard />
             </Route>
-            <Route path="/sessions">
-              {<Sessions />}
-            </Route>
+            <Route path="/sessions">{<Sessions />}</Route>
             <Route path="/modal">
-              <CreateSessionModal />
               <ProfileModal />
             </Route>
           </Switch>

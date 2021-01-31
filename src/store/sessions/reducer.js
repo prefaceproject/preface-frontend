@@ -14,6 +14,12 @@ const reducerActions = {
       error: action.payload,
     };
   },
+  [actionTypes.RECEIVE_SESSIONS](state, action) {
+    return {
+      ...state.sessions,
+      data: action.payload,
+    };
+  },
 };
 
 export default function SessionsReducer(state = initialState, action) {
