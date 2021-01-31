@@ -8,8 +8,6 @@ import "./Navbar.css";
 const Navbar = ({ user }) => {
   const signOut = () => {};
 
-  const signOutButton = <Button>Sign Out</Button>;
-
   return (
     <header className="navbar">
       <img className="navbar-logo" src={Logo} alt="" />
@@ -20,9 +18,13 @@ const Navbar = ({ user }) => {
         <Popup
           disabled
           basic
-          children={signOutButton}
           on="click"
-          content="Add users to your feed"
+          content={
+            <>
+              <Button>Sign Out</Button>
+              <span>Add users to your feed</span>
+            </>
+          }
           trigger={<div className="profile-icon" />}
         />
       </div>

@@ -1,95 +1,89 @@
-import React from 'react'
-import { Button, Header, Form, Modal, Radio, TextArea, Dropdown } from 'semantic-ui-react'
-import SemanticDatepicker from 'react-semantic-ui-datepickers';
-import 'react-semantic-ui-datepickers/dist/react-semantic-ui-datepickers.css';
+import React, { useState } from "react";
+import { Button, Form, Modal, TextArea } from "semantic-ui-react";
+import SemanticDatepicker from "react-semantic-ui-datepickers";
+import "react-semantic-ui-datepickers/dist/react-semantic-ui-datepickers.css";
 
+import CreateBookForm from "./CreateBookForm";
 
-const CreateSessionModal = (props) => {
-  const [open, setOpen] = React.useState(false)
-  const [expandBook, setExpandBook] = React.useState(false)
-  const [currentDate, setNewDate] = React.useState(null)
+const CreateSessionModal = ({ isOpen, close, createSession }) => {
+  const [expandBook, setExpandBook] = useState(false);
+  const [date, setNewDate] = useState(null);
+  const [note, setNote] = useState("");
+  const [book, setBook] = useState("");
 
-  const addNewBook = () => setExpandBook(!expandBook)
-  const saveNewBook = () => setExpandBook(false)
-  const selectDate = (event, data) => setNewDate(data.value)
+  const addNewBook = () => setExpandBook(!expandBook);
 
-  
+  const saveNewBook = (bookData) => {
+    console.log("SAVING BOOK", bookData);
+    setExpandBook(false);
+  };
+  const selectDate = (_event, { value }) => setNewDate(value);
+
+  const handleSave = () => {
+    close();
+    createSession({ note, date, book });
+  };
+
   const options = [
-    { key: 'm', text: 'Male', value: 'male' }
-  ]
-
-  const AddBook = () => (
-    <div> 
-      <Form.Group widths='equal'>
-        <Form.Input fluid label='Book Name' placeholder='Book Name' />
-        <Form.Input fluid label='Book Author' placeholder='Book Author' />
-      </Form.Group>
-      <Form.Group widths='equal'> 
-        <Form.Input fluid label='Book Language' placeholder='Book Language' />
-        <Form.Input fluid label='Book Reading Level' placeholder='Book Reading Level' />
-      </Form.Group>
-      <Button onClick={saveNewBook}>
-          Save
-      </Button>
-      
-    </div>
-  )
-
-  //props.viewOnly
-
-  
+    { key: "Dr. Doolittle", text: "Dr. Doolittle", value: "676asd78uhinasoas" },
+  ];
 
   return (
     <>
-      <Modal
-        onClose={() => setOpen(false)}
-        onOpen={() => setOpen(true)}
-        open={open}
-        trigger={<Button>Show Modal</Button>}
-      >
+      <Modal onClose={close} open={isOpen}>
         <Modal.Header>New Session</Modal.Header>
         <Modal.Content>
           {/* { props.viewOnly ? ViewSessionDetails : CreateSessionForm } */}
           <Form>
             <Form.Field>
               <div>Date of Meeting</div>
-              <SemanticDatepicker onChange={selectDate} />
+              <SemanticDatepicker onChange={selectDate} value={date} />
             </Form.Field>
-            <Form.Select
-              fluid label='Book Read'
-              options={options}
-            />
-              <Button onClick={addNewBook}>Add Book</Button>
-              { console.log(expandBook)}
-              { expandBook ? <AddBook /> : null}            
+            {expandBook ? (
+              <CreateBookForm
+                saveNewBook={saveNewBook}
+                cancel={() => setExpandBook(false)}
+              />
+            ) : (
+              <>
+                <Form.Select
+                  fluid
+                  label="Book Read"
+                  options={options}
+                  value={book}
+                  onChange={(_event, { value }) => setBook(value)}
+                />
+                <Button onClick={addNewBook}>Add Book</Button>
+              </>
+            )}
             <Form.Field>
               <div>Reading Level</div>
-              <input placeholder='read from database' readOnly/>
+              <input placeholder="read from database" readOnly />
             </Form.Field>
-              <Form.Select
-              fluid label='Difficulty Level (1 being the easiest and 5 being the hardest)'
+            <Form.Select
+              fluid
+              label="Difficulty Level (1 being the easiest and 5 being the hardest)"
               options={options}
             />
-            
+
             <Form.Field>
               <div>Notes</div>
-              <TextArea placeholder='Type additional notes here...' />
+              <TextArea
+                placeholder="Type additional notes here..."
+                value={note}
+                onChange={(event) => setNote(event.target.value)}
+              />
             </Form.Field>
           </Form>
         </Modal.Content>
         {/* {props.children} */}
         <Modal.Actions>
-          <Button onClick={() => setOpen(false)}>
-            Cancel
-          </Button>
-          <Button >
-            Save
-          </Button>
-        
+          <Button onClick={close}>Cancel</Button>
+          <Button onClick={handleSave}>Save</Button>
         </Modal.Actions>
       </Modal>
     </>
-  )
-}
+  );
+};
 
-export default CreateSessionModal
+export default CreateSessionModal;

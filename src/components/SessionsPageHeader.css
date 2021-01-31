@@ -1,5 +1,6 @@
 .sessions-page-header {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 48px;
+  align-items: center;
+  padding: 20px 0px;
 }
