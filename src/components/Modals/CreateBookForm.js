@@ -2,20 +2,20 @@ import React, { useState } from "react";
 import { Button, Form } from "semantic-ui-react";
 
 const CreateBookForm = ({ saveNewBook, cancel }) => {
-  const [name, setName] = useState("");
+  const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
   const [language, setLanguage] = useState("");
   const [readingLevel, setReadingLevel] = useState("");
 
   return (
-    <Form>
+    <>
       <Form.Group widths="equal">
         <Form.Input
           fluid
-          label="Book Name"
-          placeholder="Book Name"
-          value={name}
-          onChange={(event) => setName(event.target.value)}
+          label="Book Title"
+          placeholder="Book Title"
+          value={title}
+          onChange={(event) => setTitle(event.target.value)}
         />
         <Form.Input
           fluid
@@ -43,11 +43,11 @@ const CreateBookForm = ({ saveNewBook, cancel }) => {
       </Form.Group>
       <Button onClick={cancel}>Cancel</Button>
       <Button
-        onClick={() => saveNewBook({ name, author, language, readingLevel })}
+        onClick={() => saveNewBook({ title, author, language, readingLevel })}
       >
         Save
       </Button>
-    </Form>
+    </>
   );
 };
 

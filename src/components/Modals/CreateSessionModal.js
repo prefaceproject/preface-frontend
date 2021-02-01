@@ -5,7 +5,13 @@ import "react-semantic-ui-datepickers/dist/react-semantic-ui-datepickers.css";
 
 import CreateBookForm from "./CreateBookForm";
 
-const CreateSessionModal = ({ isOpen, close, createSession }) => {
+const CreateSessionModal = ({
+  isOpen,
+  close,
+  createSession,
+  books,
+  createBook,
+}) => {
   const [expandBook, setExpandBook] = useState(false);
   const [date, setNewDate] = useState(null);
   const [note, setNote] = useState("");
@@ -14,7 +20,7 @@ const CreateSessionModal = ({ isOpen, close, createSession }) => {
   const addNewBook = () => setExpandBook(!expandBook);
 
   const saveNewBook = (bookData) => {
-    console.log("SAVING BOOK", bookData);
+    createBook(bookData);
     setExpandBook(false);
   };
   const selectDate = (_event, { value }) => setNewDate(value);
@@ -24,9 +30,11 @@ const CreateSessionModal = ({ isOpen, close, createSession }) => {
     createSession({ note, date, book });
   };
 
-  const options = [
-    { key: "Dr. Doolittle", text: "Dr. Doolittle", value: "676asd78uhinasoas" },
-  ];
+  const options = books.map((book) => ({
+    key: book._id,
+    value: book._id,
+    text: book.title,
+  }));
 
   return (
     <>
@@ -45,16 +53,15 @@ const CreateSessionModal = ({ isOpen, close, createSession }) => {
                 cancel={() => setExpandBook(false)}
               />
             ) : (
-              <>
+              <section className="add-book-input">
                 <Form.Select
-                  fluid
                   label="Book Read"
                   options={options}
                   value={book}
                   onChange={(_event, { value }) => setBook(value)}
                 />
                 <Button onClick={addNewBook}>Add Book</Button>
-              </>
+              </section>
             )}
             <Form.Field>
               <div>Reading Level</div>

@@ -1,0 +1,14 @@
+.add-book-input {
+  display: flex;
+  padding-right: 110px;
+  align-items: flex-end;
+}
+
+.add-book-dropdown {
+  flex-grow: 1;
+  margin-right: 33px;
+}
+
+.add-new-book-toggle {
+  margin: 1em 1em 1.4em 33px !important;
+}
