@@ -9,6 +9,7 @@ import * as sessionsSelectors from "../store/sessions/selectors";
 import * as sessionsActions from "../store/sessions/actions";
 import * as booksSelectors from "../store/books/selectors";
 import * as booksActions from "../store/books/actions";
+import * as userSelectors from "../store/user/selectors";
 import SessionsPageHeader from "../components/SessionsPageHeader";
 import CreateSessionModal from "../components/Modals/CreateSessionModal";
 
@@ -16,6 +17,7 @@ const Sessions = () => {
   const dispatch = useDispatch();
   const sessions = useSelector(sessionsSelectors.getSessions);
   const books = useSelector(booksSelectors.getBooks);
+  const user = useSelector(userSelectors.getUser);
   const [createModalStatus, setCreateModalStatus] = useState(false);
 
   useEffect(() => {
@@ -64,6 +66,7 @@ const Sessions = () => {
         createSession={createSession}
         books={books}
         createBook={createBook}
+        userId={user?._id}
       />
     </>
   );

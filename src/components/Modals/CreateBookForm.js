@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Form } from "semantic-ui-react";
+import { Button, Form, Grid } from "semantic-ui-react";
 
 const CreateBookForm = ({ saveNewBook, cancel }) => {
   const [title, setTitle] = useState("");
@@ -8,46 +8,66 @@ const CreateBookForm = ({ saveNewBook, cancel }) => {
   const [readingLevel, setReadingLevel] = useState("");
 
   return (
-    <>
-      <Form.Group widths="equal">
-        <Form.Input
-          fluid
-          label="Book Title"
-          placeholder="Book Title"
-          value={title}
-          onChange={(event) => setTitle(event.target.value)}
-        />
-        <Form.Input
-          fluid
-          label="Book Author"
-          placeholder="Book Author"
-          value={author}
-          onChange={(event) => setAuthor(event.target.value)}
-        />
-      </Form.Group>
-      <Form.Group widths="equal">
-        <Form.Input
-          fluid
-          label="Book Language"
-          placeholder="Book Language"
-          value={language}
-          onChange={(event) => setLanguage(event.target.value)}
-        />
-        <Form.Input
-          fluid
-          label="Book Reading Level"
-          placeholder="Book Reading Level"
-          value={readingLevel}
-          onChange={(event) => setReadingLevel(event.target.value)}
-        />
-      </Form.Group>
-      <Button onClick={cancel}>Cancel</Button>
-      <Button
-        onClick={() => saveNewBook({ title, author, language, readingLevel })}
-      >
-        Save
-      </Button>
-    </>
+    <Grid className="create-book-grid">
+      <Grid.Row>
+        <Grid.Column width={8}>
+          <Form.Input
+            fluid
+            label="Book Title"
+            placeholder="Book Title"
+            value={title}
+            onChange={(event) => setTitle(event.target.value)}
+          />
+        </Grid.Column>
+        <Grid.Column width={8}>
+          <Form.Input
+            fluid
+            label="Book Author"
+            placeholder="Book Author"
+            value={author}
+            onChange={(event) => setAuthor(event.target.value)}
+          />
+        </Grid.Column>
+      </Grid.Row>
+      <Grid.Row>
+        <Grid.Column width={8}>
+          <Form.Input
+            fluid
+            label="Book Language"
+            placeholder="Book Language"
+            value={language}
+            onChange={(event) => setLanguage(event.target.value)}
+          />
+        </Grid.Column>
+        <Grid.Column width={8}>
+          <Form.Input
+            fluid
+            label="Book Reading Level"
+            placeholder="Book Reading Level"
+            value={readingLevel}
+            onChange={(event) => setReadingLevel(event.target.value)}
+          />
+        </Grid.Column>
+      </Grid.Row>
+      <Grid.Row>
+        <Grid.Column width={4}>
+          <Button onClick={cancel} fluid>
+            Cancel
+          </Button>
+        </Grid.Column>
+        <Grid.Column width={4}>
+          <Button
+            primary
+            fluid
+            onClick={() =>
+              saveNewBook({ title, author, language, readingLevel })
+            }
+          >
+            Save
+          </Button>
+        </Grid.Column>
+      </Grid.Row>
+    </Grid>
   );
 };
 
