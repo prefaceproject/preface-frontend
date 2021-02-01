@@ -86,13 +86,21 @@ function App() {
               {user ? <Dashboard /> : <Redirect to="/login" />}
             </Route>
             <Route path="/profile">
+              {/* TODO: restrict unauthenticated/unauthorized access to profile page */}
+              {/* {user ? <Profile /> : <Redirect to="/login" />} */}
               <Profile />
             </Route>
             <Route path="/Card">
               <StudentCard />
             </Route>
-            <Route path="/sessions">{<Sessions />}</Route>
+            <Route path="/sessions">
+              {/* TODO: restrict unauthenticated/unauthorized access to sessions page */}
+              {/* {user ? <Sessions /> : <Redirect to="/login" />} */}
+              <Sessions />
+            </Route>
             <Route path="/modal">
+              {/* TODO: restrict unauthenticated/unauthorized access to teacher profile modal */}
+              {/* {user ? <ProfileModal /> : <Redirect to="/login" />} */}
               <ProfileModal />
             </Route>
           </Switch>

@@ -27,4 +27,8 @@
   height: 50px;
   border-radius: 100%;
   background-color: purple;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
 }
