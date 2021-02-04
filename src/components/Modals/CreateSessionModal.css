@@ -1,0 +1,32 @@
+.add-new-book-toggle {
+  margin-bottom: 0.4em !important;
+}
+
+.create-session-grid {
+  margin: 0px !important;
+}
+
+.create-book-grid {
+  padding-left: 1rem;
+  margin: 0px !important;
+}
+
+.create-session-datepicker .field {
+  width: 100%;
+}
+
+.create-session-comprehension-level {
+  display: flex !important;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.comprehension-level-label {
+  display: block;
+  margin: 0 0 0.28571429rem 0;
+  color: rgba(0, 0, 0, 0.87);
+  font-size: 0.92857143em;
+  font-weight: 700;
+  text-transform: none;
+  margin-bottom: 4px;
+}

@@ -7,13 +7,22 @@ import StudentCard from "../components/StudentCard";
 import SessionList from "../components/sessions/SessionsList";
 import * as sessionsSelectors from "../store/sessions/selectors";
 import * as sessionsActions from "../store/sessions/actions";
+import * as booksSelectors from "../store/books/selectors";
+import * as booksActions from "../store/books/actions";
+import * as userSelectors from "../store/user/selectors";
 import SessionsPageHeader from "../components/SessionsPageHeader";
 import CreateSessionModal from "../components/Modals/CreateSessionModal";
 
 const Sessions = () => {
   const dispatch = useDispatch();
   const sessions = useSelector(sessionsSelectors.getSessions);
+  const books = useSelector(booksSelectors.getBooks);
+  const user = useSelector(userSelectors.getUser);
   const [createModalStatus, setCreateModalStatus] = useState(false);
+
+  useEffect(() => {
+    if (createModalStatus) dispatch(booksActions.requestBooks());
+  }, [createModalStatus]);
 
   useEffect(() => {
     dispatch(sessionsActions.requestSessions());
@@ -29,6 +38,10 @@ const Sessions = () => {
 
   const createSession = (sessionData) => {
     dispatch(sessionsActions.createSession(sessionData));
+  };
+
+  const createBook = (newBook) => {
+    dispatch(booksActions.createBook(newBook));
   };
 
   return (
@@ -51,6 +64,9 @@ const Sessions = () => {
         isOpen={createModalStatus}
         close={closeCreateSessionModal}
         createSession={createSession}
+        books={books}
+        createBook={createBook}
+        userId={user?._id}
       />
     </>
   );
