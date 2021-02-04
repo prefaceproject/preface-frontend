@@ -1,12 +1,18 @@
 import React from "react";
 import { Card, Grid, Image, Label } from "semantic-ui-react";
+import { useHistory } from 'react-router-dom';
 import "./StudentCard.css";
 
 const StudentCard = ({ student }) => {
   const { firstName, lastName, sessions, school } = student;
+  let history = useHistory();
+
+  const toSessions = () => {
+    history.push("/sessions");
+  }
 
   return (
-    <Card fluid centered color="black">
+    <Card fluid centered color="black" onClick={toSessions}>
       <Card.Content>
         <Grid>
           <Grid.Row>
