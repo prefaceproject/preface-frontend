@@ -68,31 +68,96 @@ const fetchAllTeachers = function* ({ payload }) {
   }
 };
 
-const fetchAllStudents = function* ({}) {
+const initializeAmbassador = function* ({payload}) {
   try {
     const headerParams = {
       mode: 'cors',
       credentials: 'same-origin'
     };
     const response = yield call(
-      Axios.get,
-      backend_url + "/api/students",
+      Axios.post,
+      backend_url + "/api/users/initialize",
+      payload,
       headerParams
     );
-
-    if (response.status == 200) {
-      yield put(actions.setAllStudents(response.data))
+    if (response.data.success) {
+      yield put(actions.fetchAllAmbassadors({role: 'ambassador'}));
     }
   } catch (err) {
     console.log(err)
   }
-};
+}
+
+const updateAmbassador = function* ({payload}) {
+  try {
+    const headerParams = {
+      mode: 'cors',
+      credentials: 'same-origin'
+    };
+    const response = yield call(
+      Axios.post,
+      backend_url + "/api/users/update",
+      payload,
+      headerParams
+    );
+    if (response.data.success) {
+      yield put(actions.fetchAllAmbassadors({role: 'ambassador'}));
+    }
+  } catch (err) {
+    console.log(err)
+  }
+}
+
+
+const initializeTeacher = function* ({payload}) {
+  try {
+    const headerParams = {
+      mode: 'cors',
+      credentials: 'same-origin'
+    };
+    const response = yield call(
+      Axios.post,
+      backend_url + "/api/users/initialize",
+      payload,
+      headerParams
+    );
+    if (response.data.success) {
+      yield put(actions.fetchAllTeachers({role: 'teacher'}));
+    }
+  } catch (err) {
+    console.log(err)
+  }
+}
+
+const updateTeacher = function* ({payload}) {
+  try {
+    const headerParams = {
+      mode: 'cors',
+      credentials: 'same-origin'
+    };
+    const response = yield call(
+      Axios.post,
+      backend_url + "/api/users/update",
+      payload,
+      headerParams
+    );
+    if (response.data.success) {
+      yield put(actions.fetchAllTeachers({role: 'teacher'}));
+    }
+  } catch (err) {
+    console.log(err)
+  }
+}
+
 
 export default function* UserSaga() {
   yield all([
     takeLatest(actionTypes.LOGIN_USER, loginUser),
     takeLatest(actionTypes.FETCH_ALL_AMBASSADORS, fetchAllAmbassadors),
     takeLatest(actionTypes.FETCH_ALL_TEACHERS, fetchAllTeachers),
-    takeLatest(actionTypes.FETCH_ALL_STUDENTS, fetchAllStudents)
+    takeLatest(actionTypes.INITIALIZE_AMBASSADOR, initializeAmbassador),
+    takeLatest(actionTypes.INITIALIZE_TEACHER, initializeTeacher),
+    takeLatest(actionTypes.UPDATE_AMBASSADOR, updateAmbassador),
+    takeLatest(actionTypes.UPDATE_TEACHER, updateTeacher),
   ]);
 }

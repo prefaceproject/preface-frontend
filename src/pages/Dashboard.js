@@ -9,6 +9,7 @@ import * as userSelectors from "../store/user/selectors";
 import { useDispatch, useSelector } from "react-redux";
 import React, { useState, useEffect, useCallback } from "react";
 import * as userActions from "../store/user/actions";
+import * as studentsActions from "../store/students/actions";
 
 const students = [
   {
@@ -50,9 +51,32 @@ const Dashboard = ({  }) => {
   // const ambassadorList = useSelector(userSelectors.getAllAmbassadors);
 
   useEffect(() => {
-    dispatch(userActions.fetchAllAmbassadors({role: 'ambassador'}))
-    dispatch(userActions.fetchAllTeachers({role: 'teacher'}))
-    dispatch(userActions.fetchAllStudents())
+    // dispatch(userActions.fetchAllAmbassadors({role: 'ambassador'}))
+    // dispatch(userActions.fetchAllTeachers({role: 'teacher'}))
+    // dispatch(studentsActions.fetchAllStudents())
+
+    // dispatch(userActions.initializeAmbassador({ user: {email: "f37@gmail.com", role: "ambassador"} }))
+    // dispatch(userActions.initializeTeacher({ user: {email: "f40@gmail.com", role: "teacher"} }))
+    // dispatch(studentsActions.createStudent({
+    //   "firstName": "kid5",
+    //   "lastName": "cudi",
+    //   "readingLevel": "3",
+    //   "grade": "1",
+    //   "joinDate": "2020-12-12T05:00:00.000Z",
+    //   "school": "red elementary"
+    // }))
+    
+    // dispatch(userActions.updateAmbassador({ user: { _id: "601c7f8e2663b6786ebace74", email: "f37@gmail.com", role: "ambassador", firstName: "Francis", lastName: "Kigawa"} }))
+    // dispatch(userActions.updateTeacher({ user: { _id: "601c81633dff3f7957ea60c2", email: "f40@gmail.com", role: "teacher", firstName: "Mr.", lastName: "Teacher"} }))
+    // dispatch(studentsActions.updateStudent({
+    //   "_id": "601c8bd0015214844c066720",
+    //   "firstName": "kid3",
+    //   "lastName": "cudi",
+    //   "readingLevel": "10",
+    //   "grade": "1",
+    //   "joinDate": "2020-12-12T05:00:00.000Z",
+    //   "school": "red elementary"
+    // }))
   }, [])
 
 

@@ -7,7 +7,6 @@ export const initialState = {
   error: null,
   ambassadorList: [],
   teacherList: [],
-  studentList: []
 };
 
 const reducerActions = {
@@ -27,12 +26,6 @@ const reducerActions = {
     return {
       ...state,
       teacherList: action.payload,
-    }
-  },
-  [actionTypes.SET_ALL_STUDENTS](state, action) {
-    return {
-      ...state,
-      studentList: action.payload,
     }
   },
 };
