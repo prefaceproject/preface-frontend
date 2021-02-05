@@ -51,9 +51,9 @@ const Dashboard = ({  }) => {
   // const ambassadorList = useSelector(userSelectors.getAllAmbassadors);
 
   useEffect(() => {
-    // dispatch(userActions.fetchAllAmbassadors({role: 'ambassador'}))
-    // dispatch(userActions.fetchAllTeachers({role: 'teacher'}))
-    // dispatch(studentsActions.fetchAllStudents())
+    dispatch(userActions.fetchAllAmbassadors({role: 'ambassador'}))
+    dispatch(userActions.fetchAllTeachers({role: 'teacher'}))
+    dispatch(studentsActions.fetchAllStudents())
 
     // dispatch(userActions.initializeAmbassador({ user: {email: "f37@gmail.com", role: "ambassador"} }))
     // dispatch(userActions.initializeTeacher({ user: {email: "f40@gmail.com", role: "teacher"} }))
