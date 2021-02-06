@@ -85,21 +85,27 @@ function App() {
             <Route path="/dashboard">
               {user ? <Dashboard /> : <Redirect to="/login" />}
             </Route>
-            <Route path="/profile">
-              {/* TODO: restrict unauthenticated/unauthorized access to profile page */}
-              {/* {user ? <Profile /> : <Redirect to="/login" />} */}
-              <Profile />
+
+            <Route path="/login-next=profile">
+              {user ? <Redirect to="/profile" /> : <Login />}
             </Route>
+            <Route path="/profile">
+              {user ? <Profile /> : <Redirect to="/login-next=profile" />}
+            </Route>
+
+            <Route path="/login-next=sessions">
+              {user ? <Redirect to="/sessions" /> : <Login />}
+            </Route>
+            <Route path="/sessions">
+              {user ? <Sessions /> : <Redirect to="/login-next=sessions" />}
+              <Sessions />
+            </Route>
+
             <Route path="/Card">
               <StudentCard />
             </Route>
-            <Route path="/sessions">
-              {/* TODO: restrict unauthenticated/unauthorized access to sessions page */}
-              {/* {user ? <Sessions /> : <Redirect to="/login" />} */}
-              <Sessions />
-            </Route>
+
             <Route path="/modal">
-              {/* TODO: restrict unauthenticated/unauthorized access to teacher profile modal */}
               {/* {user ? <ProfileModal /> : <Redirect to="/login" />} */}
               <ProfileModal />
             </Route>
