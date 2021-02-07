@@ -12,57 +12,22 @@ import Login from "../../authentication/Login";
 import ProfileModal from "../../components/Modals/ProfileModal";
 import Dashboard from "../../pages/Dashboard";
 import Sessions from "../../pages/Sessions";
-import Card from "../../components/CardContainer";
 import Profile from "../../pages/Profile";
 import StudentCard from "../../components/StudentCard";
-
-import * as exampleSelectors from "../../store/example/selectors";
-import * as exampleActions from "../../store/example/actions";
 import * as userSelectors from "../../store/user/selectors";
+import * as userActions from "../../store/user/actions";
 
 import "./styles.css";
 import "semantic-ui-css/semantic.min.css";
 
-import Cookies from "js-cookie";
-
 function App() {
-  // let [user, setUser] = useState("");
   let [registerSuccess, setRegisterSuccess] = useState(false);
-  // initialize dispatch
   const dispatch = useDispatch();
-  // read redux state
-  const exampleReduxData = useSelector(exampleSelectors.getExampleData);
-  const exampleReduxLoading = useSelector(exampleSelectors.getExampleLoading);
-  const exampleReduxError = useSelector(exampleSelectors.getExampleError);
   const user = useSelector(userSelectors.getUser);
 
-  // local state
-  const [data, setData] = useState(null);
-
-  const callBackendAPI = async () => {
-    const response = await fetch("/test");
-    const body = await response.json();
-
-    if (response.status !== 200) {
-      throw new Error(body.message);
-    }
-    return body;
-  };
-
-  const exampleReduxSagaRequest = () => {
-    // dispatch with desired action
-    dispatch(exampleActions.exampleRequestData());
-  };
-
   useEffect(() => {
-    callBackendAPI()
-      .then((res) => setData(res.express))
-      .catch((err) => console.error(err));
-
-    exampleReduxSagaRequest();
+    dispatch(userActions.autoLogin());
   }, []);
-
-  if (exampleReduxLoading) return <div>LOADING...</div>;
 
   return (
     <div className="App">
@@ -93,7 +58,7 @@ function App() {
             <Route path="/Card">
               <StudentCard />
             </Route>
-            <Route path="/sessions">
+            <Route path="/students/:id/sessions">
               {/* TODO: restrict unauthenticated/unauthorized access to sessions page */}
               {/* {user ? <Sessions /> : <Redirect to="/login" />} */}
               <Sessions />

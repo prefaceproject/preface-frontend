@@ -1,6 +1,6 @@
 import React from "react";
 import { Card, Grid, Image, Label } from "semantic-ui-react";
-import { useHistory } from 'react-router-dom';
+import { useHistory } from "react-router-dom";
 import "./StudentCard.css";
 
 const StudentCard = ({ student }) => {
@@ -9,7 +9,7 @@ const StudentCard = ({ student }) => {
 
   const toSessions = () => {
     history.push("/sessions");
-  }
+  };
 
   return (
     <Card fluid centered color="black" onClick={toSessions}>
