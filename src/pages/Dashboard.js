@@ -1,4 +1,5 @@
 import Layout from "../components/Layout";
+import "../index.css";
 import { Button } from "semantic-ui-react";
 import CardContainer from "../components/CardContainer";
 import StudentCard from "../components/Dashboard/StudentCard";
@@ -44,16 +45,16 @@ const students = [
   },
 ];
 
-const Dashboard = ({  }) => {
+const Dashboard = ({}) => {
   const [modelOpen, setModelOpen] = useState(false);
   const dispatch = useDispatch();
   const user = useSelector(userSelectors.getUser);
   // const ambassadorList = useSelector(userSelectors.getAllAmbassadors);
 
   useEffect(() => {
-    dispatch(userActions.fetchAllAmbassadors({role: 'ambassador'}))
-    dispatch(userActions.fetchAllTeachers({role: 'teacher'}))
-    dispatch(studentsActions.fetchAllStudents())
+    dispatch(userActions.fetchAllAmbassadors({ role: "ambassador" }));
+    dispatch(userActions.fetchAllTeachers({ role: "teacher" }));
+    dispatch(studentsActions.fetchAllStudents());
 
     // dispatch(userActions.initializeAmbassador({ user: {email: "f37@gmail.com", role: "ambassador"} }))
     // dispatch(userActions.initializeTeacher({ user: {email: "f40@gmail.com", role: "teacher"} }))
@@ -65,7 +66,7 @@ const Dashboard = ({  }) => {
     //   "joinDate": "2020-12-12T05:00:00.000Z",
     //   "school": "red elementary"
     // }))
-    
+
     // dispatch(userActions.updateAmbassador({ user: { _id: "601c7f8e2663b6786ebace74", email: "f37@gmail.com", role: "ambassador", firstName: "Francis", lastName: "Kigawa"} }))
     // dispatch(userActions.updateTeacher({ user: { _id: "601c81633dff3f7957ea60c2", email: "f40@gmail.com", role: "teacher", firstName: "Mr.", lastName: "Teacher"} }))
     // dispatch(studentsActions.updateStudent({
@@ -77,8 +78,7 @@ const Dashboard = ({  }) => {
     //   "joinDate": "2020-12-12T05:00:00.000Z",
     //   "school": "red elementary"
     // }))
-  }, [])
-
+  }, []);
 
   const closeModal = () => {
     setModelOpen(false);
@@ -91,7 +91,7 @@ const Dashboard = ({  }) => {
   return (
     <>
       <Layout>
-        <div style={{ height: "100%", paddingTop: "24px" }}>
+        <div style={{ height: "100%" }}>
           <SessionPageHeader></SessionPageHeader>
           <h1>{`Welcome${user ? ` ${user.firstName}` : ""}`}</h1>
           <CardContainer
