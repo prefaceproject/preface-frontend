@@ -1,20 +1,20 @@
 .navbar {
   display: flex;
   justify-content: space-between;
-  background-color: #48c0ea;
+  background-color: #1198fb;
   align-items: center;
   min-height: 100px;
 }
 
 .navbar-logo {
-  height: 46px;
-  margin-left: 68px;
+  height: 34px;
+  margin-left: 90px;
 }
 
 .profile {
   display: flex;
   align-items: center;
-  margin: 0 68px;
+  margin: 0 90px;
 }
 
 .username {
@@ -23,8 +23,11 @@
 }
 
 .profile-icon {
-  width: 50px;
-  height: 50px;
+  width: 40px;
+  height: 40px;
   border-radius: 100%;
   background-color: purple;
+  border: 2px;
+  border-style: solid;
+  border-color: white;
 }
