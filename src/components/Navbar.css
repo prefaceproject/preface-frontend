@@ -30,4 +30,7 @@
   border: 2px;
   border-style: solid;
   border-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

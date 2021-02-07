@@ -10,19 +10,19 @@ export const initialState = {
 const reducerActions = {
   [actionTypes.SET_ERROR](state, action) {
     return {
-      ...state.sessions,
+      ...state.books,
       error: action.payload,
     };
   },
-  [actionTypes.RECEIVE_SESSIONS](state, action) {
+  [actionTypes.RECEIVE_BOOKS](state, action) {
     return {
-      ...state.sessions,
+      ...state.books,
       data: action.payload,
     };
   },
 };
 
-export default function SessionsReducer(state = initialState, action) {
+export default function BooksReducer(state = initialState, action) {
   return action?.type in reducerActions
     ? reducerActions[action.type](state, action)
     : state;

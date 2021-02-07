@@ -1,15 +1,15 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import Logo from "../assets/small_white_logo.png";
-import { Popup, Button } from "semantic-ui-react";
+import { Popup } from "semantic-ui-react";
+import { Link } from 'react-router-dom';
 
 import "./Navbar.css";
 
 const Navbar = ({ user }) => {
   const signOut = () => {};
-
-  const signOutButton = <Button>Sign Out</Button>;
-
+  const firstInitial = user ? user.firstName[0] : '';
+  const lastInitial = user ? user.lastName[0] : '';
   return (
     <header className="navbar">
       <img className="navbar-logo" src={Logo} alt="" />
@@ -18,12 +18,14 @@ const Navbar = ({ user }) => {
           {user ? `${user.firstName} ${user.lastName}` : null}
         </span>
         <Popup
-          disabled
           basic
-          children={signOutButton}
           on="click"
-          content="Add users to your feed"
-          trigger={<div className="profile-icon" />}
+          content={
+            <>
+              <Link to="/profile">Edit Profile</Link>
+            </>
+          }
+          trigger={<div className="profile-icon">{`${firstInitial}${lastInitial}`}</div>}
         />
       </div>
     </header>

@@ -23,7 +23,7 @@ const CardDescription = () => {
   return <Card.Description>{text}</Card.Description>
 }
 
-const CardExampleCard = () => { 
+const StudentCard = () => { 
   const extra = 'Grade: ' + user.grade + ', Reading Level: ' + user.readingLevel
   const img = 'https://robohash.org/' + user.id + '.png/?set=set4'
    return (
@@ -45,4 +45,4 @@ const CardExampleCard = () => {
 )
 }
 
-export default CardExampleCard
+export default StudentCard

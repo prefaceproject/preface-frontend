@@ -9,10 +9,12 @@ import {
 
 import Registration from "../../authentication/Registration";
 import Login from "../../authentication/Login";
+import ProfileModal from "../../components/Modals/ProfileModal";
 import Dashboard from "../../pages/Dashboard";
 import Sessions from "../../pages/Sessions";
-import Card from "../../components/Card";
+import Card from "../../components/CardContainer";
 import Profile from "../../pages/Profile";
+import StudentCard from "../../components/StudentCard";
 
 import * as exampleSelectors from "../../store/example/selectors";
 import * as exampleActions from "../../store/example/actions";
@@ -84,14 +86,22 @@ function App() {
               {user ? <Dashboard /> : <Redirect to="/login" />}
             </Route>
             <Route path="/profile">
+              {/* TODO: restrict unauthenticated/unauthorized access to profile page */}
+              {/* {user ? <Profile /> : <Redirect to="/login" />} */}
               <Profile />
             </Route>
             <Route path="/Card">
-              <Card />
+              <StudentCard />
             </Route>
-
             <Route path="/sessions">
-              {user ? <Sessions /> : <Redirect to="/login" />}
+              {/* TODO: restrict unauthenticated/unauthorized access to sessions page */}
+              {/* {user ? <Sessions /> : <Redirect to="/login" />} */}
+              <Sessions />
+            </Route>
+            <Route path="/modal">
+              {/* TODO: restrict unauthenticated/unauthorized access to teacher profile modal */}
+              {/* {user ? <ProfileModal /> : <Redirect to="/login" />} */}
+              <ProfileModal />
             </Route>
           </Switch>
         </Router>

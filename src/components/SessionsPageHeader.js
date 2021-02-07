@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import Breadcrumbs from "./Breadcrumbs";
 import "./SessionsPageHeader.css";
 
-const SessionsPageHeader = () => {
+const SessionsPageHeader = ({ openCreateSessionModal }) => {
   return (
     <Container fluid>
       <header className="sessions-page-header">
@@ -15,7 +15,9 @@ const SessionsPageHeader = () => {
             { content: "Student Info" },
           ]}
         />
-        <Button primary>Create New</Button>
+        <Button primary onClick={openCreateSessionModal}>
+          Create New
+        </Button>
       </header>
     </Container>
   );
