@@ -7,19 +7,19 @@ import { backend_url } from "../../constants/url";
 
 const createSession = function* ({ payload }) {
   try {
-    console.log("CREATING SESSION", payload);
-    // yield call(Axios.post, backend_url + "/api/sessions");
-    // yield put(actions.requestSessions());
+    yield call(Axios.post, backend_url + "/api/sessions", payload);
+    yield put(actions.requestStudentSessions(payload.studentId));
   } catch (err) {
     yield put(actions.setError(err));
   }
 };
 
-const requestSessions = function* ({}) {
+const requestStudentSessions = function* ({ payload }) {
+  const { id } = payload;
   try {
     const {
       data: { data },
-    } = yield call(Axios.get, backend_url + "/api/sessions");
+    } = yield call(Axios.get, backend_url + `/api/students/${id}/sessions`);
     yield put(actions.receiveSessions(data));
   } catch (err) {
     yield put(actions.setError(err));
@@ -28,5 +28,8 @@ const requestSessions = function* ({}) {
 
 export default function* SessionsSaga() {
   yield takeLatest(actionTypes.CREATE_SESSION, createSession);
-  yield takeLatest(actionTypes.REQUEST_SESSIONS, requestSessions);
+  yield takeLatest(
+    actionTypes.REQUEST_STUDENT_SESSIONS,
+    requestStudentSessions
+  );
 }

@@ -1,14 +1,13 @@
 import React from "react";
-import Layout from "../components/Layout";
 import { Form } from "semantic-ui-react";
+
+import Layout from "../components/Layout";
 import "../index.css";
-import SessionsPageHeader from "../components/SessionsPageHeader";
 
 const Profile = () => {
   return (
     <>
       <Layout>
-        <SessionsPageHeader></SessionsPageHeader>
         <div style={{ width: "50%" }}>
           <h1>User Profile</h1>
           <Form>

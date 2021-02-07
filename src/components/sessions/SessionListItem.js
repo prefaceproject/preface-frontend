@@ -10,7 +10,7 @@ const SessionListItem = ({ session }) => {
       <List.Content verticalAlign="middle">
         <div className="middle aligned">
           {session.book}
-          {session.dateOfSession}
+          {session.date}
         </div>
       </List.Content>
       <List.Content floated="right" verticalAlign="middle">
