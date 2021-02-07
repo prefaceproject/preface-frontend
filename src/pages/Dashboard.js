@@ -1,17 +1,21 @@
+import React, { useState, useEffect, useCallback } from "react";
+
+import { Button, Container } from "semantic-ui-react";
 import Layout from "../components/Layout";
-import { Button } from "semantic-ui-react";
 import CardContainer from "../components/CardContainer";
 import StudentCard from "../components/Dashboard/StudentCard";
 import SessionPageHeader from "../components/SessionsPageHeader";
-import { connect } from "react-redux";
 import ModalTemplate from "../components/Modal/ModalTemplate";
-import * as userSelectors from "../store/user/selectors";
+
+import { connect } from "react-redux";
 import { useDispatch, useSelector } from "react-redux";
-import React, { useState, useEffect, useCallback } from "react";
+import * as userSelectors from "../store/user/selectors";
 import * as userActions from "../store/user/actions";
 import * as studentsActions from "../store/students/actions";
 
-const students = [
+import "./styles/Dashboard.css";
+
+const students_eg = [
   {
     _id: "600cb6257b63dccb764331f9",
     sessions: [],
@@ -44,41 +48,17 @@ const students = [
   },
 ];
 
-const Dashboard = ({  }) => {
+const Dashboard = ({ students }) => {
   const [modelOpen, setModelOpen] = useState(false);
   const dispatch = useDispatch();
   const user = useSelector(userSelectors.getUser);
   // const ambassadorList = useSelector(userSelectors.getAllAmbassadors);
 
   useEffect(() => {
-    dispatch(userActions.fetchAllAmbassadors({role: 'ambassador'}))
-    dispatch(userActions.fetchAllTeachers({role: 'teacher'}))
-    dispatch(studentsActions.fetchAllStudents())
-
-    // dispatch(userActions.initializeAmbassador({ user: {email: "f37@gmail.com", role: "ambassador"} }))
-    // dispatch(userActions.initializeTeacher({ user: {email: "f40@gmail.com", role: "teacher"} }))
-    // dispatch(studentsActions.createStudent({
-    //   "firstName": "kid5",
-    //   "lastName": "cudi",
-    //   "readingLevel": "3",
-    //   "grade": "1",
-    //   "joinDate": "2020-12-12T05:00:00.000Z",
-    //   "school": "red elementary"
-    // }))
-    
-    // dispatch(userActions.updateAmbassador({ user: { _id: "601c7f8e2663b6786ebace74", email: "f37@gmail.com", role: "ambassador", firstName: "Francis", lastName: "Kigawa"} }))
-    // dispatch(userActions.updateTeacher({ user: { _id: "601c81633dff3f7957ea60c2", email: "f40@gmail.com", role: "teacher", firstName: "Mr.", lastName: "Teacher"} }))
-    // dispatch(studentsActions.updateStudent({
-    //   "_id": "601c8bd0015214844c066720",
-    //   "firstName": "kid3",
-    //   "lastName": "cudi",
-    //   "readingLevel": "10",
-    //   "grade": "1",
-    //   "joinDate": "2020-12-12T05:00:00.000Z",
-    //   "school": "red elementary"
-    // }))
-  }, [])
-
+    dispatch(userActions.fetchAllAmbassadors({ role: "ambassador" }));
+    dispatch(userActions.fetchAllTeachers({ role: "teacher" }));
+    dispatch(studentsActions.fetchAllStudents());
+  }, []);
 
   const closeModal = () => {
     setModelOpen(false);
@@ -88,25 +68,33 @@ const Dashboard = ({  }) => {
     return <StudentCard student={student} key={student._id}></StudentCard>;
   });
 
-  return (
-    <>
-      <Layout>
-        <div style={{ height: "100%", paddingTop: "24px" }}>
-          <SessionPageHeader></SessionPageHeader>
-          <h1>{`Welcome${user ? ` ${user.firstName}` : ""}`}</h1>
-          <CardContainer
-            title={"List of participating students"}
-            cards={cards}
-          />
-        </div>
-        <Button
+  {
+    /* <Button
           content="Click Me"
           onClick={() => {
             setModelOpen(true);
           }}
-        ></Button>
 
-        <ModalTemplate open={modelOpen} closeModal={closeModal}></ModalTemplate>
+          <ModalTemplate open={modelOpen} closeModal={closeModal}></ModalTemplate>
+        ></Button> */
+  }
+
+  return (
+    <>
+      <Layout>
+        <Container>
+          <div className="dashboard-header">
+            <h1 className="dashboard-header-title">
+              Welcome {user ? <u>{user.firstName}</u> : null}!
+            </h1>
+            <Button primary>Need Help?</Button>
+          </div>
+          <CardContainer
+            title={"List of participating students"}
+            cards={cards}
+            cardsPerPage={10}
+          />
+        </Container>
       </Layout>
     </>
   );
@@ -114,6 +102,7 @@ const Dashboard = ({  }) => {
 
 const mapStateToProps = (state) => ({
   user: state.user.data,
+  students: state.students.studentList,
 });
 
 export default connect(mapStateToProps)(Dashboard);
