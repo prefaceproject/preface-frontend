@@ -1,0 +1,1 @@
+export const getAllStudents = ({user: { studentList } }) => studentList;

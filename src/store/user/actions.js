@@ -20,8 +20,14 @@ export const setAllTeachers = (role) =>
 export const fetchAllTeachers = (role) => 
   action(actionTypes.FETCH_ALL_TEACHERS, role);
 
-export const setAllStudents = (role) =>
-  action(actionTypes.SET_ALL_STUDENTS, role);
+export const initializeAmbassador = (data) => 
+  action(actionTypes.INITIALIZE_AMBASSADOR, data);
 
-export const fetchAllStudents = (role) => 
-  action(actionTypes.FETCH_ALL_STUDENTS, role);
+export const updateAmbassador = (data) =>
+  action(actionTypes.UPDATE_AMBASSADOR, data);
+
+export const initializeTeacher = (data) => 
+  action(actionTypes.INITIALIZE_TEACHER, data);
+
+export const updateTeacher = (data) =>
+  action(actionTypes.UPDATE_TEACHER, data);
