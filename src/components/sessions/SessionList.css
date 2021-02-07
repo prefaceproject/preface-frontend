@@ -1,0 +1,56 @@
+.session-headers {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 22.16px;
+  margin-bottom: 17.15px;
+  text-align: left;
+  font: normal normal bold 14px/17px Mulish;
+  letter-spacing: 0px;
+  color: #9fa2b4;
+  opacity: 1;
+}
+
+.session-book {
+  text-align: left;
+  width: 33%;
+}
+
+.session-date {
+  text-align: left;
+  width: 33%;
+}
+
+.session-level {
+  text-align: left;
+  width: 33%;
+}
+
+.session-number {
+  flex-grow: 0.5;
+}
+
+.session-header-info {
+  display: flex;
+  flex-grow: 2;
+  justify-content: space-evenly;
+}
+
+.session-header-book {
+  text-align: left;
+  width: 33%;
+}
+
+.session-header-date {
+  text-align: left;
+  width: 33%;
+}
+
+.session-header-level {
+  text-align: left;
+  width: 33%;
+}
+
+.session-header-actions {
+  flex-grow: 0.5;
+  text-align: center;
+}
