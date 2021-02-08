@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Grid } from "semantic-ui-react";
 import { useSelector, useDispatch } from "react-redux";
+import { useParams, Redirect } from "react-router-dom";
 
 import Layout from "../components/Layout";
 import StudentCard from "../components/StudentCard";
@@ -13,20 +14,23 @@ import * as userSelectors from "../store/user/selectors";
 import SessionsPageHeader from "../components/SessionsPageHeader";
 import CreateSessionModal from "../components/Modals/CreateSessionModal";
 
-const Sessions = () => {
+const Sessions = (props) => {
   const dispatch = useDispatch();
   const sessions = useSelector(sessionsSelectors.getSessions);
   const books = useSelector(booksSelectors.getBooks);
   const user = useSelector(userSelectors.getUser);
   const [createModalStatus, setCreateModalStatus] = useState(false);
+  const { id } = useParams();
+
+  if (!id) return <Redirect to="/dashboard" />;
 
   useEffect(() => {
     if (createModalStatus) dispatch(booksActions.requestBooks());
   }, [createModalStatus]);
 
   useEffect(() => {
-    dispatch(sessionsActions.requestSessions());
-  }, []);
+    dispatch(sessionsActions.requestStudentSessions(id));
+  }, [id]);
 
   const openCreateSessionModal = () => {
     setCreateModalStatus(true);
@@ -37,7 +41,13 @@ const Sessions = () => {
   };
 
   const createSession = (sessionData) => {
-    dispatch(sessionsActions.createSession(sessionData));
+    dispatch(
+      sessionsActions.createSession({
+        ...sessionData,
+        studentId: id,
+        userId: user._id,
+      })
+    );
   };
 
   const createBook = (newBook) => {

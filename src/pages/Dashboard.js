@@ -9,9 +9,10 @@ import ModalTemplate from "../components/Modal/ModalTemplate";
 
 import { connect } from "react-redux";
 import { useDispatch, useSelector } from "react-redux";
-import * as userSelectors from "../store/user/selectors";
+
 import * as userActions from "../store/user/actions";
 import * as studentsActions from "../store/students/actions";
+import * as userSelectors from "../store/user/selectors";
 
 import "./styles/Dashboard.css";
 
@@ -58,7 +59,7 @@ const Dashboard = ({ students }) => {
     dispatch(userActions.fetchAllAmbassadors({ role: "ambassador" }));
     dispatch(userActions.fetchAllTeachers({ role: "teacher" }));
     dispatch(studentsActions.fetchAllStudents());
-  }, []);
+}, []);
 
   const closeModal = () => {
     setModelOpen(false);
