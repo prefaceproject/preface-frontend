@@ -1,5 +1,37 @@
-.SessionItem {
+.session {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 22.16px;
+  margin-bottom: 17.15px;
+  font: normal normal normal 18px/20px Corbel;
 }
 
-.session-details {
+.session-index {
+  flex-grow: 0.5;
+}
+
+.session-info {
+  display: flex;
+  flex-grow: 2;
+  justify-content: space-evenly;
+}
+
+.session-book {
+  text-align: center;
+  width: 33%;
+}
+
+.session-date {
+  text-align: center;
+  width: 33%;
+}
+
+.session-level {
+  text-align: center;
+  width: 33%;
+}
+
+.session-actions {
+  flex-grow: 0.5;
+  text-align: center;
 }
