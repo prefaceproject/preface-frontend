@@ -1,16 +1,15 @@
-import Layout from "../components/Layout";
-import "../index.css";
+import React, { useState, useEffect } from "react";
 import { Button } from "semantic-ui-react";
+import { connect } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+
+import ModalTemplate from "../components/Modal/ModalTemplate";
+import Layout from "../components/Layout";
 import CardContainer from "../components/CardContainer";
 import StudentCard from "../components/Dashboard/StudentCard";
-import SessionPageHeader from "../components/SessionsPageHeader";
-import { connect } from "react-redux";
-import ModalTemplate from "../components/Modal/ModalTemplate";
-import * as userSelectors from "../store/user/selectors";
-import { useDispatch, useSelector } from "react-redux";
-import React, { useState, useEffect, useCallback } from "react";
 import * as userActions from "../store/user/actions";
 import * as studentsActions from "../store/students/actions";
+import * as userSelectors from "../store/user/selectors";
 
 const students = [
   {

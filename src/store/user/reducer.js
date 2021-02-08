@@ -20,16 +20,21 @@ const reducerActions = {
     return {
       ...state,
       ambassadorList: action.payload,
-    }
+    };
   },
   [actionTypes.SET_ALL_TEACHERS](state, action) {
     return {
       ...state,
       teacherList: action.payload,
-    }
+    };
+  },
+  [actionTypes.SET_ERROR](state, action) {
+    return {
+      ...state,
+      error: action.payload,
+    };
   },
 };
-
 
 export default function UserReducer(state = initialState, action) {
   return action?.type in reducerActions
