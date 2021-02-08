@@ -4,8 +4,10 @@ import { useHistory } from "react-router-dom";
 import "./StudentCard.css";
 
 const StudentCard = ({ student }) => {
-  const { firstName, lastName, sessions, school } = student;
+  const { firstName, lastName, sessions, school, languagesSpoken } = student;
   let history = useHistory();
+
+  console.log(student);
 
   const toSessions = () => {
     history.push("/sessions");
@@ -14,32 +16,32 @@ const StudentCard = ({ student }) => {
   return (
     <Card fluid centered color="black" onClick={toSessions}>
       <Card.Content>
-        <Grid>
+        <Grid padded="vertically">
           <Grid.Row>
-            <Grid.Column width={1}>
+            <Grid.Column width={2}>
               <div className="AvatarColumn">
                 <Image
-                  src="https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50"
-                  avatar
+                  src={"https://robohash.org/" + student._id + ".png/?set=set4"}
                 ></Image>
               </div>
             </Grid.Column>
-            <Grid.Column width={3}>
-              {firstName + " " + lastName}
-              <br />
-              {school}
+            <Grid.Column width={3} verticalAlign="middle">
+              <h5>{firstName + " " + lastName}</h5>
+              <p>{school}</p>
             </Grid.Column>
-            <Grid.Column width={3}>
-              Number of Sessions
-              <br />
-              {sessions.length}
+            <Grid.Column width={3} verticalAlign="middle">
+              <h5>Number of Sessions</h5>
+              <p>{sessions.length}</p>
             </Grid.Column>
-            <Grid.Column width={6}>
-              Last Session
-              <br />
-              Some date here
+            <Grid.Column width={5} verticalAlign="middle">
+              <h5>Languages Spoken</h5>
+              <p>
+                {languagesSpoken.length > 0
+                  ? languagesSpoken.join(", ")
+                  : "Languages can be added on student's profile"}
+              </p>
             </Grid.Column>
-            <Grid.Column width={3}>
+            <Grid.Column width={3} verticalAlign="middle">
               <div className="AvatarColumn">
                 <Label color="green">Status</Label>
               </div>
