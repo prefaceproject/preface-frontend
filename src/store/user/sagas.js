@@ -100,7 +100,7 @@ const initializeAmbassador = function* ({ payload }) {
       headerParams
     );
     if (response.data.success) {
-      yield put(actions.fetchAllAmbassadors({ role: "ambassador" }));
+      yield put(actions.fetchAllAmbassadors());
     }
   } catch (err) {
     console.log(err);
@@ -120,7 +120,7 @@ const updateAmbassador = function* ({ payload }) {
       headerParams
     );
     if (response.data.success) {
-      yield put(actions.fetchAllAmbassadors({ role: "ambassador" }));
+      yield put(actions.fetchAllAmbassadors());
     }
   } catch (err) {
     console.log(err);
@@ -140,7 +140,7 @@ const initializeTeacher = function* ({ payload }) {
       headerParams
     );
     if (response.data.success) {
-      yield put(actions.fetchAllTeachers({ role: "teacher" }));
+      yield put(actions.fetchAllTeachers());
     }
   } catch (err) {
     console.log(err);
@@ -160,7 +160,7 @@ const updateTeacher = function* ({ payload }) {
       headerParams
     );
     if (response.data.success) {
-      yield put(actions.fetchAllTeachers({ role: "teacher" }));
+      yield put(actions.fetchAllTeachers());
     }
   } catch (err) {
     console.log(err);
