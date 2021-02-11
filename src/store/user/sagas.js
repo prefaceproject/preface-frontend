@@ -46,7 +46,7 @@ const autoLogin = function* ({ payload }) {
   }
 };
 
-const fetchAllAmbassadors = function* ({ payload }) {
+const fetchAllAmbassadors = function* () {
   try {
     const headerParams = {
       mode: "cors",
@@ -55,7 +55,7 @@ const fetchAllAmbassadors = function* ({ payload }) {
     const response = yield call(
       Axios.post,
       backend_url + "/api/users/getAllFromRole",
-      payload,
+      { role: 'ambassador'},
       headerParams
     );
     if (response.data.success) {
@@ -67,7 +67,7 @@ const fetchAllAmbassadors = function* ({ payload }) {
   }
 };
 
-const fetchAllTeachers = function* ({ payload }) {
+const fetchAllTeachers = function* () {
   try {
     const headerParams = {
       mode: "cors",
@@ -76,7 +76,7 @@ const fetchAllTeachers = function* ({ payload }) {
     const response = yield call(
       Axios.post,
       backend_url + "/api/users/getAllFromRole",
-      payload,
+      { role: 'teacher'},
       headerParams
     );
     if (response.data.success) {
