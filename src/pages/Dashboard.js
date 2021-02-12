@@ -56,10 +56,12 @@ const Dashboard = ({ students }) => {
   // const ambassadorList = useSelector(userSelectors.getAllAmbassadors);
 
   useEffect(() => {
-    dispatch(userActions.fetchAllAmbassadors({ role: "ambassador" }));
-    dispatch(userActions.fetchAllTeachers({ role: "teacher" }));
-    dispatch(studentsActions.fetchAllStudents());
-}, []);
+      dispatch(userActions.fetchAllAmbassadors());
+      dispatch(userActions.fetchAllTeachers());
+
+      console.log("in useeffect", user._id)
+      dispatch(studentsActions.fetchAllStudents({_id: user._id}));
+  }, []);
 
   const closeModal = () => {
     setModelOpen(false);
