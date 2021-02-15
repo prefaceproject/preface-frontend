@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Button, Form } from "semantic-ui-react";
 import { useDispatch } from "react-redux";
 import Logo from "../assets/logo.png";
+import HelpModal from "../components/Modals/HelpModal"
 
 import * as userActions from "../store/user/actions";
 
@@ -11,11 +12,16 @@ const Login = () => {
   const dispatch = useDispatch();
   let [email, setEmail] = useState("");
   let [password, setPassword] = useState("");
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleSubmit = () => {
     const loginUser = { email, password };
     dispatch(userActions.loginUser({ user: loginUser }));
   };
+
+  const closeModal = () => {
+    setIsModalOpen(false)
+  }
 
   return (
     <div className="Registration">
@@ -38,12 +44,23 @@ const Login = () => {
               }}
             />
           </Form.Field>
+          <div 
+            className="forgot-password" 
+            onClick={() => setIsModalOpen(true)}
+          >
+            Forgot Password?
+          </div>
           <div className="button-container">
             <Button type="submit" className="blue">
               Login
             </Button>
           </div>
         </Form>
+        <HelpModal 
+          isOpen={isModalOpen} 
+          close={closeModal} 
+          category="password"
+        />
       </div>
     </div>
   );

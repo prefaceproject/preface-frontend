@@ -6,6 +6,7 @@ import CardContainer from "../components/CardContainer";
 import StudentCard from "../components/Dashboard/StudentCard";
 import SessionPageHeader from "../components/SessionsPageHeader";
 import ModalTemplate from "../components/Modal/ModalTemplate";
+import HelpModal from "../components/Modals/HelpModal"
 
 import { connect } from "react-redux";
 import { useDispatch, useSelector } from "react-redux";
@@ -53,6 +54,7 @@ const Dashboard = ({ students }) => {
   const [modelOpen, setModelOpen] = useState(false);
   const dispatch = useDispatch();
   const user = useSelector(userSelectors.getUser);
+  const [isHelpModalOpen, setIsHelpModalOpen] = useState(false);
   // const ambassadorList = useSelector(userSelectors.getAllAmbassadors);
 
   useEffect(() => {
@@ -65,6 +67,10 @@ const Dashboard = ({ students }) => {
 
   const closeModal = () => {
     setModelOpen(false);
+  };
+
+  const closeHelpModal = () => {
+    setIsHelpModalOpen(false);
   };
 
   const cards = students.map((student) => {
@@ -90,7 +96,7 @@ const Dashboard = ({ students }) => {
             <h1 className="dashboard-header-title">
               Welcome {user ? <u>{user.firstName}</u> : null}!
             </h1>
-            <Button primary>Need Help?</Button>
+            <Button primary onClick={() => setIsHelpModalOpen(true)}>Need Help?</Button>
           </div>
           <CardContainer
             title={"List of participating students"}
@@ -99,6 +105,11 @@ const Dashboard = ({ students }) => {
           />
         </Container>
       </Layout>
+      <HelpModal 
+          isOpen={isHelpModalOpen} 
+          close={closeHelpModal} 
+          category="help"
+        />
     </>
   );
 };
