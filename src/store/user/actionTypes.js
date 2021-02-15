@@ -1,6 +1,7 @@
 export const SET_USER = "@@user/set_data";
 export const LOGIN_USER = "@@user/login_user";
 export const AUTO_LOGIN = "@@user/auto_login";
+export const LOG_OUT = "@@user/log_out";
 
 //admin sets all ambassadors and all teachers
 export const SET_ALL_AMBASSADORS = "@@user/set_all_ambassadors";

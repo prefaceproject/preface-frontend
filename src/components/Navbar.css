@@ -34,4 +34,13 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
+}
+
+.logout {
+  color: #D51E26;
+}
+
+.logout:hover{
+  color: #C32229;
 }
