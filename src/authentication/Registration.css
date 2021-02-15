@@ -53,3 +53,8 @@
   justify-content: center;
   margin: 20px 0;
 }
+
+.forgot-password {
+  color: #555;
+  cursor: pointer;
+}
