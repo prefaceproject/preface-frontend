@@ -26,6 +26,7 @@ const fetchAllStudents = function* ({}) {
 };
 
 const createStudent = function* ({payload}) {
+  console.log(payload)
   try {
     const headerParams = {
       mode: 'cors',
