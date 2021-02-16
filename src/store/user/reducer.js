@@ -10,6 +10,9 @@ export const initialState = {
 };
 
 const reducerActions = {
+  [actionTypes.LOG_OUT]() {
+    return initialState
+  },
   [actionTypes.SET_USER](state, action) {
     return {
       ...state,

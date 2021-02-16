@@ -8,6 +8,8 @@ export const loginUser = (data) => action(actionTypes.LOGIN_USER, data);
 
 export const autoLogin = () => action(actionTypes.AUTO_LOGIN);
 
+export const logOut = () => action(actionTypes.LOG_OUT);
+
 export const setAllAmbassadors = (role) =>
   action(actionTypes.SET_ALL_AMBASSADORS, role);
 

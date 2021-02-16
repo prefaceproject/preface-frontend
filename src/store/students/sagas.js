@@ -5,7 +5,7 @@ import * as actions from "./actions";
 import { backend_url } from "../../constants/url";
 
 
-const fetchAllStudents = function* ({}) {
+const fetchAllStudents = function* ({ payload }) {
   try {
     const headerParams = {
       mode: 'cors',
@@ -14,6 +14,7 @@ const fetchAllStudents = function* ({}) {
     const response = yield call(
       Axios.get,
       backend_url + "/api/students",
+      { params: payload },
       headerParams
     );
 
