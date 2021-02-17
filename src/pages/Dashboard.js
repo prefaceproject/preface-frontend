@@ -6,6 +6,9 @@ import CardContainer from "../components/CardContainer";
 import StudentCard from "../components/Dashboard/StudentCard";
 import SessionPageHeader from "../components/SessionsPageHeader";
 import ModalTemplate from "../components/Modal/ModalTemplate";
+import CreateAmbassadorModal from "../components/Modals/CreateAmbassadorModal";
+import CreateTeacherModal from "../components/Modals/CreateTeacherModal";
+import CreateStudentModal from "../components/Modals/CreateStudentModal";
 import HelpModal from "../components/Modals/HelpModal"
 
 import { connect } from "react-redux";
@@ -61,7 +64,7 @@ const Dashboard = ({ students }) => {
       dispatch(userActions.fetchAllAmbassadors());
       dispatch(userActions.fetchAllTeachers());
 
-      console.log("in useeffect", user._id)
+      console.log("in useEffect", user._id)
       dispatch(studentsActions.fetchAllStudents({_id: user._id}));
   }, []);
 
@@ -97,6 +100,9 @@ const Dashboard = ({ students }) => {
               Welcome {user ? <u>{user.firstName}</u> : null}!
             </h1>
             <Button primary onClick={() => setIsHelpModalOpen(true)}>Need Help?</Button>
+            <CreateAmbassadorModal students={students} />
+            <CreateTeacherModal students={students} />
+            <CreateStudentModal />
           </div>
           <CardContainer
             title={"List of participating students"}
@@ -109,7 +115,7 @@ const Dashboard = ({ students }) => {
           isOpen={isHelpModalOpen} 
           close={closeHelpModal} 
           category="help"
-        />
+      />
     </>
   );
 };

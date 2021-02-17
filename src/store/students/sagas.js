@@ -36,11 +36,11 @@ const createStudent = function* ({payload}) {
     const response = yield call(
       Axios.post,
       backend_url + "/api/students",
-      payload,
+      payload.student,
       headerParams
     );
     if (response.status == 200) {
-      yield put(actions.fetchAllStudents());
+      yield put(actions.fetchAllStudents({_id: payload.user}));
     }
   } catch (err) {
     console.log(err)

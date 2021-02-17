@@ -7,7 +7,7 @@ import * as studentsActions from "../../store/students/actions";
 import * as userSelectors from "../../store/user/selectors";
 import * as studentsSelectors from "../../store/students/selectors";
 
-function CreateAmbassadorModal({students}) {
+function CreateTeacherModal({students}) {
 
     const languagesSpokenOptions = [
     { key: 'English', value: 'English', text: 'English' },
@@ -45,9 +45,9 @@ function CreateAmbassadorModal({students}) {
     }
 
     function handleSave() {
-        dispatch(userActions.initializeAmbassador({ 
+        dispatch(userActions.initializeTeacher({ 
             user: {
-                role: "ambassador", 
+                role: "teacher", 
                 email: email, 
                 students: assignedStudents,
                 isActive: isActive
@@ -75,9 +75,9 @@ function CreateAmbassadorModal({students}) {
             onClose={() => setOpen(false)}
             onOpen={() => setOpen(true)}
             open={open}
-            trigger={<Button>Create Ambassador Modal</Button>}
+            trigger={<Button>Create Teacher Modal</Button>}
         >
-        <Modal.Header>Create New Ambassador Profile</Modal.Header>
+        <Modal.Header>Create New Teacher Profile</Modal.Header>
         <Modal.Content>
         <Form>
             {/*<Form.Field>
@@ -124,4 +124,4 @@ function CreateAmbassadorModal({students}) {
     )
 }
 
-export default CreateAmbassadorModal
+export default CreateTeacherModal

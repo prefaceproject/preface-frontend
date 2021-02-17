@@ -7,7 +7,7 @@ import * as studentsActions from "../../store/students/actions";
 import * as userSelectors from "../../store/user/selectors";
 import * as studentsSelectors from "../../store/students/selectors";
 
-function CreateAmbassadorModal({students}) {
+function CreateStudentModal() {
 
     const languagesSpokenOptions = [
     { key: 'English', value: 'English', text: 'English' },
@@ -23,7 +23,10 @@ function CreateAmbassadorModal({students}) {
     const [open, setOpen] = useState(false)
     const [firstName, setFirstName] = useState('')
     const [lastName, setLastName] = useState('')
-    const [email, setEmail] = useState('')
+    const [readingLevel, setReadingLevel] = useState('')
+    const [grade, setGrade] = useState('')
+    const [joinDate, setJoinDate] = useState('')
+    const [school, setSchool] = useState('')
     const [languagesSpoken, setLanguagesSpoken] = useState('')
     const [assignedStudents, setAssignedStudents] = useState('')
     const [isActive, setIsActive] = useState(true)
@@ -31,27 +34,18 @@ function CreateAmbassadorModal({students}) {
 
     const user = useSelector(userSelectors.getUser);
 
-    const assignedStudentsOptions = formatStudents()
-
-    function formatStudents() {
-        var studentList = [];
-        students.map((student) => {
-            studentList.push({ key: student._id, value: student._id, text: student.firstName + " " + student.lastName })
-        });
-
-        console.log("studentList", studentList)
-
-        return studentList
-    }
-
     function handleSave() {
-        dispatch(userActions.initializeAmbassador({ 
-            user: {
-                role: "ambassador", 
-                email: email, 
-                students: assignedStudents,
-                isActive: isActive
-            } 
+        dispatch(studentsActions.createStudent({
+            student:
+            {
+                firstName: firstName,
+                lastName: lastName,
+                readingLevel: readingLevel,
+                grade: grade,
+                school: school,
+                languagesSpoken: languagesSpoken
+            },
+            user: user._id
         }))        
         setOpen(false)
     }
@@ -75,40 +69,35 @@ function CreateAmbassadorModal({students}) {
             onClose={() => setOpen(false)}
             onOpen={() => setOpen(true)}
             open={open}
-            trigger={<Button>Create Ambassador Modal</Button>}
+            trigger={<Button>Create Student Modal</Button>}
         >
-        <Modal.Header>Create New Ambassador Profile</Modal.Header>
+        <Modal.Header>Create New Student Profile</Modal.Header>
         <Modal.Content>
         <Form>
-            {/*<Form.Field>
+            <Form.Field>
                 <label>First Name</label>
                 <input value={firstName} onChange={(event) => setFirstName(event.target.value)}/>
             </Form.Field>
             <Form.Field>
                 <label>Last Name</label>
                 <input value={lastName} onChange={(event) => setLastName(event.target.value)}/>
-            </Form.Field>*/}
-            <Form.Field>
-                <label>Email</label>
-                <input value={email} onChange={(event) => setEmail(event.target.value)}/>
             </Form.Field>
-            {/*<Form.Field>
+            <Form.Field>
+                <label>Reading Level</label>
+                <input value={readingLevel} onChange={(event) => setReadingLevel(event.target.value)}/>
+            </Form.Field>
+            <Form.Field>
+                <label>Grade</label>
+                <input value={grade} onChange={(event) => setGrade(event.target.value)}/>
+            </Form.Field>
+            <Form.Field>
+                <label>School</label>
+                <input value={school} onChange={(event) => setSchool(event.target.value)}/>
+            </Form.Field>
+            <Form.Field>
                 <label>Languages Spoken</label>
                 <Dropdown onChange={handleLanguagesSpoken.bind(this)} fluid multiple selection options={languagesSpokenOptions} />
-            </Form.Field>*/}
-            <Form.Field>
-                <label>Assigned Students</label>
-                <Dropdown 
-                    onChange={handleAssignedStudents.bind(this)} 
-                    fluid 
-                    multiple 
-                    selection 
-                    options={assignedStudentsOptions} 
-                />
             </Form.Field>
-            <Button toggle active={isActive} onClick={handleClick}>
-                Is Active
-            </Button>
         </Form>
         </Modal.Content>
         
@@ -124,4 +113,4 @@ function CreateAmbassadorModal({students}) {
     )
 }
 
-export default CreateAmbassadorModal
+export default CreateStudentModal

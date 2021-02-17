@@ -14,7 +14,7 @@ function ProfileModal() {
   const [isActive, setIsActive] = useState('')
   const dispatch = useDispatch()
 
-  let role = "teacher"
+  let role = "student"
 
 const languagesSpoken = [
     { key: 'm', text: 'Male', value: 'male' }
@@ -40,25 +40,25 @@ const roleToHeader = {
 
 function handleSave() {
     if (role === 'ambassador') {
-        dispatch(ambassadorActions.createAmbassador({
-            firstName: firstName,
-            lastName: lastName,
-            email: email,
-            languagesSpoken: ["english", "chinese"],
-            assignedStudents: ["timmy"],
-            isActive: true
-        }))
+        // dispatch(ambassadorActions.createAmbassador({
+        //     firstName: firstName,
+        //     lastName: lastName,
+        //     email: email,
+        //     languagesSpoken: ["english", "chinese"],
+        //     assignedStudents: ["timmy"],
+        //     isActive: true
+        // }))
     } else if (role === 'student'){ 
-        dispatch(studentActions.createStudent({
-            firstName: firstName,
-            lastName: lastName,
-            grade: grade,
-            joinDate: joinDate,
-            languagesSpoken: [],
-            assignedTeacher: [],
-            assignedAmbassador: [],
-            isActive: isActive
-        }))
+        // dispatch(studentActions.createStudent({
+        //     firstName: firstName,
+        //     lastName: lastName,
+        //     grade: grade,
+        //     joinDate: joinDate,
+        //     languagesSpoken: [],
+        //     assignedTeacher: [],
+        //     assignedAmbassador: [],
+        //     isActive: isActive
+        // }))
     }
 }
 
