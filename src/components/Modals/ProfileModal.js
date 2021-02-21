@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import { Button, Form, Header, Image, Modal, Checkbox } from 'semantic-ui-react'
 
 import {useDispatch} from 'react-redux'
-import * as ambassadorActions from '../../store/ambassadors/actions'
 import * as studentActions from '../../store/students/actions'
 
 function ProfileModal() {

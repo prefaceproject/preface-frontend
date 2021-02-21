@@ -11,8 +11,6 @@ import BooksReducer from "./books/reducer";
 import BooksSaga from "./books/sagas";
 import StudentsReducer from "./students/reducer";
 import StudentsSaga from "./students/sagas";
-import AmbassadorsReducer from "./ambassadors/reducer";
-import AmbassadorsSaga from "./ambassadors/sagas"
 
 export const createRootReducer = () => {
   return combineReducers({
@@ -20,8 +18,7 @@ export const createRootReducer = () => {
     sessions: SessionsReducer,
     user: UserReducer,
     students: StudentsReducer,
-    books: BooksReducer,
-    ambassadors: AmbassadorsReducer
+    books: BooksReducer
   });
 };
 
@@ -31,5 +28,4 @@ export function* rootSaga() {
   yield all([fork(UserSaga)]);
   yield all([fork(StudentsSaga)]);
   yield all([fork(BooksSaga)]);
-  yield all([fork(AmbassadorsSaga)]);
 }
