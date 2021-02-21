@@ -10,6 +10,7 @@ import {
 import Registration from "../../authentication/Registration";
 import Login from "../../authentication/Login";
 import ProfileModal from "../../components/Modals/ProfileModal";
+import CreateAmbassadorModal from "../../components/Modals/CreateAmbassadorModal";
 import Dashboard from "../../pages/Dashboard";
 import Sessions from "../../pages/Sessions";
 import Profile from "../../pages/Profile";
@@ -67,6 +68,7 @@ function App() {
               {/* TODO: restrict unauthenticated/unauthorized access to teacher profile modal */}
               {/* {user ? <ProfileModal /> : <Redirect to="/login" />} */}
               <ProfileModal />
+              <CreateAmbassadorModal />
             </Route>
           </Switch>
         </Router>
