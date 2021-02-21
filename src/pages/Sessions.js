@@ -5,7 +5,7 @@ import { useParams, Redirect } from "react-router-dom";
 
 import Layout from "../components/Layout";
 import StudentCard from "../components/StudentCard";
-import SessionList from "../components/sessions/SessionsList";
+import SessionList from "../components/Sessions/SessionsList";
 import * as sessionsSelectors from "../store/sessions/selectors";
 import * as sessionsActions from "../store/sessions/actions";
 import * as booksSelectors from "../store/books/selectors";
