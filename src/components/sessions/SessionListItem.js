@@ -10,7 +10,6 @@ const SessionListItem = ({ session }) => {
       <ListContent>
         <div className="session">
           <div className="session-index">1</div>
-
           <div className="session-info">
             <div className="session-book">{session.bookId}</div>
             <div className="session-date">
@@ -18,7 +17,6 @@ const SessionListItem = ({ session }) => {
             </div>
             <div className="session-level">{session.comprehensionLevel}</div>
           </div>
-
           <div className="session-actions">
             <Icon name="edit" />
             <Icon name="trash alternate outline" />
