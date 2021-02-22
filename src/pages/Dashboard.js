@@ -38,6 +38,7 @@ const Dashboard = ({ students, teachers, ambassadors }) => {
 
   const onClickMenuItem = (state) => {
     return () => {
+      // TO-DO: Uncomment to add RBAC
       // if (role != "admin") {
       //   setMenuState("Students")
       //   return;
@@ -57,24 +58,36 @@ const Dashboard = ({ students, teachers, ambassadors }) => {
   const getCards = (state) => {
     switch (state) {
       case "Students":
-        return [students && students.length > 0 ? students : [], StudentCard];
+        return students && students.length > 0
+          ? students.map((profile) => {
+              return (
+                <StudentCard profile={profile} key={profile._id}></StudentCard>
+              );
+            })
+          : [];
       case "Ambassadors":
-        return [
-          ambassadors && ambassadors.length > 0 ? ambassadors : [],
-          AmbassadorCard,
-        ];
+        return ambassadors && ambassadors.length > 0
+          ? ambassadors.map((profile) => {
+              return (
+                <AmbassadorCard
+                  profile={profile}
+                  key={profile._id}
+                ></AmbassadorCard>
+              );
+            })
+          : [];
       case "Teachers":
-        return [teachers && teachers.length > 0 ? teachers : [], TeacherCard];
+        return teachers && teachers.length > 0
+          ? teachers.map((profile) => {
+              return (
+                <TeacherCard profile={profile} key={profile._id}></TeacherCard>
+              );
+            })
+          : [];
       default:
         return [];
     }
   };
-
-  const [deck, Template] = getCards(menuState);
-
-  const cards = deck.map((profile) => {
-    return <Template profile={profile} key={profile._id}></Template>;
-  });
 
   return (
     <>
@@ -88,7 +101,9 @@ const Dashboard = ({ students, teachers, ambassadors }) => {
               Need Help?
             </Button>
           </div>
-          {role === "admin" || role === "ambassador" ? (
+          {role === "admin" ||
+          // TO-DO: Delete later
+          role === "ambassador" ? (
             <Menu pointing secondary>
               <Menu.Item
                 name="Students"
@@ -110,7 +125,7 @@ const Dashboard = ({ students, teachers, ambassadors }) => {
 
           <CardContainer
             title={`List of participating ${menuState.toLowerCase()}`}
-            cards={cards}
+            cards={getCards(menuState)}
             cardsPerPage={5}
           />
         </Container>
