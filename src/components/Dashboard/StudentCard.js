@@ -10,7 +10,8 @@ const StudentCard = ({ student }) => {
   console.log(student);
 
   const toSessions = () => {
-    history.push("/sessions");
+    console.log("student._id", student._id);
+    history.push(`/students/${student._id}/sessions`);
   };
 
   return (
