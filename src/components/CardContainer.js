@@ -16,15 +16,27 @@ const CardContainer = ({ cards, title, cardsPerPage = 5 }) => {
   return (
     <>
       <h3>{title}</h3>
-      <Card.Group> {currentCards}</Card.Group>
-      <br />
-      <Container textAlign="center">
-        <Pagination
-          defaultActivePage={currentPage}
-          totalPages={totalPages}
-          onPageChange={handlePaginationChange}
-        />
-      </Container>
+      {currentCards && currentCards.length > 0 ? (
+        <>
+          <Card.Group>
+            {currentCards && currentCards.length > 0 ? (
+              currentCards
+            ) : (
+              <p>Nothing to see here..</p>
+            )}
+          </Card.Group>
+          <br />
+          <Container textAlign="center">
+            <Pagination
+              defaultActivePage={currentPage}
+              totalPages={totalPages}
+              onPageChange={handlePaginationChange}
+            />
+          </Container>
+        </>
+      ) : (
+        "Nothing to see here.."
+      )}
       <br />
     </>
   );
