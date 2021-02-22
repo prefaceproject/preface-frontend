@@ -1,12 +1,14 @@
 import React, { useState, useEffect, useCallback } from "react";
 
-import { Button, Container } from "semantic-ui-react";
+import { Button, Container, Menu } from "semantic-ui-react";
 import Layout from "../components/Layout";
 import CardContainer from "../components/CardContainer";
 import StudentCard from "../components/Dashboard/StudentCard";
+import AmbassadorCard from "../components/Dashboard/AmbassadorCard";
+import TeacherCard from "../components/Dashboard/TeacherCard";
 import SessionPageHeader from "../components/SessionsPageHeader";
 import ModalTemplate from "../components/Modal/ModalTemplate";
-import HelpModal from "../components/Modals/HelpModal"
+import HelpModal from "../components/Modals/HelpModal";
 
 import { connect } from "react-redux";
 import { useDispatch, useSelector } from "react-redux";
@@ -17,53 +19,32 @@ import * as userSelectors from "../store/user/selectors";
 
 import "./styles/Dashboard.css";
 
-const students_eg = [
-  {
-    _id: "600cb6257b63dccb764331f9",
-    sessions: [],
-    books: [],
-    languagesSpoken: [],
-    firstName: "first",
-    lastName: "last",
-    readingLevel: "lvl",
-    grade: "g",
-    joinDate: "2020-12-12T05:00:00.000Z",
-    school: "School",
-    createdAt: "2021-01-23T23:49:57.430Z",
-    updatedAt: "2021-01-23T23:49:57.430Z",
-    __v: 0,
-  },
-  {
-    _id: "600cb725c7c24fcb9f94074f",
-    sessions: [],
-    books: [],
-    languagesSpoken: [],
-    firstName: "Sisi",
-    lastName: "Yu",
-    readingLevel: "Beginner",
-    grade: "Sophomore",
-    joinDate: "1995-06-18T04:00:00.000Z",
-    school: "Cornell",
-    createdAt: "2021-01-23T23:54:13.808Z",
-    updatedAt: "2021-01-23T23:54:13.808Z",
-    __v: 0,
-  },
-];
-
-const Dashboard = ({ students }) => {
-  const [modelOpen, setModelOpen] = useState(false);
+const Dashboard = ({ students, teachers, ambassadors }) => {
+  // Global State
   const dispatch = useDispatch();
   const user = useSelector(userSelectors.getUser);
-  const [isHelpModalOpen, setIsHelpModalOpen] = useState(false);
-  // const ambassadorList = useSelector(userSelectors.getAllAmbassadors);
+  const { role, firstName } = user;
 
   useEffect(() => {
-      dispatch(userActions.fetchAllAmbassadors());
-      dispatch(userActions.fetchAllTeachers());
-
-      console.log("in useeffect", user._id)
-      dispatch(studentsActions.fetchAllStudents({_id: user._id}));
+    dispatch(userActions.fetchAllAmbassadors());
+    dispatch(userActions.fetchAllTeachers());
+    dispatch(studentsActions.fetchAllStudents({ _id: user._id }));
   }, []);
+
+  // User Interface State
+  const [modelOpen, setModelOpen] = useState(false);
+  const [menuState, setMenuState] = useState("Students");
+  const [isHelpModalOpen, setIsHelpModalOpen] = useState(false);
+
+  const onClickMenuItem = (state) => {
+    return () => {
+      // if (role != "admin") {
+      //   setMenuState("Students")
+      //   return;
+      // }
+      setMenuState(state);
+    };
+  };
 
   const closeModal = () => {
     setModelOpen(false);
@@ -73,20 +54,27 @@ const Dashboard = ({ students }) => {
     setIsHelpModalOpen(false);
   };
 
-  const cards = students.map((student) => {
-    return <StudentCard student={student} key={student._id}></StudentCard>;
+  const getCards = (state) => {
+    switch (state) {
+      case "Students":
+        return [students && students.length > 0 ? students : [], StudentCard];
+      case "Ambassadors":
+        return [
+          ambassadors && ambassadors.length > 0 ? ambassadors : [],
+          AmbassadorCard,
+        ];
+      case "Teachers":
+        return [teachers && teachers.length > 0 ? teachers : [], TeacherCard];
+      default:
+        return [];
+    }
+  };
+
+  const [deck, Template] = getCards(menuState);
+
+  const cards = deck.map((profile) => {
+    return <Template profile={profile} key={profile._id}></Template>;
   });
-
-  {
-    /* <Button
-          content="Click Me"
-          onClick={() => {
-            setModelOpen(true);
-          }}
-
-          <ModalTemplate open={modelOpen} closeModal={closeModal}></ModalTemplate>
-        ></Button> */
-  }
 
   return (
     <>
@@ -94,22 +82,44 @@ const Dashboard = ({ students }) => {
         <Container>
           <div className="dashboard-header">
             <h1 className="dashboard-header-title">
-              Welcome {user ? <u>{user.firstName}</u> : null}!
+              Welcome {user ? <u>{firstName}</u> : null}!
             </h1>
-            <Button primary onClick={() => setIsHelpModalOpen(true)}>Need Help?</Button>
+            <Button primary onClick={() => setIsHelpModalOpen(true)}>
+              Need Help?
+            </Button>
           </div>
+          {role === "admin" || role === "ambassador" ? (
+            <Menu pointing secondary>
+              <Menu.Item
+                name="Students"
+                active={menuState === "Students"}
+                onClick={onClickMenuItem("Students")}
+              />
+              <Menu.Item
+                name="Ambassadors"
+                active={menuState === "Ambassadors"}
+                onClick={onClickMenuItem("Ambassadors")}
+              />
+              <Menu.Item
+                name="Teachers"
+                active={menuState === "Teachers"}
+                onClick={onClickMenuItem("Teachers")}
+              />
+            </Menu>
+          ) : null}
+
           <CardContainer
-            title={"List of participating students"}
+            title={`List of participating ${menuState.toLowerCase()}`}
             cards={cards}
-            cardsPerPage={10}
+            cardsPerPage={5}
           />
         </Container>
       </Layout>
-      <HelpModal 
-          isOpen={isHelpModalOpen} 
-          close={closeHelpModal} 
-          category="help"
-        />
+      <HelpModal
+        isOpen={isHelpModalOpen}
+        close={closeHelpModal}
+        category="help"
+      />
     </>
   );
 };
@@ -117,6 +127,8 @@ const Dashboard = ({ students }) => {
 const mapStateToProps = (state) => ({
   user: state.user.data,
   students: state.students.studentList,
+  ambassadors: state.user.ambassadorList,
+  teachers: state.user.teacherList,
 });
 
 export default connect(mapStateToProps)(Dashboard);

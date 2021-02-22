@@ -3,19 +3,31 @@ import { Card, Grid, Image, Label } from "semantic-ui-react";
 import { useHistory } from "react-router-dom";
 import "./StudentCard.css";
 
-const StudentCard = ({ profile }) => {
-  const {
-    firstName,
-    lastName,
-    sessions,
-    school,
-    languagesSpoken,
-    _id,
-  } = profile;
+const TeacherCard = ({ profile }) => {
+  const { firstName, lastName, email, _id } = profile;
   let history = useHistory();
 
+  const pretifyName = (f, l) => {
+    if (!f && !l) {
+      return "Name not available";
+    }
+
+    let string = "";
+
+    if (f && f.length > 0) {
+      string += f;
+    }
+
+    if (l && l.length > 0) {
+      string += " ";
+      string += l;
+    }
+
+    return string;
+  };
+
   const toSessions = () => {
-    history.push(`/students/${_id}/sessions`);
+    history.push(`/ambassadors/${_id}/`);
   };
 
   return (
@@ -26,29 +38,22 @@ const StudentCard = ({ profile }) => {
             <Grid.Column width={2}>
               <div className="AvatarColumn">
                 <Image
-                  src={"https://robohash.org/" + profile._id + ".png/?set=set4"}
+                  src={"https://robohash.org/" + profile._id + ".png/?set=set3"}
                 ></Image>
               </div>
             </Grid.Column>
             <Grid.Column width={3} verticalAlign="middle">
-              <h5>{firstName + " " + lastName}</h5>
-              <p>{school}</p>
+              <h5>Name</h5>
+              <p>{pretifyName(firstName, lastName)}</p>
             </Grid.Column>
             <Grid.Column width={3} verticalAlign="middle">
-              <h5>Number of Sessions</h5>
-              <p>{sessions.length}</p>
+              <h5>E-mail Address</h5>
+              <p>{email}</p>
             </Grid.Column>
-            <Grid.Column width={5} verticalAlign="middle">
-              <h5>Languages Spoken</h5>
-              <p>
-                {languagesSpoken.length > 0
-                  ? languagesSpoken.join(", ")
-                  : "Languages can be added on student's profile"}
-              </p>
-            </Grid.Column>
+            <Grid.Column width={5} verticalAlign="middle"></Grid.Column>
             <Grid.Column width={3} verticalAlign="middle">
               <div className="AvatarColumn">
-                <Label color="green">Status</Label>
+                <Label color="orange">Details</Label>
               </div>
             </Grid.Column>
           </Grid.Row>
@@ -58,4 +63,4 @@ const StudentCard = ({ profile }) => {
   );
 };
 
-export default StudentCard;
+export default TeacherCard;
