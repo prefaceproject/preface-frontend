@@ -9,6 +9,9 @@ import TeacherCard from "../components/Dashboard/TeacherCard";
 import SessionPageHeader from "../components/SessionsPageHeader";
 import ModalTemplate from "../components/Modal/ModalTemplate";
 import HelpModal from "../components/Modals/HelpModal";
+import CreateStudentModal from "../components/Modals/CreateStudentModal";
+import CreateAmbassadorModal from "../components/Modals/CreateAmbassadorModal";
+import CreateTeacherModal from "../components/Modals/CreateTeacherModal";
 
 import { connect } from "react-redux";
 import { useDispatch, useSelector } from "react-redux";
@@ -89,6 +92,19 @@ const Dashboard = ({ students, teachers, ambassadors }) => {
     }
   };
 
+  const getCreateModal = (state) => {
+    switch (state) {
+      case "Students":
+        return <CreateStudentModal/>
+      case "Ambassadors":
+        return  <CreateAmbassadorModal students={students} />
+      case "Teachers":
+        return <CreateTeacherModal students={students} />
+      default:
+        return [];
+    }
+  }
+
   return (
     <>
       <Layout>
@@ -97,9 +113,12 @@ const Dashboard = ({ students, teachers, ambassadors }) => {
             <h1 className="dashboard-header-title">
               Welcome {user ? <u>{firstName}</u> : null}!
             </h1>
+            { role == "teacher" || role == "ambassador" ? (
             <Button primary onClick={() => setIsHelpModalOpen(true)}>
               Need Help?
             </Button>
+            ) : getCreateModal(menuState)}
+            
           </div>
           {role === "admin" ||
           // TO-DO: Delete later

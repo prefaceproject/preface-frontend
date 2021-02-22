@@ -69,7 +69,7 @@ function CreateStudentModal() {
             onClose={() => setOpen(false)}
             onOpen={() => setOpen(true)}
             open={open}
-            trigger={<Button>Create Student Modal</Button>}
+            trigger={<Button>Create New Student</Button>}
         >
         <Modal.Header>Create New Student Profile</Modal.Header>
         <Modal.Content>
