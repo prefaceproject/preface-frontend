@@ -75,7 +75,7 @@ function CreateAmbassadorModal({students}) {
             onClose={() => setOpen(false)}
             onOpen={() => setOpen(true)}
             open={open}
-            trigger={<Button>Create Ambassador Modal</Button>}
+            trigger={<Button>Create New Ambassador</Button>}
         >
         <Modal.Header>Create New Ambassador Profile</Modal.Header>
         <Modal.Content>
