@@ -10,7 +10,7 @@ import UserSaga from "./user/sagas";
 import BooksReducer from "./books/reducer";
 import BooksSaga from "./books/sagas";
 import StudentsReducer from "./students/reducer";
-import StudentsSaga from "./students/sagas"
+import StudentsSaga from "./students/sagas";
 
 export const createRootReducer = () => {
   return combineReducers({
@@ -18,7 +18,7 @@ export const createRootReducer = () => {
     sessions: SessionsReducer,
     user: UserReducer,
     students: StudentsReducer,
-    books: BooksReducer,
+    books: BooksReducer
   });
 };
 

@@ -10,47 +10,28 @@
   opacity: 1;
 }
 
-.session-book {
-  text-align: left;
-  width: 33%;
-}
-
-.session-date {
-  text-align: left;
-  width: 33%;
-}
-
-.session-level {
-  text-align: left;
-  width: 33%;
-}
-
-.session-number {
-  flex-grow: 0.5;
+.session-header-index {
+  width: 10%;
 }
 
 .session-header-info {
   display: flex;
-  flex-grow: 2;
   justify-content: space-evenly;
+  width: 70%;
 }
 
 .session-header-book {
-  text-align: left;
   width: 33%;
 }
 
 .session-header-date {
-  text-align: left;
   width: 33%;
 }
 
 .session-header-level {
-  text-align: left;
   width: 33%;
 }
 
 .session-header-actions {
-  flex-grow: 0.5;
-  text-align: center;
+  width: 10%;
 }

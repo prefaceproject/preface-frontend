@@ -29,3 +29,10 @@ export default function* BooksSaga() {
   yield takeLatest(actionTypes.CREATE_BOOK, createBook);
   yield takeLatest(actionTypes.REQUEST_BOOKS, requestBooks);
 }
+/*
+component -> action -> reducer -> saga
+
+Modal opens -> requestBooks -> reducer (but no matching action type so skip) -> requestBooks
+
+receiveBooks -> reducer -> saga (but no matching action type so skip)
+*/
