@@ -7,7 +7,7 @@ import * as userSelectors from "../../store/user/selectors";
 
 import "./ChangePasswordModal.css";
 
-const ChangePasswordModal = ({isOpen, close}) => {
+const ChangePasswordModal = ({isOpen, close, setStatus}) => {
   const dispatch = useDispatch();
   const { email } = useSelector(userSelectors.getUser);
   const passwordError = useSelector(userSelectors.getPasswordError);
@@ -16,6 +16,7 @@ const ChangePasswordModal = ({isOpen, close}) => {
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     if (newPassword && currentPassword === newPassword) {
@@ -29,21 +30,24 @@ const ChangePasswordModal = ({isOpen, close}) => {
 
   useEffect(() => {
     if (passwordError && passwordError.success) {
+      setIsLoading(false)
       setStatus(passwordError)
       close();
     } else if (
       passwordError && 
       !passwordError.success && 
-      password.message !== "Incorrect password entered") {
+      passwordError.message !== "Incorrect password entered") {
+        setIsLoading(false)
         setStatus(passwordError)
         close();
     } else if (
       passwordError && 
       !passwordError.success &&
       passwordError.message === "Incorrect password entered") {
+        setIsLoading(false)
         setError(passwordError.message)
     }
-  }, passwordError)
+  }, [passwordError])
 
   const handleSubmit = () => {
     const payload = {
@@ -51,7 +55,8 @@ const ChangePasswordModal = ({isOpen, close}) => {
       password: currentPassword,
       newPassword: newPassword
     }
-    dispatch(userActions.changePassword(payload));
+    dispatch(userActions.changePassword({user: payload}));
+    setIsLoading(true);
   }
 
   return (
@@ -96,6 +101,7 @@ const ChangePasswordModal = ({isOpen, close}) => {
         <Button 
           primary 
           disabled={!!error || !currentPassword || !newPassword || !confirmPassword} 
+          loading={isLoading}
           onClick={() => handleSubmit()}>
           Update Password
         </Button>

@@ -169,13 +169,9 @@ const updateTeacher = function* ({ payload }) {
 
 const changePassword = function* ({ payload }) {
   try {
-    const token = !(Cookies.get("token") === null);
-    const userToken = token ? Cookies.get("token") : "";
-
     const headerParams = {
       mode: "cors",
       credentials: "same-origin",
-      Authorization: "Token " + userToken,
     };
 
     const response = yield call(
