@@ -19,9 +19,7 @@ const ChangePasswordModal = ({isOpen, close, setStatus}) => {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    if (newPassword && currentPassword === newPassword) {
-      setError("New password must be different from your current password")
-    } else if (confirmPassword && newPassword !== confirmPassword) {
+    if (confirmPassword && newPassword !== confirmPassword) {
       setError("Passwords do not match")
     } else {
       setError("")
@@ -32,6 +30,7 @@ const ChangePasswordModal = ({isOpen, close, setStatus}) => {
     if (passwordError && passwordError.success) {
       setIsLoading(false)
       setStatus(passwordError)
+      resetFields()
       close();
     } else if (
       passwordError && 
@@ -39,6 +38,7 @@ const ChangePasswordModal = ({isOpen, close, setStatus}) => {
       passwordError.message !== "Incorrect password entered") {
         setIsLoading(false)
         setStatus(passwordError)
+        resetFields()
         close();
     } else if (
       passwordError && 
@@ -59,6 +59,12 @@ const ChangePasswordModal = ({isOpen, close, setStatus}) => {
     setIsLoading(true);
   }
 
+  const resetFields = () => {
+    setConfirmPassword("");
+    setNewPassword("");
+    setCurrentPassword("");
+  }
+
   return (
     <Modal onClose={close} open={isOpen} size="tiny">
       <Modal.Header>Change Password</Modal.Header>
@@ -67,16 +73,17 @@ const ChangePasswordModal = ({isOpen, close, setStatus}) => {
           <Form.Field>
             <label>Current Password</label>
             <input 
-              // type="password" 
+              type="password" 
               placeholder="Current Password" 
               value={currentPassword}
               onChange={(e) => setCurrentPassword(e.target.value)}
+              onFocus={() => setError("")}
             />
           </Form.Field>
           <Form.Field>
             <label>New Password</label>
             <input
-              // type="password"
+              type="password"
               placeholder="New Password" 
               value={newPassword}
               onChange={(e) => setNewPassword(e.target.value)}
@@ -85,7 +92,7 @@ const ChangePasswordModal = ({isOpen, close, setStatus}) => {
           <Form.Field>
             <label>Confirm Password</label>
             <input 
-              // type="password" 
+              type="password" 
               placeholder="Confirm Password" 
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
