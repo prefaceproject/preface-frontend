@@ -2,6 +2,7 @@ export const SET_USER = "@@user/set_data";
 export const LOGIN_USER = "@@user/login_user";
 export const AUTO_LOGIN = "@@user/auto_login";
 export const LOG_OUT = "@@user/log_out";
+export const CHANGE_PASSWORD = "@@user/change_password";
 
 //admin sets all ambassadors and all teachers
 export const SET_ALL_AMBASSADORS = "@@user/set_all_ambassadors";
@@ -17,3 +18,4 @@ export const INITIALIZE_TEACHER = "@@user/initialize_teacher";
 export const UPDATE_TEACHER = "@@user/update_teacher";
 
 export const SET_ERROR = "@@user/set_error";
+export const SET_PASSWORD_ERROR = "@@user/set_password_error"

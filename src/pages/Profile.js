@@ -6,11 +6,20 @@ import { connect } from "react-redux";
 import ProfilePageHeader from "../components/ProfilePageHeader";
 import { Link } from "react-router-dom";
 
+import "./styles/Profile.css";
+import ChangePasswordModal from "../components/Modals/ChangePasswordModal";
+
 const Profile = ({ user }) => {
   console.log(user);
   const [firstName, setFirstName] = useState(user.firstName);
   const [lastName, setLastName] = useState(user.lastName);
   const [email, setEmail] = useState(user.email);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [passwordStatus, setPasswordStatus] = useState({success: false, message: ""});
+
+  const closeModal = () => {
+    setModalOpen(false);
+  };
 
   return (
     <>
@@ -40,11 +49,27 @@ const Profile = ({ user }) => {
                 <label>School</label>
                 <input placeholder="Add School Name" />
               </Form.Field>
-              <Button color="blue">Save</Button>
+              <div className="buttons">
+                <Button 
+                  basic 
+                  color="blue" 
+                  onClick={() => setModalOpen(true)}>
+                    Change Password
+                </Button>
+                <Button color="blue">Save</Button>
+              </div>
+              <div className={passwordStatus.success ? "passwordStatus pass" : "passwordStatus fail"}>
+                {passwordStatus.message}
+              </div>
             </Form>
           </div>
         </Container>
       </Layout>
+      <ChangePasswordModal
+        isOpen={modalOpen}
+        close={closeModal}
+        setStatus={setPasswordStatus}
+      />
     </>
   );
 };

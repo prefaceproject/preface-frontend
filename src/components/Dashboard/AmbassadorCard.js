@@ -31,7 +31,7 @@ const AmbassadorCard = ({ profile }) => {
   };
 
   return (
-    <Card fluid centered color="black" onClick={toSessions}>
+    <Card fluid centered color="black" onClick={toSessions} className={isActive ? "" : "inactiveText"}>
       <Card.Content>
         <Grid padded="vertically">
           <Grid.Row>
@@ -53,9 +53,9 @@ const AmbassadorCard = ({ profile }) => {
             <Grid.Column width={5} verticalAlign="middle"></Grid.Column>
             <Grid.Column width={3} verticalAlign="middle">
               <div className="AvatarColumn">
-                <Label color={isActive ? "green" : "red"}>
-                  {isActive ? "Active" : "Inactive"}
-                </Label>
+                <div className={isActive ? "status active" : "status inactive"}>
+                  {isActive ? "  Active  " : "  Inactive  "}
+                </div>
               </div>
             </Grid.Column>
           </Grid.Row>

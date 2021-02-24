@@ -167,6 +167,27 @@ const updateTeacher = function* ({ payload }) {
   }
 };
 
+const changePassword = function* ({ payload }) {
+  try {
+    const headerParams = {
+      mode: "cors",
+      credentials: "same-origin",
+    };
+
+    const response = yield call(
+      Axios.post,
+      backend_url + "/api/auth/updatepassword",
+      payload,
+      headerParams
+    );
+    console.log(response.data)
+    yield put(actions.setPasswordError(response.data));
+  } catch {
+    yield put(actions.setPasswordError({success: false, message: "Error changing password. Please try again."}));
+  }
+    
+}
+
 export default function* UserSaga() {
   yield all([
     takeLatest(actionTypes.LOGIN_USER, loginUser),
@@ -177,5 +198,6 @@ export default function* UserSaga() {
     takeLatest(actionTypes.INITIALIZE_TEACHER, initializeTeacher),
     takeLatest(actionTypes.UPDATE_AMBASSADOR, updateAmbassador),
     takeLatest(actionTypes.UPDATE_TEACHER, updateTeacher),
+    takeLatest(actionTypes.CHANGE_PASSWORD, changePassword)
   ]);
 }
