@@ -65,8 +65,13 @@ const ChangePasswordModal = ({isOpen, close, setStatus}) => {
     setCurrentPassword("");
   }
 
+  const closeModal = () => {
+    resetFields();
+    close()
+  }
+
   return (
-    <Modal onClose={close} open={isOpen} size="tiny">
+    <Modal onClose={closeModal} open={isOpen} size="tiny">
       <Modal.Header>Change Password</Modal.Header>
       <Modal.Content>
         <Form>
@@ -77,7 +82,9 @@ const ChangePasswordModal = ({isOpen, close, setStatus}) => {
               placeholder="Current Password" 
               value={currentPassword}
               onChange={(e) => setCurrentPassword(e.target.value)}
-              onFocus={() => setError("")}
+              onFocus={() => {
+                if (error === "Incorrect password entered") setError("")
+              }}
             />
           </Form.Field>
           <Form.Field>
@@ -104,7 +111,7 @@ const ChangePasswordModal = ({isOpen, close, setStatus}) => {
         </Form>
       </Modal.Content>
       <Modal.Actions>
-        <Button onClick={close}>Cancel</Button>
+        <Button onClick={closeModal}>Cancel</Button>
         <Button 
           primary 
           disabled={!!error || !currentPassword || !newPassword || !confirmPassword} 
