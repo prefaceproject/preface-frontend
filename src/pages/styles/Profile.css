@@ -1,0 +1,18 @@
+.buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.passwordStatus {
+  min-height: 30px;
+  padding-top: 4px;
+}
+
+.pass {
+  color: green;
+}
+
+.fail {
+  color: red;
+}

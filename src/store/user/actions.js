@@ -10,6 +10,8 @@ export const autoLogin = () => action(actionTypes.AUTO_LOGIN);
 
 export const logOut = () => action(actionTypes.LOG_OUT);
 
+export const changePassword = (data) => action(actionTypes.CHANGE_PASSWORD, data);
+
 export const setAllAmbassadors = (role) =>
   action(actionTypes.SET_ALL_AMBASSADORS, role);
 
@@ -34,3 +36,5 @@ export const initializeTeacher = (data) =>
 export const updateTeacher = (data) => action(actionTypes.UPDATE_TEACHER, data);
 
 export const setError = (err) => action(actionTypes.SET_ERROR, err);
+
+export const setPasswordError = (err) => action(actionTypes.SET_PASSWORD_ERROR, err);
