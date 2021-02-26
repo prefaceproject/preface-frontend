@@ -1,11 +1,14 @@
-import React from "react";
-import { Card, Grid, Image, Label } from "semantic-ui-react";
+import React, { useState, useEffect } from "react";
+import { Card, Grid, Image, Label, Modal, Button } from "semantic-ui-react";
 import { useHistory } from "react-router-dom";
 import "./StudentCard.css";
+import UpdateTeacherModal from "../Modals/UpdateTeacherModal";
 
-const TeacherCard = ({ profile }) => {
+const TeacherCard = ({ profile, key, ...rest }) => {
   const { firstName, lastName, email, _id } = profile;
   let history = useHistory();
+
+  const [open, setOpen] = useState(false)
 
   const pretifyName = (f, l) => {
     if (!f && !l) {
@@ -26,12 +29,13 @@ const TeacherCard = ({ profile }) => {
     return string;
   };
 
-  const toSessions = () => {
-    history.push(`/ambassadors/${_id}/`);
-  };
+  useEffect(() => {
+    console.log("profile", profile)
+    console.log("email", email)
+  }, []);
 
   return (
-    <Card fluid centered color="black" onClick={toSessions}>
+    <Card fluid centered color="black" {...rest}>
       <Card.Content>
         <Grid padded="vertically">
           <Grid.Row>
