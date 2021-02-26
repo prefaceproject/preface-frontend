@@ -12,6 +12,8 @@ import HelpModal from "../components/Modals/HelpModal";
 import CreateStudentModal from "../components/Modals/CreateStudentModal";
 import CreateAmbassadorModal from "../components/Modals/CreateAmbassadorModal";
 import CreateTeacherModal from "../components/Modals/CreateTeacherModal";
+import UpdateTeacherModal from "../components/Modals/UpdateTeacherModal";
+import UpdateAmbassadorModal from "../components/Modals/UpdateAmbassadorModal";
 
 import { connect } from "react-redux";
 import { useDispatch, useSelector } from "react-redux";
@@ -72,10 +74,7 @@ const Dashboard = ({ students, teachers, ambassadors }) => {
         return ambassadors && ambassadors.length > 0
           ? ambassadors.map((profile) => {
               return (
-                <AmbassadorCard
-                  profile={profile}
-                  key={profile._id}
-                ></AmbassadorCard>
+                <UpdateAmbassadorModal profile={profile} students={students} key={profile._id}></UpdateAmbassadorModal>
               );
             })
           : [];
@@ -83,7 +82,7 @@ const Dashboard = ({ students, teachers, ambassadors }) => {
         return teachers && teachers.length > 0
           ? teachers.map((profile) => {
               return (
-                <TeacherCard profile={profile} key={profile._id}></TeacherCard>
+                <UpdateTeacherModal profile={profile} students={students} key={profile._id}></UpdateTeacherModal>
               );
             })
           : [];

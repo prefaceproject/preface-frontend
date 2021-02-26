@@ -38,7 +38,7 @@ const StudentCard = ({ profile }) => {
               <h5>Number of Sessions</h5>
               <p>{sessions.length}</p>
             </Grid.Column>
-            <Grid.Column width={5} verticalAlign="middle">
+            <Grid.Column width={3} verticalAlign="middle">
               <h5>Languages Spoken</h5>
               <p>
                 {languagesSpoken.length > 0
@@ -46,11 +46,18 @@ const StudentCard = ({ profile }) => {
                   : "Languages can be added on student's profile"}
               </p>
             </Grid.Column>
-            <Grid.Column width={3} verticalAlign="middle">
+           
+            <Grid.Column width={2} verticalAlign="middle">
               <div className="AvatarColumn">
                 <Label color="green">Status</Label>
               </div>
             </Grid.Column>
+            <Grid.Column width={2} verticalAlign="middle">
+              <div className="AvatarColumn">
+                <i className="edit outline icon"></i>
+              </div>
+            </Grid.Column>
+            
           </Grid.Row>
         </Grid>
       </Card.Content>
