@@ -14,6 +14,7 @@ import CreateAmbassadorModal from "../../components/Modals/CreateAmbassadorModal
 import Dashboard from "../../pages/Dashboard";
 import Sessions from "../../pages/Sessions";
 import Profile from "../../pages/Profile";
+import Loading from "../../pages/Loading";
 import StudentCard from "../../components/StudentCard";
 import * as userSelectors from "../../store/user/selectors";
 import * as userActions from "../../store/user/actions";
@@ -58,6 +59,9 @@ function App() {
             </Route>
             <Route path="/Card">
               <StudentCard />
+            </Route>
+            <Route path="/Loading">
+              <Loading />
             </Route>
             <Route path="/students/:id/sessions">
               {/* TODO: restrict unauthenticated/unauthorized access to sessions page */}

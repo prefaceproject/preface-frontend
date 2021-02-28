@@ -12,8 +12,8 @@
   align-items: left;
   justify-content: top;
   flex: 1;
-  padding-left: 90px;
-  padding-right: 90px;
+  padding: 24px 90px 24px 90px;
+  min-height: 80vh;
 }
 
 .white {
