@@ -9,8 +9,7 @@ import ModalTemplate from "../components/Modal/ModalTemplate";
 import CreateAmbassadorModal from "../components/Modals/CreateAmbassadorModal";
 import CreateTeacherModal from "../components/Modals/CreateTeacherModal";
 import CreateStudentModal from "../components/Modals/CreateStudentModal";
-import HelpModal from "../components/Modals/HelpModal"
-
+import HelpModal from "../components/Modals/HelpModal";
 import { connect } from "react-redux";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -61,11 +60,11 @@ const Dashboard = ({ students }) => {
   // const ambassadorList = useSelector(userSelectors.getAllAmbassadors);
 
   useEffect(() => {
-      dispatch(userActions.fetchAllAmbassadors());
-      dispatch(userActions.fetchAllTeachers());
+    dispatch(userActions.fetchAllAmbassadors());
+    dispatch(userActions.fetchAllTeachers());
 
-      console.log("in useEffect", user._id)
-      dispatch(studentsActions.fetchAllStudents({_id: user._id}));
+    console.log("in useEffect", user._id);
+    dispatch(studentsActions.fetchAllStudents({ _id: user._id }));
   }, []);
 
   const closeModal = () => {
@@ -99,7 +98,9 @@ const Dashboard = ({ students }) => {
             <h1 className="dashboard-header-title">
               Welcome {user ? <u>{user.firstName}</u> : null}!
             </h1>
-            <Button primary onClick={() => setIsHelpModalOpen(true)}>Need Help?</Button>
+            <Button primary onClick={() => setIsHelpModalOpen(true)}>
+              Need Help?
+            </Button>
             <CreateAmbassadorModal students={students} />
             <CreateTeacherModal students={students} />
             <CreateStudentModal />
@@ -111,10 +112,10 @@ const Dashboard = ({ students }) => {
           />
         </Container>
       </Layout>
-      <HelpModal 
-          isOpen={isHelpModalOpen} 
-          close={closeHelpModal} 
-          category="help"
+      <HelpModal
+        isOpen={isHelpModalOpen}
+        close={closeHelpModal}
+        category="help"
       />
     </>
   );
