@@ -3,7 +3,7 @@ import { Card, Grid, Image, Label } from "semantic-ui-react";
 import { useHistory } from "react-router-dom";
 import "./StudentCard.css";
 
-const StudentCard = ({ profile }) => {
+const StudentCard = ({ profile, ...rest }) => {
   const {
     firstName,
     lastName,
@@ -19,7 +19,10 @@ const StudentCard = ({ profile }) => {
   };
 
   return (
-    <Card fluid centered color="black" onClick={toSessions}>
+    <Card fluid centered color="black" 
+    /*onClick={toSessions}*/
+    {...rest}
+    >
       <Card.Content>
         <Grid padded="vertically">
           <Grid.Row>
