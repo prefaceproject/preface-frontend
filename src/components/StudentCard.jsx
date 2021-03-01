@@ -4,19 +4,14 @@ import { useDispatch, connect } from "react-redux";
 import { useParams } from "react-router-dom";
 import * as studentsActions from "../store/students/actions";
 
-import "./StudentCard.css";
-
 const StudentCard = ({ userId, students }) => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(studentsActions.fetchAllStudents({ _id: userId }));
   }, [userId, students.length]);
 
-  console.log("students", students);
-
   const { id } = useParams();
   const [res] = students.filter((s) => id === s._id);
-  console.log("res", res);
   if (!res) return null;
   const {
     firstName,
