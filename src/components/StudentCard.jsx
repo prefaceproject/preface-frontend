@@ -1,48 +1,68 @@
-import React from 'react'
-import { Card, FeedUser, Icon, Image } from 'semantic-ui-react'
-import { useDispatch, useSelector } from 'react-redux'
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
+import React, { useEffect } from "react";
+import { Card, Image } from "semantic-ui-react";
+import { useDispatch, connect } from "react-redux";
+import { useParams } from "react-router-dom";
+import * as studentsActions from "../store/students/actions";
 
-const user = {
-  firstName: 'Sam',
-  lastName: 'Smith',
-  role: 'student',
-  grade: '4',
-  readingLevel: '5',
-  languagesSpoken: '',
-  id: "235434",
-  books: ['Green Eggs and Ham']
-}
+import "./StudentCard.css";
 
-const CardDescription = () => {
-  const text =
-    user.firstName +
-    ' is currently reading ' +
-    user.books[user.books.length - 1]
+const StudentCard = ({ userId, students }) => {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(studentsActions.fetchAllStudents({ _id: userId }));
+  }, [userId, students.length]);
 
-  return <Card.Description>{text}</Card.Description>
-}
+  console.log("students", students);
 
-const StudentCard = () => { 
-  const extra = 'Grade: ' + user.grade + ', Reading Level: ' + user.readingLevel
-  const img = 'https://robohash.org/' + user.id + '.png/?set=set4'
-   return (
-  <Card>
+  const { id } = useParams();
+  const [res] = students.filter((s) => id === s._id);
+  console.log("res", res);
+  if (!res) return null;
+  const {
+    firstName,
+    grade,
+    joinDate,
+    lastName,
+    languagesSpoken,
+    readingLevel,
+    school,
+  } = res;
+
+  const img = "https://robohash.org/" + id + ".png/?set=set4";
+  return (
+    <Card>
       <Image src={img} wrapped ui={false} />
-    <Card.Content>
-      <Card.Header>
-        {user.firstName} {' ' + user.lastName}
-      </Card.Header>
-      <Card.Meta>
-        <span className="date">Joined in 2015</span>
+      <Card.Content>
+        <Card.Header>{firstName + " " + lastName}</Card.Header>
+        <Card.Meta>
+          <span className="date">
+            Joined in {new Date(joinDate).getFullYear()}
+          </span>
         </Card.Meta>
-        <CardDescription user={user} />
+        <br />
+        <div>
+          <strong>Grade: </strong>
+          {grade}
+        </div>
+        <div>
+          <strong>Reading Level: </strong>
+          {readingLevel}
+        </div>
+        <div>
+          <strong>School: </strong>
+          {school}
+        </div>
+        <div>
+          <strong>Languages Spoken: </strong>
+          {languagesSpoken.join(" ")}
+        </div>
       </Card.Content>
-      <Card.Content extra>
-        <a>{extra}</a>
-      </Card.Content>
-  </Card>
-)
-}
+    </Card>
+  );
+};
 
-export default StudentCard
+const mapStateToProps = (state) => ({
+  students: state.students.studentList,
+});
+
+export default connect(mapStateToProps)(StudentCard);
