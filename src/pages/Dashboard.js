@@ -12,6 +12,8 @@ import HelpModal from "../components/Modals/HelpModal";
 import CreateStudentModal from "../components/Modals/CreateStudentModal";
 import CreateAmbassadorModal from "../components/Modals/CreateAmbassadorModal";
 import CreateTeacherModal from "../components/Modals/CreateTeacherModal";
+import CreateStudentModal from "../components/Modals/CreateStudentModal";
+import HelpModal from "../components/Modals/HelpModal";
 import UpdateTeacherModal from "../components/Modals/UpdateTeacherModal";
 import UpdateAmbassadorModal from "../components/Modals/UpdateAmbassadorModal";
 
@@ -112,6 +114,7 @@ const Dashboard = ({ students, teachers, ambassadors }) => {
             <h1 className="dashboard-header-title">
               Welcome {user ? <u>{firstName}</u> : null}!
             </h1>
+
             { role == "teacher" || role == "ambassador" ? (
             <Button primary onClick={() => setIsHelpModalOpen(true)}>
               Need Help?
