@@ -61,14 +61,15 @@ const Dashboard = ({ students, teachers, ambassadors }) => {
     setIsHelpModalOpen(false);
   };
 
+{/* <UpdateStudentModal profile={profile} key={profile._id}></UpdateStudentModal> */}
   const getCards = (state) => {
     switch (state) {
       case "Students":
         return students && students.length > 0
           ? students.map((profile) => {
               return (
-                // <StudentCard profile={profile} key={profile._id}></StudentCard>
-                <UpdateStudentModal profile={profile} key={profile._id}></UpdateStudentModal>
+                <StudentCard profile={profile} key={profile._id}></StudentCard>
+                
               );
             })
           : [];

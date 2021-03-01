@@ -20,8 +20,8 @@ const StudentCard = ({ profile, ...rest }) => {
 
   return (
     <Card fluid centered color="black" 
-    /*onClick={toSessions}*/
-    {...rest}
+    onClick={toSessions}
+
     >
       <Card.Content>
         <Grid padded="vertically">
