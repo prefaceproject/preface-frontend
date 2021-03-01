@@ -59,12 +59,11 @@ const Sessions = (props) => {
       <Layout>
         <Grid>
           <SessionsPageHeader openCreateSessionModal={openCreateSessionModal} />
-          <Grid.Column width={2}>
+          <Grid.Column width={4}>
             <div className="ui medium header"> Student Info</div>
-            <StudentCard></StudentCard>
+            <StudentCard userId={user?._id}></StudentCard>
           </Grid.Column>
-          <Grid.Column width={1}></Grid.Column>
-          <Grid.Column width={13}>
+          <Grid.Column width={12}>
             <div className="ui medium header"> All Sessions </div>
             <SessionList sessions={sessions}></SessionList>
           </Grid.Column>

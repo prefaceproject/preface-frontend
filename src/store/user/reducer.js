@@ -5,6 +5,7 @@ import * as actionTypes from "./actionTypes";
 export const initialState = {
   data: null,
   error: null,
+  passwordError: null,
   ambassadorList: [],
   teacherList: [],
 };
@@ -35,6 +36,12 @@ const reducerActions = {
     return {
       ...state,
       error: action.payload,
+    };
+  },
+  [actionTypes.SET_PASSWORD_ERROR](state, action) {
+    return {
+      ...state,
+      passwordError: action.payload,
     };
   },
 };
