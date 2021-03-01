@@ -8,8 +8,6 @@ import AmbassadorCard from "../components/Dashboard/AmbassadorCard";
 import TeacherCard from "../components/Dashboard/TeacherCard";
 import SessionPageHeader from "../components/SessionsPageHeader";
 import ModalTemplate from "../components/Modal/ModalTemplate";
-import HelpModal from "../components/Modals/HelpModal";
-import CreateStudentModal from "../components/Modals/CreateStudentModal";
 import CreateAmbassadorModal from "../components/Modals/CreateAmbassadorModal";
 import CreateTeacherModal from "../components/Modals/CreateTeacherModal";
 import CreateStudentModal from "../components/Modals/CreateStudentModal";

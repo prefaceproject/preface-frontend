@@ -1,6 +1,7 @@
 .profileMain {
   width: 50%;
   padding-top: 24px;
+}
 .buttons {
   display: flex;
   flex-direction: row;
