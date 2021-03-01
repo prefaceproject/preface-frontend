@@ -8,14 +8,13 @@ import AmbassadorCard from "../components/Dashboard/AmbassadorCard";
 import TeacherCard from "../components/Dashboard/TeacherCard";
 import SessionPageHeader from "../components/SessionsPageHeader";
 import ModalTemplate from "../components/Modal/ModalTemplate";
-import HelpModal from "../components/Modals/HelpModal";
-import CreateStudentModal from "../components/Modals/CreateStudentModal";
 import CreateAmbassadorModal from "../components/Modals/CreateAmbassadorModal";
 import CreateTeacherModal from "../components/Modals/CreateTeacherModal";
 import CreateStudentModal from "../components/Modals/CreateStudentModal";
 import HelpModal from "../components/Modals/HelpModal";
 import UpdateTeacherModal from "../components/Modals/UpdateTeacherModal";
 import UpdateAmbassadorModal from "../components/Modals/UpdateAmbassadorModal";
+import UpdateStudentModal from "../components/Modals/UpdateStudentModal";
 
 import { connect } from "react-redux";
 import { useDispatch, useSelector } from "react-redux";
@@ -62,6 +61,7 @@ const Dashboard = ({ students, teachers, ambassadors }) => {
     setIsHelpModalOpen(false);
   };
 
+{/* <UpdateStudentModal profile={profile} key={profile._id}></UpdateStudentModal> */}
   const getCards = (state) => {
     switch (state) {
       case "Students":
@@ -69,6 +69,7 @@ const Dashboard = ({ students, teachers, ambassadors }) => {
           ? students.map((profile) => {
               return (
                 <StudentCard profile={profile} key={profile._id}></StudentCard>
+                
               );
             })
           : [];

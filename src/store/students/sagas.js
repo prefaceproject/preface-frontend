@@ -48,20 +48,23 @@ const createStudent = function* ({payload}) {
 }
 
 const updateStudent = function* ({payload}) {
-  console.log("in updateStudent", payload._id)
   try {
+
+    var student = payload.student
+    var user = payload.user
+
     const headerParams = {
       mode: 'cors',
       credentials: 'same-origin'
     };
     const response = yield call(
       Axios.put,
-      backend_url + "/api/students/" + payload._id,
-      payload,
+      backend_url + "/api/students/" + student._id,
+      student,
       headerParams
     );
     if (response.status == 200) {
-      yield put(actions.fetchAllStudents());
+      yield put(actions.fetchAllStudents({_id: user}));
     }
   } catch (err) {
     console.log(err)

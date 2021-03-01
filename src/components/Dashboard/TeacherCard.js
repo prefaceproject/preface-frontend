@@ -4,7 +4,7 @@ import { useHistory } from "react-router-dom";
 import "./StudentCard.css";
 import UpdateTeacherModal from "../Modals/UpdateTeacherModal";
 
-const TeacherCard = ({ profile, key, ...rest }) => {
+const TeacherCard = ({ profile, ...rest }) => {
   const { firstName, lastName, email, _id } = profile;
   let history = useHistory();
 
