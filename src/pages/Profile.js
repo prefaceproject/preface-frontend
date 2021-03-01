@@ -5,6 +5,7 @@ import "../index.css";
 import { connect } from "react-redux";
 import ProfilePageHeader from "../components/ProfilePageHeader";
 import { Link } from "react-router-dom";
+import "./styles/Profile.css";
 
 import "./styles/Profile.css";
 import ChangePasswordModal from "../components/Modals/ChangePasswordModal";
@@ -26,7 +27,7 @@ const Profile = ({ user }) => {
       <Layout>
         <Container>
           <ProfilePageHeader></ProfilePageHeader>
-          <div style={{ width: "50%" }}>
+          <div className="profileMain">
             <h1>User Profile</h1>
             <Form>
               <Form.Field>
