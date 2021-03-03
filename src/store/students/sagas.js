@@ -71,10 +71,32 @@ const updateStudent = function* ({payload}) {
   }
 }
 
+const fetchStudentById = function* ({ payload }) {
+  try {
+    const headerParams = {
+      mode: 'cors',
+      credentials: 'same-origin'
+    };
+    const response = yield call(
+      Axios.get,
+      backend_url + "/api/students/" + payload,
+      headerParams
+    );
+
+    console.log("response", response.data)
+    if (response.status == 200) {
+      yield put(actions.setStudentById(response.data.student))
+    }
+  } catch (err) {
+    console.log(err)
+  }
+};
+
 export default function* StudentsSaga() {
   yield all([
     takeLatest(actionTypes.FETCH_ALL_STUDENTS, fetchAllStudents),
     takeLatest(actionTypes.CREATE_STUDENT, createStudent),
     takeLatest(actionTypes.UPDATE_STUDENT, updateStudent),
+    takeLatest(actionTypes.FETCH_STUDENT_BY_ID, fetchStudentById),
   ]);
 }

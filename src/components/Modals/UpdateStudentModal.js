@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Button, Form, Header, Image, Modal, Checkbox, Dropdown } from 'semantic-ui-react'
 
 import {useDispatch, useSelector} from 'react-redux'
@@ -22,6 +22,10 @@ function UpdateStudentModal({profile}) {
     { key: 'Mandarin', value: 'Mandarin', text: 'Mandarin' },
     { key: 'Japanese', value: 'Japanese', text: 'Japanese' }
     ]
+
+    useEffect(() => {
+        console.log(profile)
+    }, []);
 
     const [open, setOpen] = useState(false)
     const [firstName, setFirstName] = useState(profile.firstName)
@@ -69,7 +73,7 @@ function UpdateStudentModal({profile}) {
             onClose={() => setOpen(false)}
             onOpen={() => setOpen(true)}
             open={open}
-            trigger={<StudentCard profile={profile}></StudentCard>}
+            trigger={<Button>Edit Student</Button>}
         >
         <Modal.Header>Update Student Profile</Modal.Header>
         <Modal.Content>
