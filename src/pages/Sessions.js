@@ -11,14 +11,18 @@ import * as sessionsActions from "../store/sessions/actions";
 import * as booksSelectors from "../store/books/selectors";
 import * as booksActions from "../store/books/actions";
 import * as userSelectors from "../store/user/selectors";
+import * as studentActions from "../store/students/actions";
+import * as studentSelectors from "../store/students/selectors";
 import SessionsPageHeader from "../components/SessionsPageHeader";
 import CreateSessionModal from "../components/Modals/CreateSessionModal";
+import UpdateStudentModal from "../components/Modals/UpdateStudentModal";
 
 const Sessions = (props) => {
   const dispatch = useDispatch();
   const sessions = useSelector(sessionsSelectors.getSessions);
   const books = useSelector(booksSelectors.getBooks);
   const user = useSelector(userSelectors.getUser);
+  const student = useSelector(studentSelectors.getStudentById);
   const [createModalStatus, setCreateModalStatus] = useState(false);
   const { id } = useParams();
 
@@ -31,6 +35,10 @@ const Sessions = (props) => {
   useEffect(() => {
     dispatch(sessionsActions.requestStudentSessions(id));
   }, [id]);
+
+  useEffect(() => {
+    dispatch(studentActions.fetchStudentById(id))
+  }, []);
 
   const openCreateSessionModal = () => {
     setCreateModalStatus(true);
@@ -61,7 +69,8 @@ const Sessions = (props) => {
           <SessionsPageHeader openCreateSessionModal={openCreateSessionModal} />
           <Grid.Column width={4}>
             <div className="ui medium header"> Student Info</div>
-            <StudentCard userId={user?._id}></StudentCard>
+            <StudentCard userId={user?._id} profile={student}></StudentCard>
+            <UpdateStudentModal profile={student}></UpdateStudentModal>
           </Grid.Column>
           <Grid.Column width={12}>
             <div className="ui medium header"> All Sessions </div>

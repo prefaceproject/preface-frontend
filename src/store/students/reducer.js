@@ -3,7 +3,8 @@
 import * as actionTypes from "./actionTypes";
 
 export const initialState = {
-  studentList: []
+  studentList: [],
+  studentById: ''
 };
 
 const reducerActions = {
@@ -11,6 +12,12 @@ const reducerActions = {
     return {
       ...state,
       studentList: action.payload,
+    }
+  },
+  [actionTypes.SET_STUDENT_BY_ID](state, action) {
+    return {
+      ...state,
+      studentById: action.payload,
     }
   },
 };
