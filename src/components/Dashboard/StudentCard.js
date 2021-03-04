@@ -55,11 +55,6 @@ const StudentCard = ({ profile, ...rest }) => {
                 <Label color="green">Status</Label>
               </div>
             </Grid.Column>
-            <Grid.Column width={2} verticalAlign="middle">
-              <div className="AvatarColumn">
-                <i className="edit outline icon"></i>
-              </div>
-            </Grid.Column>
             
           </Grid.Row>
         </Grid>
