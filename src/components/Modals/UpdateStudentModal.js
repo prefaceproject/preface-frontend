@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Button, Form, Header, Image, Modal, Checkbox, Dropdown } from 'semantic-ui-react'
 
-import {useDispatch, useSelector} from 'react-redux'
+import {useDispatch, useSelector, shallowEqual} from 'react-redux'
 import * as userActions from "../../store/user/actions";
 import * as studentsActions from "../../store/students/actions";
 import * as userSelectors from "../../store/user/selectors";
@@ -23,7 +23,7 @@ function UpdateStudentModal({}) {
     { key: 'Japanese', value: 'Japanese', text: 'Japanese' }
     ]
 
-    const student = useSelector(studentSelectors.getStudentById);
+    const student = useSelector(studentSelectors.getStudentById, shallowEqual);
     const user = useSelector(userSelectors.getUser);
 
     const [open, setOpen] = useState(false)
@@ -35,10 +35,6 @@ function UpdateStudentModal({}) {
     const [school, setSchool] = useState(student.school)
     const dispatch = useDispatch()
 
-    useEffect(() => {
-        console.log(student)
-    }, []);
-    
 
     function handleSave() {
         dispatch(studentsActions.updateStudent({
@@ -49,7 +45,7 @@ function UpdateStudentModal({}) {
                 grade: grade,
                 school: school,
                 languagesSpoken: languagesSpoken,
-                _id: profile._id
+                _id: student._id
             },
             user: user._id
         }))        
@@ -69,7 +65,7 @@ function UpdateStudentModal({}) {
     function handleClick() {
         setIsActive(!isActive)
     }
-
+    
     return(
         <Modal
             onClose={() => setOpen(false)}

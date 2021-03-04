@@ -159,6 +159,8 @@ const updateTeacher = function* ({ payload }) {
       payload,
       headerParams
     );
+
+    console.log("in update", response)
     if (response.data.success) {
       yield put(actions.fetchAllTeachers());
     }
@@ -188,6 +190,27 @@ const changePassword = function* ({ payload }) {
     
 }
 
+const fetchUser = function* ({}) {
+  try {
+    const token = !(Cookies.get("token") === null);
+    const userToken = token ? Cookies.get("token") : "";
+
+    const { data } = yield call(Axios.get, backend_url + "/api/auth/current", {
+      headers: {
+        Authorization: "Token " + userToken,
+      },
+    });
+
+    if (data.success) {
+      console.log("data success")
+      yield put(actions.setUser(data.user));
+    }
+  } catch (err) {
+    yield put(actions.setError(err));
+  }
+};
+
+
 export default function* UserSaga() {
   yield all([
     takeLatest(actionTypes.LOGIN_USER, loginUser),
@@ -198,6 +221,7 @@ export default function* UserSaga() {
     takeLatest(actionTypes.INITIALIZE_TEACHER, initializeTeacher),
     takeLatest(actionTypes.UPDATE_AMBASSADOR, updateAmbassador),
     takeLatest(actionTypes.UPDATE_TEACHER, updateTeacher),
-    takeLatest(actionTypes.CHANGE_PASSWORD, changePassword)
+    takeLatest(actionTypes.CHANGE_PASSWORD, changePassword),
+    takeLatest(actionTypes.FETCH_USER, fetchUser),
   ]);
 }
