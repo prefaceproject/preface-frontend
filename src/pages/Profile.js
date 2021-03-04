@@ -20,7 +20,7 @@ const Profile = ({ user }) => {
   const [email, setEmail] = useState(user.email);
   const [modalOpen, setModalOpen] = useState(false);
   const [passwordStatus, setPasswordStatus] = useState({success: false, message: ""});
-  const [school, setSchool] = useState(user.school);
+  const [school, setSchool] = useState(user.school ? user.school : '');
   const [languagesSpoken, setLanguagesSpoken] = useState(user.languagesSpoken);
   const [isActive, setIsActive] = useState(user.isActive);
   const [students, setStudents] = useState(user.students);
@@ -107,7 +107,7 @@ const handleLanguagesSpoken = (e, {value}) => {
               </Form.Field>
               <Form.Field>
                 <label>Languages Spoken</label>
-                <Dropdown value={languagesSpoken} onChange={handleLanguagesSpoken.bind(this)} fluid multiple selection options={languagesSpokenOptions} />
+                <Dropdown onChange={handleLanguagesSpoken.bind(this)} fluid multiple selection options={languagesSpokenOptions} value={languagesSpoken} />
             </Form.Field>
               <Form.Field>
                 <label>School</label>
