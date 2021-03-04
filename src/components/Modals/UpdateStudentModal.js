@@ -5,12 +5,12 @@ import {useDispatch, useSelector} from 'react-redux'
 import * as userActions from "../../store/user/actions";
 import * as studentsActions from "../../store/students/actions";
 import * as userSelectors from "../../store/user/selectors";
-import * as studentsSelectors from "../../store/students/selectors";
+import * as studentSelectors from "../../store/students/selectors";
 import TeacherCard from "../Dashboard/TeacherCard";
 import AmbassadorCard from "../Dashboard/AmbassadorCard";
 import StudentCard from "../Dashboard/StudentCard";
 
-function UpdateStudentModal({profile}) {
+function UpdateStudentModal({}) {
 
     const languagesSpokenOptions = [
     { key: 'English', value: 'English', text: 'English' },
@@ -23,20 +23,22 @@ function UpdateStudentModal({profile}) {
     { key: 'Japanese', value: 'Japanese', text: 'Japanese' }
     ]
 
-    useEffect(() => {
-        console.log(profile)
-    }, []);
+    const student = useSelector(studentSelectors.getStudentById);
+    const user = useSelector(userSelectors.getUser);
 
     const [open, setOpen] = useState(false)
-    const [firstName, setFirstName] = useState(profile.firstName)
-    const [lastName, setLastName] = useState(profile.lastName)
-    const [readingLevel, setReadingLevel] = useState(profile.readingLevel)
-    const [languagesSpoken, setLanguagesSpoken] = useState(profile.languagesSpoken)
-    const [grade, setGrade] = useState(profile.grade)
-    const [school, setSchool] = useState(profile.school)
+    const [firstName, setFirstName] = useState(student.firstName)
+    const [lastName, setLastName] = useState(student.lastName)
+    const [readingLevel, setReadingLevel] = useState(student.readingLevel)
+    const [languagesSpoken, setLanguagesSpoken] = useState(student.languagesSpoken)
+    const [grade, setGrade] = useState(student.grade)
+    const [school, setSchool] = useState(student.school)
     const dispatch = useDispatch()
 
-    const user = useSelector(userSelectors.getUser);
+    useEffect(() => {
+        console.log(student)
+    }, []);
+    
 
     function handleSave() {
         dispatch(studentsActions.updateStudent({

@@ -85,7 +85,7 @@ const fetchStudentById = function* ({ payload }) {
 
     console.log("response", response.data)
     if (response.status == 200) {
-      yield put(actions.setStudentById(response.data.student))
+      yield put(actions.setStudentById(response.data.data))
     }
   } catch (err) {
     console.log(err)

@@ -38,7 +38,7 @@ const Sessions = (props) => {
 
   useEffect(() => {
     dispatch(studentActions.fetchStudentById(id))
-  }, []);
+  }, [id]);
 
   const openCreateSessionModal = () => {
     setCreateModalStatus(true);
@@ -70,7 +70,7 @@ const Sessions = (props) => {
           <Grid.Column width={4}>
             <div className="ui medium header"> Student Info</div>
             <StudentCard userId={user?._id} profile={student}></StudentCard>
-            <UpdateStudentModal profile={student}></UpdateStudentModal>
+            <UpdateStudentModal></UpdateStudentModal>
           </Grid.Column>
           <Grid.Column width={12}>
             <div className="ui medium header"> All Sessions </div>
