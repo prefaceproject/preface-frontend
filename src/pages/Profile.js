@@ -10,10 +10,14 @@ import "./styles/Profile.css";
 import ChangePasswordModal from "../components/Modals/ChangePasswordModal";
 import {useDispatch, useSelector} from 'react-redux';
 import * as userActions from "../store/user/actions";
+import * as userSelectors from "../store/user/selectors";
 
 
 
-const Profile = ({ user }) => {
+const Profile = ({ }) => {
+
+  const user = useSelector(userSelectors.getUser);
+
   console.log(user);
   const [firstName, setFirstName] = useState(user.firstName);
   const [lastName, setLastName] = useState(user.lastName);
@@ -57,11 +61,9 @@ const Profile = ({ user }) => {
             school: school,
             languagesSpoken: languagesSpoken
         } 
-    }))       
-
+      }))       
     }
     else {
-      console.log(user.school)
       dispatch(userActions.updateTeacher({ 
         user: {
             role: "teacher", 
@@ -74,8 +76,10 @@ const Profile = ({ user }) => {
             school: school,
             languagesSpoken: languagesSpoken
         } 
-    }))        
+      }))        
     }
+
+    dispatch(userActions.fetchUser())
 }
 
 const handleLanguagesSpoken = (e, {value}) => {
@@ -107,8 +111,8 @@ const handleLanguagesSpoken = (e, {value}) => {
               </Form.Field>
               <Form.Field>
                 <label>Languages Spoken</label>
-                <Dropdown onChange={handleLanguagesSpoken.bind(this)} fluid multiple selection options={languagesSpokenOptions} value={languagesSpoken} />
-            </Form.Field>
+                <Dropdown onChange={handleLanguagesSpoken.bind(this)} fluid multiple selection options={languagesSpokenOptions} defaultValue={languagesSpoken} />
+              </Form.Field>
               <Form.Field>
                 <label>School</label>
                 <input placeholder="Add School Name" value = {school}  onChange={(event) =>  setSchool(event.target.value)}/>
@@ -139,7 +143,6 @@ const handleLanguagesSpoken = (e, {value}) => {
 };
 
 const mapStateToProps = (state) => ({
-  user: state.user.data,
 });
 
 export default connect(mapStateToProps)(Profile);

@@ -38,3 +38,5 @@ export const updateTeacher = (data) => action(actionTypes.UPDATE_TEACHER, data);
 export const setError = (err) => action(actionTypes.SET_ERROR, err);
 
 export const setPasswordError = (err) => action(actionTypes.SET_PASSWORD_ERROR, err);
+
+export const fetchUser = (data) => action(actionTypes.FETCH_USER, data);
