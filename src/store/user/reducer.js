@@ -6,13 +6,14 @@ export const initialState = {
   data: null,
   error: null,
   passwordError: null,
+  autoLoginError: null,
   ambassadorList: [],
   teacherList: [],
 };
 
 const reducerActions = {
   [actionTypes.LOG_OUT]() {
-    return initialState
+    return initialState;
   },
   [actionTypes.SET_USER](state, action) {
     return {
@@ -42,6 +43,12 @@ const reducerActions = {
     return {
       ...state,
       passwordError: action.payload,
+    };
+  },
+  [actionTypes.SET_AUTO_LOGIN_ERROR](state, action) {
+    return {
+      ...state,
+      autoLoginError: action.payload,
     };
   },
 };

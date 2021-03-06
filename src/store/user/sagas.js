@@ -42,7 +42,7 @@ const autoLogin = function* ({ payload }) {
       yield put(actions.setUser(data.user));
     }
   } catch (err) {
-    yield put(actions.setError(err));
+    yield put(actions.setAutoLoginError(err));
   }
 };
 
@@ -55,7 +55,7 @@ const fetchAllAmbassadors = function* () {
     const response = yield call(
       Axios.post,
       backend_url + "/api/users/getAllFromRole",
-      { role: 'ambassador'},
+      { role: "ambassador" },
       headerParams
     );
     if (response.data.success) {
@@ -76,7 +76,7 @@ const fetchAllTeachers = function* () {
     const response = yield call(
       Axios.post,
       backend_url + "/api/users/getAllFromRole",
-      { role: 'teacher'},
+      { role: "teacher" },
       headerParams
     );
     if (response.data.success) {
@@ -160,7 +160,7 @@ const updateTeacher = function* ({ payload }) {
       headerParams
     );
 
-    console.log("in update", response)
+    console.log("in update", response);
     if (response.data.success) {
       yield put(actions.fetchAllTeachers());
     }
@@ -182,13 +182,17 @@ const changePassword = function* ({ payload }) {
       payload,
       headerParams
     );
-    console.log(response.data)
+    console.log(response.data);
     yield put(actions.setPasswordError(response.data));
   } catch {
-    yield put(actions.setPasswordError({success: false, message: "Error changing password. Please try again."}));
+    yield put(
+      actions.setPasswordError({
+        success: false,
+        message: "Error changing password. Please try again.",
+      })
+    );
   }
-    
-}
+};
 
 const fetchUser = function* ({}) {
   try {
@@ -202,14 +206,13 @@ const fetchUser = function* ({}) {
     });
 
     if (data.success) {
-      console.log("data success")
+      console.log("data success");
       yield put(actions.setUser(data.user));
     }
   } catch (err) {
     yield put(actions.setError(err));
   }
 };
-
 
 export default function* UserSaga() {
   yield all([
