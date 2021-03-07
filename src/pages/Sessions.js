@@ -19,12 +19,14 @@ import UpdateStudentModal from "../components/Modals/UpdateStudentModal";
 
 const Sessions = (props) => {
   const dispatch = useDispatch();
+  const [createModalStatus, setCreateModalStatus] = useState(false);
+  const { id } = useParams();
+
   const sessions = useSelector(sessionsSelectors.getSessions);
   const books = useSelector(booksSelectors.getBooks);
   const user = useSelector(userSelectors.getUser);
   const student = useSelector(studentSelectors.getStudentById);
-  const [createModalStatus, setCreateModalStatus] = useState(false);
-  const { id } = useParams();
+  const studentLoading = useSelector(studentSelectors.getStudentLoading);
 
   if (!id) return <Redirect to="/dashboard" />;
 
@@ -37,7 +39,7 @@ const Sessions = (props) => {
   }, [id]);
 
   useEffect(() => {
-    dispatch(studentActions.fetchStudentById(id))
+    dispatch(studentActions.fetchStudentById(id));
   }, [id]);
 
   const openCreateSessionModal = () => {
@@ -70,7 +72,7 @@ const Sessions = (props) => {
           <Grid.Column width={4}>
             <div className="ui medium header"> Student Info</div>
             <StudentCard userId={user?._id} profile={student}></StudentCard>
-            <UpdateStudentModal></UpdateStudentModal>
+            <UpdateStudentModal student={student} loading={studentLoading} />
           </Grid.Column>
           <Grid.Column width={12}>
             <div className="ui medium header"> All Sessions </div>
