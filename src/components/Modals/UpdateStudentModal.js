@@ -20,6 +20,17 @@ function UpdateStudentModal({ student, loading }) {
   ];
 
   const user = useSelector(userSelectors.getUser);
+
+  const [studentInput, setStudentInput] = useState({
+    firstName: "",
+    lastName: "",
+    readingLevel: "",
+    grade: "",
+    school: "",
+    languagesSpoken: [],
+  });
+
+  
   useEffect(() => {
     setStudentInput({
       firstName: student.firstName,
@@ -31,14 +42,6 @@ function UpdateStudentModal({ student, loading }) {
     });
   }, [student]);
 
-  const [studentInput, setStudentInput] = useState({
-    firstName: "",
-    lastName: "",
-    readingLevel: "",
-    grade: "",
-    school: "",
-    languagesSpoken: [],
-  });
 
   const [open, setOpen] = useState(false);
 
@@ -60,7 +63,7 @@ function UpdateStudentModal({ student, loading }) {
   };
 
   const handleLanguagesSpoken = (e, { value }) => {
-    setStudentInput("languagesSpoken", value);
+    setStudentInput({ ...studentInput, "languagesSpoken": value});
   };
 
   const {
