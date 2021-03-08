@@ -1,24 +1,18 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 
 import { Button, Container, Menu } from "semantic-ui-react";
+import { connect } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+
 import Layout from "../components/Layout";
 import CardContainer from "../components/CardContainer";
 import StudentCard from "../components/Dashboard/StudentCard";
-import AmbassadorCard from "../components/Dashboard/AmbassadorCard";
-import TeacherCard from "../components/Dashboard/TeacherCard";
-import SessionPageHeader from "../components/SessionsPageHeader";
-import ModalTemplate from "../components/Modal/ModalTemplate";
 import CreateAmbassadorModal from "../components/Modals/CreateAmbassadorModal";
 import CreateTeacherModal from "../components/Modals/CreateTeacherModal";
 import CreateStudentModal from "../components/Modals/CreateStudentModal";
 import HelpModal from "../components/Modals/HelpModal";
 import UpdateTeacherModal from "../components/Modals/UpdateTeacherModal";
 import UpdateAmbassadorModal from "../components/Modals/UpdateAmbassadorModal";
-import UpdateStudentModal from "../components/Modals/UpdateStudentModal";
-
-import { connect } from "react-redux";
-import { useDispatch, useSelector } from "react-redux";
-
 import * as userActions from "../store/user/actions";
 import * as studentsActions from "../store/students/actions";
 import * as userSelectors from "../store/user/selectors";
@@ -53,15 +47,10 @@ const Dashboard = ({ students, teachers, ambassadors }) => {
     };
   };
 
-  const closeModal = () => {
-    setModelOpen(false);
-  };
-
   const closeHelpModal = () => {
     setIsHelpModalOpen(false);
   };
 
-{/* <UpdateStudentModal profile={profile} key={profile._id}></UpdateStudentModal> */}
   const getCards = (state) => {
     switch (state) {
       case "Students":
@@ -69,7 +58,6 @@ const Dashboard = ({ students, teachers, ambassadors }) => {
           ? students.map((profile) => {
               return (
                 <StudentCard profile={profile} key={profile._id}></StudentCard>
-                
               );
             })
           : [];
@@ -77,7 +65,11 @@ const Dashboard = ({ students, teachers, ambassadors }) => {
         return ambassadors && ambassadors.length > 0
           ? ambassadors.map((profile) => {
               return (
-                <UpdateAmbassadorModal profile={profile} students={students} key={profile._id}></UpdateAmbassadorModal>
+                <UpdateAmbassadorModal
+                  profile={profile}
+                  students={students}
+                  key={profile._id}
+                ></UpdateAmbassadorModal>
               );
             })
           : [];
@@ -85,7 +77,11 @@ const Dashboard = ({ students, teachers, ambassadors }) => {
         return teachers && teachers.length > 0
           ? teachers.map((profile) => {
               return (
-                <UpdateTeacherModal profile={profile} students={students} key={profile._id}></UpdateTeacherModal>
+                <UpdateTeacherModal
+                  profile={profile}
+                  students={students}
+                  key={profile._id}
+                ></UpdateTeacherModal>
               );
             })
           : [];
@@ -97,15 +93,15 @@ const Dashboard = ({ students, teachers, ambassadors }) => {
   const getCreateModal = (state) => {
     switch (state) {
       case "Students":
-        return <CreateStudentModal/>
+        return <CreateStudentModal />;
       case "Ambassadors":
-        return  <CreateAmbassadorModal students={students} />
+        return <CreateAmbassadorModal students={students} />;
       case "Teachers":
-        return <CreateTeacherModal students={students} />
+        return <CreateTeacherModal students={students} />;
       default:
         return [];
     }
-  }
+  };
 
   return (
     <>
@@ -116,12 +112,13 @@ const Dashboard = ({ students, teachers, ambassadors }) => {
               Welcome {user ? <u>{firstName}</u> : null}!
             </h1>
 
-            { role == "teacher" || role == "ambassador" ? (
-            <Button primary onClick={() => setIsHelpModalOpen(true)}>
-              Need Help?
-            </Button>
-            ) : getCreateModal(menuState)}
-            
+            {role == "teacher" || role == "ambassador" ? (
+              <Button primary onClick={() => setIsHelpModalOpen(true)}>
+                Need Help?
+              </Button>
+            ) : (
+              getCreateModal(menuState)
+            )}
           </div>
           {role === "admin" ||
           // TO-DO: Delete later

@@ -1,15 +1,14 @@
 import Axios from "axios";
-import { all, call, put, takeLatest, select, take, takeEvery } from "redux-saga/effects";
+import { all, call, put, takeLatest } from "redux-saga/effects";
 import * as actionTypes from "./actionTypes";
 import * as actions from "./actions";
 import { backend_url } from "../../constants/url";
 
-
 const fetchAllStudents = function* ({ payload }) {
   try {
     const headerParams = {
-      mode: 'cors',
-      credentials: 'same-origin'
+      mode: "cors",
+      credentials: "same-origin",
     };
     const response = yield call(
       Axios.get,
@@ -19,19 +18,19 @@ const fetchAllStudents = function* ({ payload }) {
     );
 
     if (response.status == 200) {
-      yield put(actions.setAllStudents(response.data))
+      yield put(actions.setAllStudents(response.data));
     }
   } catch (err) {
-    console.log(err)
+    console.log(err);
   }
 };
 
-const createStudent = function* ({payload}) {
-  console.log(payload)
+const createStudent = function* ({ payload }) {
+  console.log(payload);
   try {
     const headerParams = {
-      mode: 'cors',
-      credentials: 'same-origin'
+      mode: "cors",
+      credentials: "same-origin",
     };
     const response = yield call(
       Axios.post,
@@ -40,22 +39,21 @@ const createStudent = function* ({payload}) {
       headerParams
     );
     if (response.status == 200) {
-      yield put(actions.fetchAllStudents({_id: payload.user}));
+      yield put(actions.fetchAllStudents({ _id: payload.user }));
     }
   } catch (err) {
-    console.log(err)
+    console.log(err);
   }
-}
+};
 
-const updateStudent = function* ({payload}) {
+const updateStudent = function* ({ payload }) {
   try {
-
-    var student = payload.student
-    var user = payload.user
+    var student = payload.student;
+    var user = payload.user;
 
     const headerParams = {
-      mode: 'cors',
-      credentials: 'same-origin'
+      mode: "cors",
+      credentials: "same-origin",
     };
     const response = yield call(
       Axios.put,
@@ -64,31 +62,25 @@ const updateStudent = function* ({payload}) {
       headerParams
     );
     if (response.status == 200) {
-      yield put(actions.fetchAllStudents({_id: user}));
+      yield put(actions.fetchAllStudents({ _id: user }));
     }
   } catch (err) {
-    console.log(err)
+    console.log(err);
   }
-}
+};
 
 const fetchStudentById = function* ({ payload }) {
   try {
-    const headerParams = {
-      mode: 'cors',
-      credentials: 'same-origin'
-    };
     const response = yield call(
       Axios.get,
-      backend_url + "/api/students/" + payload,
-      headerParams
+      backend_url + "/api/students/" + payload
     );
 
-    console.log("response", response.data)
     if (response.status == 200) {
-      yield put(actions.setStudentById(response.data.data))
+      yield put(actions.setStudentById(response.data.data));
     }
   } catch (err) {
-    console.log(err)
+    console.log(err);
   }
 };
 
