@@ -15,7 +15,12 @@ const StudentCard = ({ profile }) => {
   let history = useHistory();
 
   const toSessions = () => {
+<<<<<<< HEAD
     history.push(`/students/${_id}/sessions`);
+=======
+    console.log("student._id", student._id);
+    history.push(`/students/${student._id}/sessions`);
+>>>>>>> main
   };
 
   return (

@@ -7,31 +7,28 @@
 }
 
 .session-index {
-  flex-grow: 0.5;
+  width: 10%;
 }
 
 .session-info {
   display: flex;
-  flex-grow: 2;
   justify-content: space-evenly;
+  width: 70%;
 }
 
 .session-book {
-  text-align: center;
   width: 33%;
 }
 
 .session-date {
-  text-align: center;
   width: 33%;
 }
 
 .session-level {
-  text-align: center;
   width: 33%;
 }
 
 .session-actions {
-  flex-grow: 0.5;
-  text-align: center;
+  width: 10%;
+  padding-left: 5px;
 }

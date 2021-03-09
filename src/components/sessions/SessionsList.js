@@ -8,7 +8,7 @@ const SessionList = ({ sessions }) => {
   return (
     <>
       <div className="session-headers">
-        <div className="session-number">Session Number</div>
+        <div className="session-header-index">Session Number</div>
         <div className="session-header-info">
           <div className="session-header-book">Book Read</div>
           <div className="session-header-date">Date Recorded</div>
