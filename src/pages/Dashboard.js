@@ -1,18 +1,7 @@
-import React, { useState, useEffect, useCallback } from "react";
+// React
+import React, { useState, useEffect } from "react";
 
-import { Button, Container, Menu } from "semantic-ui-react";
-import Layout from "../components/Layout";
-import CardContainer from "../components/CardContainer";
-import StudentCard from "../components/Dashboard/StudentCard";
-import AmbassadorCard from "../components/Dashboard/AmbassadorCard";
-import TeacherCard from "../components/Dashboard/TeacherCard";
-import SessionPageHeader from "../components/SessionsPageHeader";
-import ModalTemplate from "../components/Modal/ModalTemplate";
-import CreateAmbassadorModal from "../components/Modals/CreateAmbassadorModal";
-import CreateTeacherModal from "../components/Modals/CreateTeacherModal";
-import CreateStudentModal from "../components/Modals/CreateStudentModal";
-import HelpModal from "../components/Modals/HelpModal";
-
+// Redux
 import { connect } from "react-redux";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -20,6 +9,14 @@ import * as userActions from "../store/user/actions";
 import * as studentsActions from "../store/students/actions";
 import * as userSelectors from "../store/user/selectors";
 
+// SemanticUI + Components
+import { Button, Container } from "semantic-ui-react";
+import DashboardAdmin from "../components/Dashboard/Views/DashboardAdmin";
+import DashboardMain from "../components/Dashboard/Views/DashboardMain";
+import Layout from "../components/Layout";
+import HelpModal from "../components/Modals/HelpModal";
+
+// Styles
 import "./styles/Dashboard.css";
 
 const Dashboard = ({ students, teachers, ambassadors }) => {
@@ -31,26 +28,12 @@ const Dashboard = ({ students, teachers, ambassadors }) => {
   useEffect(() => {
     dispatch(userActions.fetchAllAmbassadors());
     dispatch(userActions.fetchAllTeachers());
-
-    console.log("in useEffect", user._id);
     dispatch(studentsActions.fetchAllStudents({ _id: user._id }));
   }, []);
 
   // User Interface State
   const [modelOpen, setModelOpen] = useState(false);
-  const [menuState, setMenuState] = useState("Students");
   const [isHelpModalOpen, setIsHelpModalOpen] = useState(false);
-
-  const onClickMenuItem = (state) => {
-    return () => {
-      // TO-DO: Uncomment to add RBAC
-      // if (role != "admin") {
-      //   setMenuState("Students")
-      //   return;
-      // }
-      setMenuState(state);
-    };
-  };
 
   const closeModal = () => {
     setModelOpen(false);
@@ -60,39 +43,7 @@ const Dashboard = ({ students, teachers, ambassadors }) => {
     setIsHelpModalOpen(false);
   };
 
-  const getCards = (state) => {
-    switch (state) {
-      case "Students":
-        return students && students.length > 0
-          ? students.map((profile) => {
-              return (
-                <StudentCard profile={profile} key={profile._id}></StudentCard>
-              );
-            })
-          : [];
-      case "Ambassadors":
-        return ambassadors && ambassadors.length > 0
-          ? ambassadors.map((profile) => {
-              return (
-                <AmbassadorCard
-                  profile={profile}
-                  key={profile._id}
-                ></AmbassadorCard>
-              );
-            })
-          : [];
-      case "Teachers":
-        return teachers && teachers.length > 0
-          ? teachers.map((profile) => {
-              return (
-                <TeacherCard profile={profile} key={profile._id}></TeacherCard>
-              );
-            })
-          : [];
-      default:
-        return [];
-    }
-  };
+  console.log(role);
 
   return (
     <>
@@ -105,37 +56,8 @@ const Dashboard = ({ students, teachers, ambassadors }) => {
             <Button primary onClick={() => setIsHelpModalOpen(true)}>
               Need Help?
             </Button>
-            <CreateAmbassadorModal students={students} />
-            <CreateTeacherModal students={students} />
-            <CreateStudentModal />
           </div>
-          {role === "admin" ||
-          // TO-DO: Delete later
-          role === "ambassador" ? (
-            <Menu pointing secondary>
-              <Menu.Item
-                name="Students"
-                active={menuState === "Students"}
-                onClick={onClickMenuItem("Students")}
-              />
-              <Menu.Item
-                name="Ambassadors"
-                active={menuState === "Ambassadors"}
-                onClick={onClickMenuItem("Ambassadors")}
-              />
-              <Menu.Item
-                name="Teachers"
-                active={menuState === "Teachers"}
-                onClick={onClickMenuItem("Teachers")}
-              />
-            </Menu>
-          ) : null}
-
-          <CardContainer
-            title={`List of participating ${menuState.toLowerCase()}`}
-            cards={getCards(menuState)}
-            cardsPerPage={5}
-          />
+          {role === "admin" ? <DashboardAdmin /> : <DashboardMain />}
         </Container>
       </Layout>
       <HelpModal
@@ -149,9 +71,6 @@ const Dashboard = ({ students, teachers, ambassadors }) => {
 
 const mapStateToProps = (state) => ({
   user: state.user.data,
-  students: state.students.studentList,
-  ambassadors: state.user.ambassadorList,
-  teachers: state.user.teacherList,
 });
 
 export default connect(mapStateToProps)(Dashboard);
