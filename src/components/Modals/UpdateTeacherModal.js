@@ -6,7 +6,7 @@ import * as userActions from "../../store/user/actions";
 import * as studentsActions from "../../store/students/actions";
 import * as userSelectors from "../../store/user/selectors";
 import * as studentsSelectors from "../../store/students/selectors";
-import TeacherCard from "../Dashboard/TeacherCard";
+import TeacherCard from "../Dashboard/Cards/TeacherCard";
 
 function UpdateTeacherModal({profile, students}) {
 
