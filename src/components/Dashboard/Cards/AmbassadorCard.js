@@ -3,7 +3,7 @@ import { Card, Grid, Image, Label } from "semantic-ui-react";
 import { useHistory } from "react-router-dom";
 import "./StudentCard.css";
 
-const AmbassadorCard = ({ profile }) => {
+const AmbassadorCard = ({ profile, ...rest }) => {
   const { firstName, lastName, email, isActive, _id } = profile;
   let history = useHistory();
 
@@ -26,12 +26,8 @@ const AmbassadorCard = ({ profile }) => {
     return string;
   };
 
-  const toSessions = () => {
-    history.push(`/ambassadors/${_id}/`);
-  };
-
   return (
-    <Card fluid centered color="black" onClick={toSessions}>
+    <Card fluid centered color="black" className={isActive ? "" : "inactiveText"} {...rest}>
       <Card.Content>
         <Grid padded="vertically">
           <Grid.Row>
@@ -53,9 +49,9 @@ const AmbassadorCard = ({ profile }) => {
             <Grid.Column width={5} verticalAlign="middle"></Grid.Column>
             <Grid.Column width={3} verticalAlign="middle">
               <div className="AvatarColumn">
-                <Label color={isActive ? "green" : "red"}>
-                  {isActive ? "Active" : "Inactive"}
-                </Label>
+                <div className={isActive ? "status active" : "status inactive"}>
+                  {isActive ? "  Active  " : "  Inactive  "}
+                </div>
               </div>
             </Grid.Column>
           </Grid.Row>
