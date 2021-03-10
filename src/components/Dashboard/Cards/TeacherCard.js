@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Card, Grid, Image, Label, Modal, Button } from "semantic-ui-react";
 import { useHistory } from "react-router-dom";
 import "./StudentCard.css";
-import UpdateTeacherModal from "../Modals/UpdateTeacherModal";
+import UpdateTeacherModal from "../../Modals/UpdateTeacherModal";
 
 const TeacherCard = ({ profile, ...rest }) => {
   const { firstName, lastName, email, _id } = profile;
