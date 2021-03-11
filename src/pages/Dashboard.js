@@ -45,18 +45,18 @@ const Dashboard = ({ students, teachers, ambassadors }) => {
 
   console.log(role);
 
-  const getCreateModal = (state) => {
-    switch (state) {
-      case "Students":
-        return <CreateStudentModal />;
-      case "Ambassadors":
-        return <CreateAmbassadorModal students={students} />;
-      case "Teachers":
-        return <CreateTeacherModal students={students} />;
-      default:
-        return [];
-    }
-  };
+  // const getCreateModal = (state) => {
+  //   switch (state) {
+  //     case "Students":
+  //       return <CreateStudentModal />;
+  //     case "Ambassadors":
+  //       return <CreateAmbassadorModal students={students} />;
+  //     case "Teachers":
+  //       return <CreateTeacherModal students={students} />;
+  //     default:
+  //       return [];
+  //   }
+  // };
 
   return (
     <>
@@ -66,14 +66,9 @@ const Dashboard = ({ students, teachers, ambassadors }) => {
             <h1 className="dashboard-header-title">
               Welcome {user ? <u>{firstName}</u> : null}!
             </h1>
-
-            {role == "teacher" || role == "ambassador" ? (
-              <Button primary onClick={() => setIsHelpModalOpen(true)}>
-                Need Help?
-              </Button>
-            ) : (
-              getCreateModal(menuState)
-            )}
+            <Button primary onClick={() => setIsHelpModalOpen(true)}>
+              Need Help?
+            </Button>
           </div>
           {role === "admin" ? <DashboardAdmin /> : <DashboardMain />}
         </Container>
