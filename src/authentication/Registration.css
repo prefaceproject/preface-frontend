@@ -58,3 +58,14 @@
   color: #555;
   cursor: pointer;
 }
+
+.error-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.error-container > .error {
+  text-align: center;
+  width: 100%;
+}

@@ -23,7 +23,7 @@ const loginUser = function* ({ payload }) {
       Cookies.set("token", response.data.user.token, { expires: 1 });
     }
   } catch (err) {
-    console.log(err);
+    yield put(actions.setLoginError(err));
   }
 };
 

@@ -8,7 +8,7 @@ import * as userActions from "../store/user/actions";
 
 import "./Registration.css";
 
-const Login = () => {
+const Login = ({ loginErrorMsg }) => {
   const dispatch = useDispatch();
   let [email, setEmail] = useState("");
   let [password, setPassword] = useState("");
@@ -17,6 +17,7 @@ const Login = () => {
   const handleSubmit = () => {
     const loginUser = { email, password };
     dispatch(userActions.setAutoLoginError(null));
+    dispatch(userActions.setLoginError(null));
     dispatch(userActions.loginUser({ user: loginUser }));
   };
 
@@ -40,6 +41,7 @@ const Login = () => {
           <Form.Field>
             <div>Password</div>
             <input
+              type="password"
               onChange={(e) => {
                 setPassword(e.target.value);
               }}
@@ -52,6 +54,9 @@ const Login = () => {
             <Button type="submit" className="blue">
               Login
             </Button>
+          </div>
+          <div className="error-container">
+            <span className="error">{loginErrorMsg || ""}</span>
           </div>
         </Form>
         <HelpModal
