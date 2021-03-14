@@ -1,15 +1,7 @@
-import React, { useState, useEffect, useCallback } from "react";
+// React
+import React, { useState, useEffect } from "react";
 
-import { Button, Container } from "semantic-ui-react";
-import Layout from "../components/Layout";
-import CardContainer from "../components/CardContainer";
-import StudentCard from "../components/Dashboard/StudentCard";
-import SessionPageHeader from "../components/SessionsPageHeader";
-import ModalTemplate from "../components/Modal/ModalTemplate";
-import CreateAmbassadorModal from "../components/Modals/CreateAmbassadorModal";
-import CreateTeacherModal from "../components/Modals/CreateTeacherModal";
-import CreateStudentModal from "../components/Modals/CreateStudentModal";
-import HelpModal from "../components/Modals/HelpModal";
+// Redux
 import { connect } from "react-redux";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -17,55 +9,31 @@ import * as userActions from "../store/user/actions";
 import * as studentsActions from "../store/students/actions";
 import * as userSelectors from "../store/user/selectors";
 
+// SemanticUI + Components
+import { Button, Container } from "semantic-ui-react";
+import DashboardAdmin from "../components/Dashboard/Views/DashboardAdmin";
+import DashboardMain from "../components/Dashboard/Views/DashboardMain";
+import Layout from "../components/Layout";
+import HelpModal from "../components/Modals/HelpModal";
+
+// Styles
 import "./styles/Dashboard.css";
 
-const students_eg = [
-  {
-    _id: "600cb6257b63dccb764331f9",
-    sessions: [],
-    books: [],
-    languagesSpoken: [],
-    firstName: "first",
-    lastName: "last",
-    readingLevel: "lvl",
-    grade: "g",
-    joinDate: "2020-12-12T05:00:00.000Z",
-    school: "School",
-    createdAt: "2021-01-23T23:49:57.430Z",
-    updatedAt: "2021-01-23T23:49:57.430Z",
-    __v: 0,
-  },
-  {
-    _id: "600cb725c7c24fcb9f94074f",
-    sessions: [],
-    books: [],
-    languagesSpoken: [],
-    firstName: "Sisi",
-    lastName: "Yu",
-    readingLevel: "Beginner",
-    grade: "Sophomore",
-    joinDate: "1995-06-18T04:00:00.000Z",
-    school: "Cornell",
-    createdAt: "2021-01-23T23:54:13.808Z",
-    updatedAt: "2021-01-23T23:54:13.808Z",
-    __v: 0,
-  },
-];
-
-const Dashboard = ({ students }) => {
-  const [modelOpen, setModelOpen] = useState(false);
+const Dashboard = ({ students, teachers, ambassadors }) => {
+  // Global State
   const dispatch = useDispatch();
   const user = useSelector(userSelectors.getUser);
-  const [isHelpModalOpen, setIsHelpModalOpen] = useState(false);
-  // const ambassadorList = useSelector(userSelectors.getAllAmbassadors);
+  const { role, firstName } = user;
 
   useEffect(() => {
     dispatch(userActions.fetchAllAmbassadors());
     dispatch(userActions.fetchAllTeachers());
-
-    console.log("in useEffect", user._id);
     dispatch(studentsActions.fetchAllStudents({ _id: user._id }));
   }, []);
+
+  // User Interface State
+  const [modelOpen, setModelOpen] = useState(false);
+  const [isHelpModalOpen, setIsHelpModalOpen] = useState(false);
 
   const closeModal = () => {
     setModelOpen(false);
@@ -75,20 +43,20 @@ const Dashboard = ({ students }) => {
     setIsHelpModalOpen(false);
   };
 
-  const cards = students.map((student) => {
-    return <StudentCard student={student} key={student._id}></StudentCard>;
-  });
+  console.log(role);
 
-  {
-    /* <Button
-          content="Click Me"
-          onClick={() => {
-            setModelOpen(true);
-          }}
-
-          <ModalTemplate open={modelOpen} closeModal={closeModal}></ModalTemplate>
-        ></Button> */
-  }
+  // const getCreateModal = (state) => {
+  //   switch (state) {
+  //     case "Students":
+  //       return <CreateStudentModal />;
+  //     case "Ambassadors":
+  //       return <CreateAmbassadorModal students={students} />;
+  //     case "Teachers":
+  //       return <CreateTeacherModal students={students} />;
+  //     default:
+  //       return [];
+  //   }
+  // };
 
   return (
     <>
@@ -96,20 +64,13 @@ const Dashboard = ({ students }) => {
         <Container>
           <div className="dashboard-header">
             <h1 className="dashboard-header-title">
-              Welcome {user ? <u>{user.firstName}</u> : null}!
+              Welcome {user ? <u>{firstName}</u> : null}!
             </h1>
             <Button primary onClick={() => setIsHelpModalOpen(true)}>
               Need Help?
             </Button>
-            <CreateAmbassadorModal students={students} />
-            <CreateTeacherModal students={students} />
-            <CreateStudentModal />
           </div>
-          <CardContainer
-            title={"List of participating students"}
-            cards={cards}
-            cardsPerPage={10}
-          />
+          {role === "admin" ? <DashboardAdmin /> : <DashboardMain />}
         </Container>
       </Layout>
       <HelpModal
@@ -123,7 +84,6 @@ const Dashboard = ({ students }) => {
 
 const mapStateToProps = (state) => ({
   user: state.user.data,
-  students: state.students.studentList,
 });
 
 export default connect(mapStateToProps)(Dashboard);

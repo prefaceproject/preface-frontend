@@ -6,8 +6,10 @@ import * as userActions from "../../store/user/actions";
 import * as studentsActions from "../../store/students/actions";
 import * as userSelectors from "../../store/user/selectors";
 import * as studentsSelectors from "../../store/students/selectors";
+import TeacherCard from "../Dashboard/TeacherCard";
+import AmbassadorCard from "../Dashboard/AmbassadorCard";
 
-function CreateAmbassadorModal({students}) {
+function UpdateAmbassadorModal({profile, students}) {
 
     const languagesSpokenOptions = [
     { key: 'English', value: 'English', text: 'English' },
@@ -21,15 +23,30 @@ function CreateAmbassadorModal({students}) {
     ]
 
     const [open, setOpen] = useState(false)
-    const [firstName, setFirstName] = useState('')
-    const [lastName, setLastName] = useState('')
-    const [email, setEmail] = useState('')
+    const [firstName, setFirstName] = useState(profile.firstName)
+    const [lastName, setLastName] = useState(profile.lastName)
+    const [email, setEmail] = useState(profile.email)
     const [languagesSpoken, setLanguagesSpoken] = useState('')
-    const [assignedStudents, setAssignedStudents] = useState('')
-    const [isActive, setIsActive] = useState(true)
+    const [assignedStudents, setAssignedStudents] = useState(profile.students)
+    const [isActive, setIsActive] = useState(profile.isActive)
     const dispatch = useDispatch()
 
     const user = useSelector(userSelectors.getUser);
+
+    function handleSave() {
+        dispatch(userActions.updateAmbassador({ 
+            user: {
+                role: "ambassador", 
+                firstName: firstName,
+                lastName: lastName,
+                email: email, 
+                students: assignedStudents,
+                isActive: isActive,
+                _id: profile._id
+            } 
+        }))        
+        setOpen(false)
+    }
 
     const assignedStudentsOptions = formatStudents()
 
@@ -44,17 +61,6 @@ function CreateAmbassadorModal({students}) {
         return studentList
     }
 
-    function handleSave() {
-        dispatch(userActions.initializeAmbassador({ 
-            user: {
-                role: "ambassador", 
-                email: email, 
-                students: assignedStudents,
-                isActive: isActive
-            } 
-        }))        
-        setOpen(false)
-    }
 
     const handleLanguagesSpoken = (e, {value}) => {
         console.log(value)
@@ -75,19 +81,19 @@ function CreateAmbassadorModal({students}) {
             onClose={() => setOpen(false)}
             onOpen={() => setOpen(true)}
             open={open}
-            trigger={<Button>Create New Ambassador</Button>}
+            trigger={<AmbassadorCard profile={profile}></AmbassadorCard>}
         >
-        <Modal.Header>Create New Ambassador Profile</Modal.Header>
+        <Modal.Header>Update Ambassador Profile</Modal.Header>
         <Modal.Content>
         <Form>
-            {/*<Form.Field>
+            <Form.Field>
                 <label>First Name</label>
                 <input value={firstName} onChange={(event) => setFirstName(event.target.value)}/>
             </Form.Field>
             <Form.Field>
                 <label>Last Name</label>
                 <input value={lastName} onChange={(event) => setLastName(event.target.value)}/>
-            </Form.Field>*/}
+            </Form.Field>
             <Form.Field>
                 <label>Email</label>
                 <input value={email} onChange={(event) => setEmail(event.target.value)}/>
@@ -104,6 +110,7 @@ function CreateAmbassadorModal({students}) {
                     multiple 
                     selection 
                     options={assignedStudentsOptions} 
+                    defaultValue={assignedStudents}
                 />
             </Form.Field>
             <Button toggle active={isActive} onClick={handleClick}>
@@ -124,4 +131,4 @@ function CreateAmbassadorModal({students}) {
     )
 }
 
-export default CreateAmbassadorModal
+export default UpdateAmbassadorModal

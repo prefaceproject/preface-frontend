@@ -13,3 +13,9 @@ export const createStudent = (data) =>
 
 export const updateStudent = (data) =>
   action(actionTypes.UPDATE_STUDENT, data);
+
+export const fetchStudentById = (data) => 
+  action(actionTypes.FETCH_STUDENT_BY_ID, data);
+
+export const setStudentById = (data) =>
+  action(actionTypes.SET_STUDENT_BY_ID, data);

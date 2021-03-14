@@ -75,7 +75,7 @@ function CreateTeacherModal({students}) {
             onClose={() => setOpen(false)}
             onOpen={() => setOpen(true)}
             open={open}
-            trigger={<Button>Create Teacher Modal</Button>}
+            trigger={<Button>Create New Teacher</Button>}
         >
         <Modal.Header>Create New Teacher Profile</Modal.Header>
         <Modal.Content>
