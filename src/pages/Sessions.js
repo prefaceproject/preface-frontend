@@ -20,6 +20,7 @@ import UpdateStudentModal from "../components/Modals/UpdateStudentModal";
 const Sessions = (props) => {
   const dispatch = useDispatch();
   const [createModalStatus, setCreateModalStatus] = useState(false);
+  const [sessionEditing, setSessionEditing] = useState(null);
   const { id } = useParams();
 
   const sessions = useSelector(sessionsSelectors.getSessions);
@@ -48,6 +49,7 @@ const Sessions = (props) => {
 
   const closeCreateSessionModal = () => {
     setCreateModalStatus(false);
+    setSessionEditing(null);
   };
 
   const createSession = (sessionData) => {
@@ -64,6 +66,19 @@ const Sessions = (props) => {
     dispatch(booksActions.createBook(newBook));
   };
 
+  const editSession = (sessionId, inputData) => {
+    dispatch(sessionsActions.editSession(sessionId, id, inputData));
+  };
+
+  const onEditClick = (session) => {
+    setSessionEditing(session);
+    openCreateSessionModal();
+  };
+
+  const onDeleteClick = (sessionId) => {
+    dispatch(sessionsActions.deleteSession(sessionId, id));
+  };
+
   return (
     <>
       <Layout>
@@ -76,7 +91,11 @@ const Sessions = (props) => {
           </Grid.Column>
           <Grid.Column width={12}>
             <div className="ui medium header"> All Sessions </div>
-            <SessionList sessions={sessions}></SessionList>
+            <SessionList
+              sessions={sessions}
+              onEditClick={onEditClick}
+              onDeleteClick={onDeleteClick}
+            ></SessionList>
           </Grid.Column>
         </Grid>
       </Layout>
@@ -84,9 +103,11 @@ const Sessions = (props) => {
         isOpen={createModalStatus}
         close={closeCreateSessionModal}
         createSession={createSession}
+        editSession={editSession}
         books={books}
         createBook={createBook}
         userId={user?._id}
+        session={sessionEditing}
       />
     </>
   );
