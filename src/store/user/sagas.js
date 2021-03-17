@@ -109,6 +109,8 @@ const initializeAmbassador = function* ({ payload }) {
 
 const updateAmbassador = function* ({ payload }) {
   try {
+
+    console.log("in update ambassador", payload)
     const headerParams = {
       mode: "cors",
       credentials: "same-origin",
@@ -160,7 +162,6 @@ const updateTeacher = function* ({ payload }) {
       headerParams
     );
 
-    console.log("in update", response);
     if (response.data.success) {
       yield put(actions.fetchAllTeachers());
     }
@@ -214,6 +215,52 @@ const fetchUser = function* ({}) {
   }
 };
 
+const updateAmbassadorProfile = function* ({ payload }) {
+  try {
+
+    console.log("in update ambassador", payload)
+    const headerParams = {
+      mode: "cors",
+      credentials: "same-origin",
+    };
+    const response = yield call(
+      Axios.post,
+      backend_url + "/api/users/update",
+      payload,
+      headerParams
+    );
+    if (response.data.success) {
+      yield put(actions.fetchAllAmbassadors());
+      yield put(actions.fetchUser());
+    }
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+const updateTeacherProfile = function* ({ payload }) {
+  try {
+    const headerParams = {
+      mode: "cors",
+      credentials: "same-origin",
+    };
+    const response = yield call(
+      Axios.post,
+      backend_url + "/api/users/update",
+      payload,
+      headerParams
+    );
+
+    if (response.data.success) {
+      yield put(actions.fetchAllTeachers());
+      yield put(actions.fetchUser());
+    }
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+
 export default function* UserSaga() {
   yield all([
     takeLatest(actionTypes.LOGIN_USER, loginUser),
@@ -226,5 +273,7 @@ export default function* UserSaga() {
     takeLatest(actionTypes.UPDATE_TEACHER, updateTeacher),
     takeLatest(actionTypes.CHANGE_PASSWORD, changePassword),
     takeLatest(actionTypes.FETCH_USER, fetchUser),
+    takeLatest(actionTypes.UPDATE_AMBASSADOR_PROFILE, updateAmbassadorProfile),
+    takeLatest(actionTypes.UPDATE_TEACHER_PROFILE, updateTeacherProfile),
   ]);
 }

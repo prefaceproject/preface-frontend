@@ -22,3 +22,7 @@ export const SET_PASSWORD_ERROR = "@@user/set_password_error";
 export const SET_AUTO_LOGIN_ERROR = "@@user/set_auto_login_error";
 
 export const FETCH_USER = "@@user/fetch_user";
+
+export const UPDATE_AMBASSADOR_PROFILE = "@@user/update_ambassador_profile";
+
+export const UPDATE_TEACHER_PROFILE = "@@user/update_teacher_profile";
