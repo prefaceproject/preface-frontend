@@ -44,6 +44,8 @@ export const setPasswordError = (err) =>
 export const setAutoLoginError = (err) =>
   action(actionTypes.SET_AUTO_LOGIN_ERROR, err);
 
+export const setLoginError = (err) => action(actionTypes.SET_LOGIN_ERROR, err);
+
 export const fetchUser = (data) => action(actionTypes.FETCH_USER, data);
 
 export const updateAmbassadorProfile = (data) =>

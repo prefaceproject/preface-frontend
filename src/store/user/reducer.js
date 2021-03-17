@@ -6,6 +6,7 @@ export const initialState = {
   data: null,
   error: null,
   passwordError: null,
+  loginError: null,
   autoLoginError: null,
   ambassadorList: [],
   teacherList: [],
@@ -43,6 +44,12 @@ const reducerActions = {
     return {
       ...state,
       passwordError: action.payload,
+    };
+  },
+  [actionTypes.SET_LOGIN_ERROR](state, action) {
+    return {
+      ...state,
+      loginError: action.payload,
     };
   },
   [actionTypes.SET_AUTO_LOGIN_ERROR](state, action) {

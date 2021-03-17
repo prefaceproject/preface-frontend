@@ -19,6 +19,7 @@ export const UPDATE_TEACHER = "@@user/update_teacher";
 
 export const SET_ERROR = "@@user/set_error";
 export const SET_PASSWORD_ERROR = "@@user/set_password_error";
+export const SET_LOGIN_ERROR = "@@user/set_login_error";
 export const SET_AUTO_LOGIN_ERROR = "@@user/set_auto_login_error";
 
 export const FETCH_USER = "@@user/fetch_user";

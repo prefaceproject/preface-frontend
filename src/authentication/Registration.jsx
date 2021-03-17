@@ -1,43 +1,43 @@
-import React, { useState } from 'react'
-import { Button, Form, Grid, Image } from 'semantic-ui-react'
-import axios from 'axios'
+import React, { useState } from "react";
+import { Button, Form, Grid, Image } from "semantic-ui-react";
+import axios from "axios";
 
-import Logo from '../assets/logo.png'
+import Logo from "../assets/logo.png";
 
-import './Registration.css'
+import "./Registration.css";
 
-import { backend_url } from '../constants/url'
+import { backend_url } from "../constants/url";
 
 const Registration = (props) => {
-  let [firstName, setFirstName] = useState('')
-  let [lastName, setLastName] = useState('')
-  let [password, setPassword] = useState('')
-  let [email, setEmail] = useState('')
-  let [confirmPassword, setconfirmPassword] = useState('')
+  let [firstName, setFirstName] = useState("");
+  let [lastName, setLastName] = useState("");
+  let [password, setPassword] = useState("");
+  let [email, setEmail] = useState("");
+  let [confirmPassword, setconfirmPassword] = useState("");
 
   const handleSubmit = () => {
-    const user = { email, firstName, lastName, password }
+    const user = { email, firstName, lastName, password };
 
     fetch(`${backend_url}/api/auth/register`, {
-      method: 'POST',
-      mode: 'cors',
-      credentials: 'same-origin',
+      method: "POST",
+      mode: "cors",
+      credentials: "same-origin",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
         user: user,
       }),
     })
       .then((res) => {
-        return res.json()
+        return res.json();
       })
       .then((res) => {
         if (res.success) {
-          props.setRegisterSuccess(true)
+          props.setRegisterSuccess(true);
         }
-      })
-  }
+      });
+  };
   return (
     <div className="Registration">
       <div className="registration-form">
@@ -47,7 +47,7 @@ const Registration = (props) => {
             <div>First Name</div>
             <input
               onChange={(e) => {
-                setFirstName(e.target.value)
+                setFirstName(e.target.value);
               }}
             />
           </Form.Field>
@@ -55,7 +55,7 @@ const Registration = (props) => {
             <div>Last Name</div>
             <input
               onChange={(e) => {
-                setLastName(e.target.value)
+                setLastName(e.target.value);
               }}
             />
           </Form.Field>
@@ -63,23 +63,25 @@ const Registration = (props) => {
             <div>Email</div>
             <input
               onChange={(e) => {
-                setEmail(e.target.value)
+                setEmail(e.target.value);
               }}
             />
           </Form.Field>
           <Form.Field>
             <div>Password</div>
             <input
+              type="password"
               onChange={(e) => {
-                setPassword(e.target.value)
+                setPassword(e.target.value);
               }}
             />
           </Form.Field>
           <Form.Field>
             <div>Confirm Password</div>
             <input
+              type="password"
               onChange={(e) => {
-                setconfirmPassword(e.target.value)
+                setconfirmPassword(e.target.value);
               }}
             />
           </Form.Field>
@@ -91,7 +93,7 @@ const Registration = (props) => {
         </Form>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Registration
+export default Registration;
