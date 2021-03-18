@@ -6,8 +6,8 @@ import * as userActions from "../../store/user/actions";
 import * as studentsActions from "../../store/students/actions";
 import * as userSelectors from "../../store/user/selectors";
 import * as studentsSelectors from "../../store/students/selectors";
-import TeacherCard from "../Dashboard/TeacherCard";
-import AmbassadorCard from "../Dashboard/AmbassadorCard";
+import TeacherCard from "../Dashboard/Cards/TeacherCard";
+import AmbassadorCard from "../Dashboard/Cards/AmbassadorCard";
 
 function UpdateAmbassadorModal({profile, students}) {
 
