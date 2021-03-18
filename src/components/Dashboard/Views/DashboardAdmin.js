@@ -17,6 +17,9 @@ import CreateAmbassadorModal from "../../Modals/CreateAmbassadorModal";
 import CreateTeacherModal from "../../Modals/CreateTeacherModal";
 import CreateStudentModal from "../../Modals/CreateStudentModal";
 
+import UpdateAmbassadorModal from "../../Modals/UpdateAmbassadorModal";
+import UpdateTeacherModal from "../../Modals/UpdateTeacherModal";
+
 const DashboardAdmin = ({ user, students, ambassadors, teachers }) => {
   const [menuState, setMenuState] = useState("Students");
 
@@ -49,10 +52,11 @@ const DashboardAdmin = ({ user, students, ambassadors, teachers }) => {
         return ambassadors && ambassadors.length > 0
           ? ambassadors.map((profile) => {
               return (
-                <AmbassadorCard
+                <UpdateAmbassadorModal
                   profile={profile}
+                  students={students}
                   key={profile._id}
-                ></AmbassadorCard>
+                ></UpdateAmbassadorModal>
               );
             })
           : [];
@@ -60,7 +64,11 @@ const DashboardAdmin = ({ user, students, ambassadors, teachers }) => {
         return teachers && teachers.length > 0
           ? teachers.map((profile) => {
               return (
-                <TeacherCard profile={profile} key={profile._id}></TeacherCard>
+                 <UpdateTeacherModal
+                  profile={profile}
+                  students={students}
+                  key={profile._id}
+                ></UpdateTeacherModal>
               );
             })
           : [];
