@@ -8,6 +8,9 @@ import * as userSelectors from "../../store/user/selectors";
 import * as studentsSelectors from "../../store/students/selectors";
 import TeacherCard from "../Dashboard/Cards/TeacherCard";
 import AmbassadorCard from "../Dashboard/Cards/AmbassadorCard";
+import AdminResetPasswordModal from "./AdminResetPasswordModal";
+
+import "./UpdateAmbassadorModal.css";
 
 function UpdateAmbassadorModal({profile, students}) {
 
@@ -29,6 +32,7 @@ function UpdateAmbassadorModal({profile, students}) {
     const [languagesSpoken, setLanguagesSpoken] = useState('')
     const [assignedStudents, setAssignedStudents] = useState(profile.students)
     const [isActive, setIsActive] = useState(profile.isActive)
+    const [resetModalOpen, setResetModalOpen] = useState(false);
     const dispatch = useDispatch()
 
     const user = useSelector(userSelectors.getUser);
@@ -76,58 +80,77 @@ function UpdateAmbassadorModal({profile, students}) {
         setIsActive(!isActive)
     }
 
+    const closeModal = () => {
+        setResetModalOpen(false);
+    };
+
     return(
-        <Modal
-            onClose={() => setOpen(false)}
-            onOpen={() => setOpen(true)}
-            open={open}
-            trigger={<AmbassadorCard profile={profile}></AmbassadorCard>}
-        >
-        <Modal.Header>Update Ambassador Profile</Modal.Header>
-        <Modal.Content>
-        <Form>
-            <Form.Field>
-                <label>First Name</label>
-                <input value={firstName} onChange={(event) => setFirstName(event.target.value)}/>
-            </Form.Field>
-            <Form.Field>
-                <label>Last Name</label>
-                <input value={lastName} onChange={(event) => setLastName(event.target.value)}/>
-            </Form.Field>
-            <Form.Field>
-                <label>Email</label>
-                <input value={email} onChange={(event) => setEmail(event.target.value)}/>
-            </Form.Field>
-            {/*<Form.Field>
-                <label>Languages Spoken</label>
-                <Dropdown onChange={handleLanguagesSpoken.bind(this)} fluid multiple selection options={languagesSpokenOptions} />
-            </Form.Field>*/}
-            <Form.Field>
-                <label>Assigned Students</label>
-                <Dropdown 
-                    onChange={handleAssignedStudents.bind(this)} 
-                    fluid 
-                    multiple 
-                    selection 
-                    options={assignedStudentsOptions} 
-                    defaultValue={assignedStudents}
-                />
-            </Form.Field>
-            <Button toggle active={isActive} onClick={handleClick}>
-                Is Active
-            </Button>
-        </Form>
-        </Modal.Content>
-        
-        <Modal.Actions>
-            <Button onClick={() => setOpen(false)}>
-                Cancel
-            </Button>
-            <Button onClick={handleSave}>
-                Save
-            </Button>
-        </Modal.Actions>
-        </Modal>
+        <>
+            <Modal
+                onClose={() => setOpen(false)}
+                onOpen={() => setOpen(true)}
+                open={open}
+                trigger={<AmbassadorCard profile={profile}></AmbassadorCard>}
+            >
+            <Modal.Header>Update Ambassador Profile</Modal.Header>
+            <Modal.Content>
+            <Form>
+                <Form.Field>
+                    <label>First Name</label>
+                    <input value={firstName} onChange={(event) => setFirstName(event.target.value)}/>
+                </Form.Field>
+                <Form.Field>
+                    <label>Last Name</label>
+                    <input value={lastName} onChange={(event) => setLastName(event.target.value)}/>
+                </Form.Field>
+                <Form.Field>
+                    <label>Email</label>
+                    <input value={email} onChange={(event) => setEmail(event.target.value)}/>
+                </Form.Field>
+                {/*<Form.Field>
+                    <label>Languages Spoken</label>
+                    <Dropdown onChange={handleLanguagesSpoken.bind(this)} fluid multiple selection options={languagesSpokenOptions} />
+                </Form.Field>*/}
+                <Form.Field>
+                    <label>Assigned Students</label>
+                    <Dropdown 
+                        onChange={handleAssignedStudents.bind(this)} 
+                        fluid 
+                        multiple 
+                        selection 
+                        options={assignedStudentsOptions} 
+                        defaultValue={assignedStudents}
+                    />
+                </Form.Field>
+                <div className="flex-ends">
+                    <Button toggle active={isActive} onClick={handleClick}>
+                        Is Active
+                    </Button>
+                    <Button 
+                        basic 
+                        color="red" 
+                        onClick={() => setResetModalOpen(true)}>
+                            Reset Password
+                    </Button>
+                </div>
+            </Form>
+            </Modal.Content>
+            
+            <Modal.Actions>
+                <Button onClick={() => setOpen(false)}>
+                    Cancel
+                </Button>
+                <Button onClick={handleSave}>
+                    Save
+                </Button>
+            </Modal.Actions>
+            </Modal>
+            <AdminResetPasswordModal
+                isOpen={resetModalOpen}
+                close={closeModal}
+                user={{firstName, lastName, email}}
+            />
+        </>
     )
 }
 
