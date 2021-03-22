@@ -195,6 +195,31 @@ const changePassword = function* ({ payload }) {
   }
 };
 
+const resetPassword = function* ({ payload }) {
+  try {
+    const headerParams = {
+      mode: "cors",
+      credentials: "same-origin",
+    };
+
+    const response = yield call(
+      Axios.post,
+      backend_url + "/api/auth/resetuserpassword",
+      payload,
+      headerParams
+    );
+    console.log(response.data);
+    yield put(actions.setResetPasswordError(response.data));
+  } catch {
+    yield put(
+      actions.setResetPasswordError({
+        success: false,
+        message: "Error resetting password. Please try again.",
+      })
+    );
+  }
+};
+
 const fetchUser = function* ({}) {
   try {
     const token = !(Cookies.get("token") === null);
@@ -272,6 +297,7 @@ export default function* UserSaga() {
     takeLatest(actionTypes.UPDATE_AMBASSADOR, updateAmbassador),
     takeLatest(actionTypes.UPDATE_TEACHER, updateTeacher),
     takeLatest(actionTypes.CHANGE_PASSWORD, changePassword),
+    takeLatest(actionTypes.RESET_PASSWORD, resetPassword),
     takeLatest(actionTypes.FETCH_USER, fetchUser),
     takeLatest(actionTypes.UPDATE_AMBASSADOR_PROFILE, updateAmbassadorProfile),
     takeLatest(actionTypes.UPDATE_TEACHER_PROFILE, updateTeacherProfile),
