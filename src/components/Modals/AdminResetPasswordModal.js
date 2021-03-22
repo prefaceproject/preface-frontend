@@ -1,14 +1,37 @@
 import React, { useEffect, useState } from 'react'
 import { Button, Modal, Form } from 'semantic-ui-react'
+import { useDispatch, useSelector } from "react-redux"
+
+import * as userActions from "../../store/user/actions";
+import * as userSelectors from "../../store/user/selectors";
 
 import "./AdminResetPasswordModal.css";
 
 const AdminResetPasswordModal = ({isOpen, close, user}) => {
+  const dispatch = useDispatch();
+  const { email } = useSelector(userSelectors.getUser);
+  const resetPasswordError = useSelector(userSelectors.getResetPasswordError);
+
   const [confirmReset, setConfirmReset] = useState(false);
   const [newPassword, setNewPassword] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState('');
+
+  useEffect(() => {
+    if (resetPasswordError && resetPasswordError.success) {
+      setIsLoading(false);
+      setConfirmReset(true);
+    } else if (resetPasswordError && !resetPasswordError.success) {
+      setIsLoading(false);
+      setError("There was an error resetting the password. Try again later.")
+    }
+  }, [resetPasswordError])
 
   const closeModal = () => {
     setConfirmReset(false);
+    setError('');
+    setIsLoading(false);
+    setNewPassword('');
     close();
   }
 
@@ -23,9 +46,19 @@ const AdminResetPasswordModal = ({isOpen, close, user}) => {
   }
 
   const resetPassword = () => {
-    setConfirmReset(true);
-    // ADD REQUEST TO UPDATE PASSWORD
-    setNewPassword(generatePassword(8));
+    const newPassword = generatePassword(8);
+    const payload = {
+      user: {
+        email: user.email,
+        newPassword: newPassword
+      },
+      adminUser: {
+        email: email
+      }
+    }
+    dispatch(userActions.resetPassword(payload));
+    setNewPassword(newPassword);
+    setIsLoading(true);
   }
 
   return (
@@ -51,9 +84,13 @@ const AdminResetPasswordModal = ({isOpen, close, user}) => {
           <Button 
             className="reset-button"
             color="red"
+            loading={isLoading}
             onClick={() => resetPassword()}>
             Reset Password
           </Button>
+          <div className="error-content">
+            {error}
+          </div>
         </div>}
       </Modal.Content>
 
