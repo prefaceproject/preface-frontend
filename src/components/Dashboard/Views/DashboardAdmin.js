@@ -17,6 +17,7 @@ import CreateTeacherModal from "../../Modals/CreateTeacherModal";
 import CreateStudentModal from "../../Modals/CreateStudentModal";
 
 import UpdateTeacherModal from "../../Modals/UpdateTeacherModal";
+import TeacherCard from "../Cards/TeacherCard";
 
 const DashboardAdmin = ({ user, students, ambassadors, teachers }) => {
   const [menuState, setMenuState] = useState("Students");
@@ -55,13 +56,7 @@ const DashboardAdmin = ({ user, students, ambassadors, teachers }) => {
       case "Teachers":
         return teachers && teachers.length > 0
           ? teachers.map((profile) => {
-              return (
-                <UpdateTeacherModal
-                  profile={profile}
-                  students={students}
-                  key={profile._id}
-                ></UpdateTeacherModal>
-              );
+              return <TeacherCard profile={profile}></TeacherCard>;
             })
           : [];
       default:
