@@ -1,157 +1,168 @@
-import React, { useState } from 'react'
-import { Button, Form, Header, Image, Modal, Checkbox, Dropdown } from 'semantic-ui-react'
+import React, { useState } from "react";
+import { Button, Form, Modal, Dropdown } from "semantic-ui-react";
 
-import {useDispatch, useSelector} from 'react-redux'
+import { useDispatch, useSelector } from "react-redux";
 import * as userActions from "../../store/user/actions";
-import * as studentsActions from "../../store/students/actions";
 import * as userSelectors from "../../store/user/selectors";
-import * as studentsSelectors from "../../store/students/selectors";
-import TeacherCard from "../Dashboard/Cards/TeacherCard";
 import AmbassadorCard from "../Dashboard/Cards/AmbassadorCard";
 import AdminResetPasswordModal from "./AdminResetPasswordModal";
 
 import "./UpdateAmbassadorModal.css";
 
-function UpdateAmbassadorModal({profile, students}) {
+function UpdateAmbassadorModal({ profile, students }) {
+  const languagesSpokenOptions = [
+    { key: "English", value: "English", text: "English" },
+    { key: "French", value: "French", text: "French" },
+    { key: "Spanish", value: "Spanish", text: "Spanish" },
+    { key: "German", value: "German", text: "German" },
+    { key: "Italian", value: "Italian", text: "Italian" },
+    { key: "Greek", value: "Greek", text: "Greek" },
+    { key: "Mandarin", value: "Mandarin", text: "Mandarin" },
+    { key: "Japanese", value: "Japanese", text: "Japanese" },
+  ];
 
-    const languagesSpokenOptions = [
-    { key: 'English', value: 'English', text: 'English' },
-    { key: 'French', value: 'French', text: 'French' },
-    { key: 'Spanish', value: 'Spanish', text: 'Spanish' },
-    { key: 'German', value: 'German', text: 'German' },
-    { key: 'Italian', value: 'Italian', text: 'Italian' },
-    { key: 'Greek', value: 'Greek', text: 'Greek' },
-    { key: 'Mandarin', value: 'Mandarin', text: 'Mandarin' },
-    { key: 'Japanese', value: 'Japanese', text: 'Japanese' }
-    ]
+  const [open, setOpen] = useState(false);
+  const [firstName, setFirstName] = useState(profile.firstName);
+  const [lastName, setLastName] = useState(profile.lastName);
+  const [email, setEmail] = useState(profile.email);
+  const [languagesSpoken, setLanguagesSpoken] = useState(
+    profile.languagesSpoken
+  );
+  const [assignedStudents, setAssignedStudents] = useState(profile.students);
+  const [isActive, setIsActive] = useState(profile.isActive);
+  const [resetModalOpen, setResetModalOpen] = useState(false);
+  const dispatch = useDispatch();
 
-    const [open, setOpen] = useState(false)
-    const [firstName, setFirstName] = useState(profile.firstName)
-    const [lastName, setLastName] = useState(profile.lastName)
-    const [email, setEmail] = useState(profile.email)
-    const [languagesSpoken, setLanguagesSpoken] = useState('')
-    const [assignedStudents, setAssignedStudents] = useState(profile.students)
-    const [isActive, setIsActive] = useState(profile.isActive)
-    const [resetModalOpen, setResetModalOpen] = useState(false);
-    const dispatch = useDispatch()
+  const user = useSelector(userSelectors.getUser);
 
-    const user = useSelector(userSelectors.getUser);
+  function handleSave() {
+    dispatch(
+      userActions.updateAmbassador({
+        user: {
+          role: "ambassador",
+          firstName: firstName,
+          lastName: lastName,
+          languagesSpoken: languagesSpoken,
+          email: email,
+          students: assignedStudents,
+          isActive: isActive,
+          _id: profile._id,
+        },
+      })
+    );
+    setOpen(false);
+  }
 
-    function handleSave() {
-        dispatch(userActions.updateAmbassador({ 
-            user: {
-                role: "ambassador", 
-                firstName: firstName,
-                lastName: lastName,
-                email: email, 
-                students: assignedStudents,
-                isActive: isActive,
-                _id: profile._id
-            } 
-        }))        
-        setOpen(false)
-    }
+  const assignedStudentsOptions = formatStudents();
 
-    const assignedStudentsOptions = formatStudents()
+  function formatStudents() {
+    var studentList = [];
+    students.map((student) => {
+      studentList.push({
+        key: student._id,
+        value: student._id,
+        text: student.firstName + " " + student.lastName,
+      });
+    });
 
-    function formatStudents() {
-        var studentList = [];
-        students.map((student) => {
-            studentList.push({ key: student._id, value: student._id, text: student.firstName + " " + student.lastName })
-        });
+    return studentList;
+  }
 
-        console.log("studentList", studentList)
+  const handleLanguagesSpoken = (e, { value }) => {
+    console.log(value);
+    setLanguagesSpoken(value);
+  };
 
-        return studentList
-    }
+  const handleAssignedStudents = (e, { value }) => {
+    console.log(value);
+    setAssignedStudents(value);
+  };
 
+  function handleClick() {
+    setIsActive(!isActive);
+  }
 
-    const handleLanguagesSpoken = (e, {value}) => {
-        console.log(value)
-        setLanguagesSpoken(value)
-    }
+  const closeModal = () => {
+    setResetModalOpen(false);
+  };
 
-    const handleAssignedStudents = (e, {value}) => {
-        console.log(value)
-        setAssignedStudents(value)
-    }
+  return (
+    <>
+      <Modal
+        onClose={() => setOpen(false)}
+        onOpen={() => setOpen(true)}
+        open={open}
+        trigger={<AmbassadorCard profile={profile}></AmbassadorCard>}
+      >
+        <Modal.Header>Update Ambassador Profile</Modal.Header>
+        <Modal.Content>
+          <Form>
+            <Form.Field>
+              <label>First Name</label>
+              <input
+                value={firstName}
+                onChange={(event) => setFirstName(event.target.value)}
+              />
+            </Form.Field>
+            <Form.Field>
+              <label>Last Name</label>
+              <input
+                value={lastName}
+                onChange={(event) => setLastName(event.target.value)}
+              />
+            </Form.Field>
+            <Form.Field>
+              <label>Email</label>
+              <input
+                value={email}
+                onChange={(event) => setEmail(event.target.value)}
+              />
+            </Form.Field>
+            <Form.Field>
+              <label>Languages Spoken</label>
+              <Dropdown
+                onChange={handleLanguagesSpoken.bind(this)}
+                fluid
+                multiple
+                selection
+                options={languagesSpokenOptions}
+                defaultValue={languagesSpoken}
+              />
+            </Form.Field>
+            <Form.Field>
+              <label>Assigned Students</label>
+              <Dropdown
+                onChange={handleAssignedStudents.bind(this)}
+                fluid
+                multiple
+                selection
+                options={assignedStudentsOptions}
+                defaultValue={assignedStudents}
+              />
+            </Form.Field>
+            <div className="flex-ends">
+              <Button toggle active={isActive} onClick={handleClick}>
+                Is Active
+              </Button>
+              <Button basic color="red" onClick={() => setResetModalOpen(true)}>
+                Reset Password
+              </Button>
+            </div>
+          </Form>
+        </Modal.Content>
 
-    function handleClick() {
-        setIsActive(!isActive)
-    }
-
-    const closeModal = () => {
-        setResetModalOpen(false);
-    };
-
-    return(
-        <>
-            <Modal
-                onClose={() => setOpen(false)}
-                onOpen={() => setOpen(true)}
-                open={open}
-                trigger={<AmbassadorCard profile={profile}></AmbassadorCard>}
-            >
-            <Modal.Header>Update Ambassador Profile</Modal.Header>
-            <Modal.Content>
-            <Form>
-                <Form.Field>
-                    <label>First Name</label>
-                    <input value={firstName} onChange={(event) => setFirstName(event.target.value)}/>
-                </Form.Field>
-                <Form.Field>
-                    <label>Last Name</label>
-                    <input value={lastName} onChange={(event) => setLastName(event.target.value)}/>
-                </Form.Field>
-                <Form.Field>
-                    <label>Email</label>
-                    <input value={email} onChange={(event) => setEmail(event.target.value)}/>
-                </Form.Field>
-                {/*<Form.Field>
-                    <label>Languages Spoken</label>
-                    <Dropdown onChange={handleLanguagesSpoken.bind(this)} fluid multiple selection options={languagesSpokenOptions} />
-                </Form.Field>*/}
-                <Form.Field>
-                    <label>Assigned Students</label>
-                    <Dropdown 
-                        onChange={handleAssignedStudents.bind(this)} 
-                        fluid 
-                        multiple 
-                        selection 
-                        options={assignedStudentsOptions} 
-                        defaultValue={assignedStudents}
-                    />
-                </Form.Field>
-                <div className="flex-ends">
-                    <Button toggle active={isActive} onClick={handleClick}>
-                        Is Active
-                    </Button>
-                    <Button 
-                        basic 
-                        color="red" 
-                        onClick={() => setResetModalOpen(true)}>
-                            Reset Password
-                    </Button>
-                </div>
-            </Form>
-            </Modal.Content>
-            
-            <Modal.Actions>
-                <Button onClick={() => setOpen(false)}>
-                    Cancel
-                </Button>
-                <Button onClick={handleSave}>
-                    Save
-                </Button>
-            </Modal.Actions>
-            </Modal>
-            <AdminResetPasswordModal
-                isOpen={resetModalOpen}
-                close={closeModal}
-                user={{firstName, lastName, email}}
-            />
-        </>
-    )
+        <Modal.Actions>
+          <Button onClick={() => setOpen(false)}>Cancel</Button>
+          <Button onClick={handleSave}>Save</Button>
+        </Modal.Actions>
+      </Modal>
+      <AdminResetPasswordModal
+        isOpen={resetModalOpen}
+        close={closeModal}
+        user={{ firstName, lastName, email }}
+      />
+    </>
+  );
 }
 
-export default UpdateAmbassadorModal
+export default UpdateAmbassadorModal;

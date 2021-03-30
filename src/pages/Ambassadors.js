@@ -1,7 +1,6 @@
 import React from "react";
 import Layout from "../components/Layout";
 import CardContainer from "../components/CardContainer";
-import AmbassadorCard from "../components/Dashboard/AmbassadorCard";
 
 const Ambassadors = () => {
   const cards = students.map((student) => {
