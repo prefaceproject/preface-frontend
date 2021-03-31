@@ -23,12 +23,14 @@ import * as userActions from "../../store/user/actions";
 import "./styles.css";
 import "semantic-ui-css/semantic.min.css";
 
+
 function App() {
   let [registerSuccess, setRegisterSuccess] = useState(false);
   const dispatch = useDispatch();
   const user = useSelector(userSelectors.getUser);
 
   useEffect(() => {
+    console.log("here", process.env.REACT_APP_BACKEND_URL)
     dispatch(userActions.autoLogin());
   }, []);
 
