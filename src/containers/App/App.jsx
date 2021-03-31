@@ -23,6 +23,7 @@ import * as userActions from "../../store/user/actions";
 import "./styles.css";
 import "semantic-ui-css/semantic.min.css";
 
+
 function App() {
   let [registerSuccess, setRegisterSuccess] = useState(false);
   const dispatch = useDispatch();
