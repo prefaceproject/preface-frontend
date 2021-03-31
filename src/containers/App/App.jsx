@@ -30,7 +30,6 @@ function App() {
   const user = useSelector(userSelectors.getUser);
 
   useEffect(() => {
-    console.log("here", process.env.REACT_APP_BACKEND_URL)
     dispatch(userActions.autoLogin());
   }, []);
 
