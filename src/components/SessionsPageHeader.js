@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import Breadcrumbs from "./Breadcrumbs";
 import { Header } from "./Header";
 
-const SessionsPageHeader = ({ openCreateSessionModal }) => {
+const SessionsPageHeader = ({ openCreateSessionModal, role }) => {
   return (
     <Header>
       <Breadcrumbs
@@ -14,9 +14,11 @@ const SessionsPageHeader = ({ openCreateSessionModal }) => {
           { content: "Student Info" },
         ]}
       />
-      <Button primary onClick={openCreateSessionModal}>
-        Create New
-      </Button>
+      {role === "teacher" ? null : (
+        <Button primary onClick={openCreateSessionModal}>
+          Create New
+        </Button>
+      )}
     </Header>
   );
 };

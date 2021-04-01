@@ -4,7 +4,12 @@ import { toMonthDayYearDate } from "../../utils/formatters";
 
 import "./SessionListItem.css";
 
-const SessionListItem = ({ session, onEditClick, onDeleteClick }) => {
+const SessionListItem = ({
+  session,
+  editable = false,
+  onEditClick,
+  onDeleteClick,
+}) => {
   return (
     <List.Item>
       <ListContent>
@@ -17,13 +22,17 @@ const SessionListItem = ({ session, onEditClick, onDeleteClick }) => {
             </div>
             <div className="session-level">{session.comprehensionLevel}</div>
           </div>
-          <div className="session-actions">
-            <Icon name="edit" onClick={() => onEditClick(session)} />
-            <Icon
-              name="trash alternate outline"
-              onClick={() => onDeleteClick(session._id)}
-            />
-          </div>
+          {editable ? (
+            <div className="session-actions">
+              <>
+                <Icon name="edit" onClick={() => onEditClick(session)} />
+                <Icon
+                  name="trash alternate outline"
+                  onClick={() => onDeleteClick(session._id)}
+                />
+              </>
+            </div>
+          ) : null}
         </div>
       </ListContent>
     </List.Item>

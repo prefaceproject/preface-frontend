@@ -29,6 +29,11 @@ const Sessions = (props) => {
   const student = useSelector(studentSelectors.getStudentById);
   const studentLoading = useSelector(studentSelectors.getStudentLoading);
 
+  const { role } = user;
+  const isTeacher = role === "teacher";
+  const isAmbassador = role === "ambassador";
+  const isAdmin = role === "admin";
+
   if (!id) return <Redirect to="/dashboard" />;
 
   useEffect(() => {
@@ -83,15 +88,21 @@ const Sessions = (props) => {
     <>
       <Layout>
         <Grid>
-          <SessionsPageHeader openCreateSessionModal={openCreateSessionModal} />
+          <SessionsPageHeader
+            role={user.role}
+            openCreateSessionModal={openCreateSessionModal}
+          />
           <Grid.Column width={4}>
             <div className="ui medium header"> Student Info</div>
             <StudentCard userId={user?._id} profile={student}></StudentCard>
-            <UpdateStudentModal student={student} loading={studentLoading} />
+            {isAdmin ? (
+              <UpdateStudentModal student={student} loading={studentLoading} />
+            ) : null}
           </Grid.Column>
           <Grid.Column width={12}>
             <div className="ui medium header"> All Sessions </div>
             <SessionList
+              editable={isAdmin || isAmbassador}
               sessions={sessions}
               onEditClick={onEditClick}
               onDeleteClick={onDeleteClick}

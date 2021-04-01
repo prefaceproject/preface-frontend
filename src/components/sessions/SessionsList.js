@@ -4,7 +4,7 @@ import SessionListItem from "./SessionListItem";
 
 import "./SessionList.css";
 
-const SessionList = ({ sessions, onEditClick, onDeleteClick }) => {
+const SessionList = ({ sessions, onEditClick, onDeleteClick, editable }) => {
   return (
     <>
       <div className="session-headers">
@@ -22,9 +22,11 @@ const SessionList = ({ sessions, onEditClick, onDeleteClick }) => {
             <h4>Comprehension Level</h4>
           </div>
         </div>
-        <div className="session-header-actions">
-          <h4>Actions</h4>
-        </div>
+        {editable ? (
+          <div className="session-header-actions">
+            <h4>Actions</h4>
+          </div>
+        ) : null}
       </div>
       {!sessions?.length ? (
         <Loader />
@@ -36,6 +38,7 @@ const SessionList = ({ sessions, onEditClick, onDeleteClick }) => {
               key={session._id}
               onEditClick={onEditClick}
               onDeleteClick={onDeleteClick}
+              editable={editable}
             />
           ))}
         </List>
