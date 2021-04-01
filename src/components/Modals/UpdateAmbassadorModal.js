@@ -1,15 +1,24 @@
 import React, { useState } from "react";
-import { Button, Form, Modal, Dropdown } from "semantic-ui-react";
+
+import {
+  Button,
+  Form,
+  Header,
+  Image,
+  Modal,
+  Checkbox,
+  Dropdown,
+  Icon,
+} from "semantic-ui-react";
 
 import { useDispatch, useSelector } from "react-redux";
 import * as userActions from "../../store/user/actions";
-import * as userSelectors from "../../store/user/selectors";
-import AmbassadorCard from "../Dashboard/Cards/AmbassadorCard";
+import * as studentsSelectors from "../../store/students/selectors";
 import AdminResetPasswordModal from "./AdminResetPasswordModal";
 
 import "./UpdateAmbassadorModal.css";
 
-function UpdateAmbassadorModal({ profile, students }) {
+function UpdateAmbassadorModal({ profile }) {
   const languagesSpokenOptions = [
     { key: "English", value: "English", text: "English" },
     { key: "French", value: "French", text: "French" },
@@ -28,12 +37,13 @@ function UpdateAmbassadorModal({ profile, students }) {
   const [languagesSpoken, setLanguagesSpoken] = useState(
     profile.languagesSpoken
   );
+
   const [assignedStudents, setAssignedStudents] = useState(profile.students);
   const [isActive, setIsActive] = useState(profile.isActive);
   const [resetModalOpen, setResetModalOpen] = useState(false);
   const dispatch = useDispatch();
 
-  const user = useSelector(userSelectors.getUser);
+  const students = useSelector(studentsSelectors.getAllStudents);
 
   function handleSave() {
     dispatch(
@@ -92,7 +102,9 @@ function UpdateAmbassadorModal({ profile, students }) {
         onClose={() => setOpen(false)}
         onOpen={() => setOpen(true)}
         open={open}
-        trigger={<AmbassadorCard profile={profile}></AmbassadorCard>}
+        trigger={
+          <Icon style={{ cursor: "pointer" }} name="ellipsis horizontal"></Icon>
+        }
       >
         <Modal.Header>Update Ambassador Profile</Modal.Header>
         <Modal.Content>

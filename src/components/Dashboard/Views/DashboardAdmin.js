@@ -10,15 +10,14 @@ import { Menu, Icon } from "semantic-ui-react";
 import CardContainer from "../../CardContainer";
 import StudentCard from "../Cards/StudentCard";
 import AmbassadorCard from "../Cards/AmbassadorCard";
-import TeacherCard from "../Cards/TeacherCard";
 
 // Modals
 import CreateAmbassadorModal from "../../Modals/CreateAmbassadorModal";
 import CreateTeacherModal from "../../Modals/CreateTeacherModal";
 import CreateStudentModal from "../../Modals/CreateStudentModal";
 
-import UpdateAmbassadorModal from "../../Modals/UpdateAmbassadorModal";
 import UpdateTeacherModal from "../../Modals/UpdateTeacherModal";
+import TeacherCard from "../Cards/TeacherCard";
 
 const DashboardAdmin = ({ user, students, ambassadors, teachers }) => {
   const [menuState, setMenuState] = useState("Students");
@@ -51,25 +50,13 @@ const DashboardAdmin = ({ user, students, ambassadors, teachers }) => {
       case "Ambassadors":
         return ambassadors && ambassadors.length > 0
           ? ambassadors.map((profile) => {
-              return (
-                <UpdateAmbassadorModal
-                  profile={profile}
-                  students={students}
-                  key={profile._id}
-                ></UpdateAmbassadorModal>
-              );
+              return <AmbassadorCard profile={profile}></AmbassadorCard>;
             })
           : [];
       case "Teachers":
         return teachers && teachers.length > 0
           ? teachers.map((profile) => {
-              return (
-                 <UpdateTeacherModal
-                  profile={profile}
-                  students={students}
-                  key={profile._id}
-                ></UpdateTeacherModal>
-              );
+              return <TeacherCard profile={profile}></TeacherCard>;
             })
           : [];
       default:
