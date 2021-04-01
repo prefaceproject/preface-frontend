@@ -50,11 +50,6 @@ const StudentCard = ({ profile, ...rest }) => {
               </p>
             </Grid.Column>
            
-            <Grid.Column width={2} verticalAlign="middle">
-              <div className="AvatarColumn">
-                <Label color="green">Status</Label>
-              </div>
-            </Grid.Column>
             
           </Grid.Row>
         </Grid>
