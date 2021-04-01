@@ -5,7 +5,7 @@ import "./StudentCard.css";
 import UpdateTeacherModal from "../../Modals/UpdateTeacherModal";
 
 const TeacherCard = ({ profile, ...rest }) => {
-  const { firstName, lastName, email, _id } = profile;
+  const { firstName, lastName, email, _id, isActive } = profile;
   let history = useHistory();
 
   const [open, setOpen] = useState(false);
@@ -35,7 +35,7 @@ const TeacherCard = ({ profile, ...rest }) => {
   }, []);
 
   return (
-    <Card fluid centered color="black" {...rest}>
+    <Card fluid centered color="black" className={isActive ? "" : "inactiveText"} {...rest}>
       <Card.Content>
         <Grid padded="vertically">
           <Grid.Row>
@@ -54,10 +54,12 @@ const TeacherCard = ({ profile, ...rest }) => {
               <h5>E-mail Address</h5>
               <p>{email}</p>
             </Grid.Column>
-            <Grid.Column width={4} verticalAlign="middle"></Grid.Column>
+            <Grid.Column width={5} verticalAlign="middle"></Grid.Column>
             <Grid.Column width={2} verticalAlign="middle">
               <div className="AvatarColumn">
-                <Label color="orange">Details</Label>
+                <div className={isActive ? "status active" : "status inactive"}>
+                  {isActive ? "  Active  " : "  Inactive  "}
+                </div>
               </div>
             </Grid.Column>
             <Grid.Column width={1} verticalAlign="middle">
