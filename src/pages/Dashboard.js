@@ -43,8 +43,6 @@ const Dashboard = ({ students, teachers, ambassadors }) => {
     setIsHelpModalOpen(false);
   };
 
-  console.log(role);
-
   // const getCreateModal = (state) => {
   //   switch (state) {
   //     case "Students":
