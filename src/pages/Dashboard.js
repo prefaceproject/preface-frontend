@@ -64,9 +64,11 @@ const Dashboard = ({ students, teachers, ambassadors }) => {
             <h1 className="dashboard-header-title">
               Welcome {user ? <u>{firstName}</u> : null}!
             </h1>
-            <Button primary onClick={() => setIsHelpModalOpen(true)}>
+            {(role !== "admin") &&
+            <Button  onClick={() => setIsHelpModalOpen(true)}>
               Need Help?
             </Button>
+            }
           </div>
           {role === "admin" ? <DashboardAdmin /> : <DashboardMain />}
         </Container>
