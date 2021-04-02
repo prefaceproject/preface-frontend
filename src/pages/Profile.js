@@ -75,7 +75,7 @@ const Profile = ({ }) => {
         } 
       }))       
     }
-    else {
+    else if (user.role == 'teacher') {
       dispatch(userActions.updateTeacherProfile({ 
         user: {
             role: "teacher", 
@@ -147,7 +147,9 @@ const handleLanguagesSpoken = (e, {value}) => {
                   onClick={() => setModalOpen(true)}>
                     Change Password
                 </Button>
+                {(role !== "admin") &&
                 <Button color="blue" onClick={handleSave}>Save</Button>
+                }
               </div>
               <div className={passwordStatus.success ? "passwordStatus pass" : "passwordStatus fail"}>
                 {passwordStatus.message}
