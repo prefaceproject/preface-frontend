@@ -28,6 +28,7 @@ const Profile = ({ }) => {
   const [languagesSpoken, setLanguagesSpoken] = useState(user.languagesSpoken);
   const [isActive, setIsActive] = useState(user.isActive);
   const [students, setStudents] = useState(user.students);
+  const { role } = user;
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -120,6 +121,7 @@ const handleLanguagesSpoken = (e, {value}) => {
                 <label>Email</label>
                 <input placeholder="Email" value={email} readOnly />
               </Form.Field>
+              {(role === "ambassador") &&
               <Form.Field>
                 <label>Languages Spoken</label>
                 <Dropdown
@@ -131,10 +133,13 @@ const handleLanguagesSpoken = (e, {value}) => {
                   defaultValue={languagesSpoken}
                 />
               </Form.Field>
+              }
+              {(role !== "admin") &&
               <Form.Field>
                 <label>School</label>
                 <input placeholder="Add School Name" value = {school}  onChange={(event) =>  setSchool(event.target.value)}/>
               </Form.Field>
+              }
               <div className="buttons">
                 <Button 
                   basic 
