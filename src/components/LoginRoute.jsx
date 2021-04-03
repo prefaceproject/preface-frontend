@@ -9,9 +9,12 @@ import * as userSelectors from "../store/user/selectors";
 const LoginRoute = (props) => {
   const user = useSelector(userSelectors.getUser);
   const autoLoginError = useSelector(userSelectors.getAutoLoginError);
+  const loginError = useSelector(userSelectors.getLoginError);
 
   const getRendering = () => {
     if (autoLoginError) return <Login />;
+    if (loginError)
+      return <Login loginErrorMsg="Incorrect email/password combination" />;
     return user ? <Redirect to="/dashboard" /> : <Loading />;
   };
 

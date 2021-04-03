@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Layout from "../components/Layout";
 import { Form, Button, Container, Dropdown } from "semantic-ui-react";
 import "../index.css";
@@ -24,12 +24,22 @@ const Profile = ({ }) => {
   const [email, setEmail] = useState(user.email);
   const [modalOpen, setModalOpen] = useState(false);
   const [passwordStatus, setPasswordStatus] = useState({success: false, message: ""});
-  const [school, setSchool] = useState(user.school ? user.school : '');
+  const [school, setSchool] = useState(user.school ? user.school : "");
   const [languagesSpoken, setLanguagesSpoken] = useState(user.languagesSpoken);
   const [isActive, setIsActive] = useState(user.isActive);
   const [students, setStudents] = useState(user.students);
+  const { role } = user;
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    setFirstName(user.firstName)
+    setLastName(user.lastName)
+    setEmail(user.email)
+    setSchool(user.school ? user.school : "")
+    setLanguagesSpoken(user.languagesSpoken)
+    setIsActive(user.isActive)
+    setStudents(user.students)
+  }, [user]);
 
   const languagesSpokenOptions = [
     { key: 'English', value: 'English', text: 'English' },
@@ -40,7 +50,7 @@ const Profile = ({ }) => {
     { key: 'Greek', value: 'Greek', text: 'Greek' },
     { key: 'Mandarin', value: 'Mandarin', text: 'Mandarin' },
     { key: 'Japanese', value: 'Japanese', text: 'Japanese' }
-    ]
+  ]
 
 
   const closeModal = () => {
@@ -48,8 +58,10 @@ const Profile = ({ }) => {
   };
 
   function handleSave() {
+
+    console.log("languagesSpoken", languagesSpoken)
     if (user.role == 'ambassador') {
-      dispatch(userActions.updateAmbassador({ 
+      dispatch(userActions.updateAmbassadorProfile({ 
         user: {
             role: "ambassador", 
             firstName: firstName,
@@ -63,8 +75,8 @@ const Profile = ({ }) => {
         } 
       }))       
     }
-    else {
-      dispatch(userActions.updateTeacher({ 
+    else if (user.role == 'teacher') {
+      dispatch(userActions.updateTeacherProfile({ 
         user: {
             role: "teacher", 
             firstName: firstName,
@@ -79,7 +91,7 @@ const Profile = ({ }) => {
       }))        
     }
 
-    dispatch(userActions.fetchUser())
+    // dispatch(userActions.fetchUser())
 }
 
 const handleLanguagesSpoken = (e, {value}) => {
@@ -109,14 +121,25 @@ const handleLanguagesSpoken = (e, {value}) => {
                 <label>Email</label>
                 <input placeholder="Email" value={email} readOnly />
               </Form.Field>
+              {(role === "ambassador") &&
               <Form.Field>
                 <label>Languages Spoken</label>
-                <Dropdown onChange={handleLanguagesSpoken.bind(this)} fluid multiple selection options={languagesSpokenOptions} defaultValue={languagesSpoken} />
+                <Dropdown
+                  onChange={handleLanguagesSpoken}
+                  fluid
+                  multiple
+                  selection
+                  options={languagesSpokenOptions}
+                  defaultValue={languagesSpoken}
+                />
               </Form.Field>
+              }
+              {(role !== "admin") &&
               <Form.Field>
                 <label>School</label>
                 <input placeholder="Add School Name" value = {school}  onChange={(event) =>  setSchool(event.target.value)}/>
               </Form.Field>
+              }
               <div className="buttons">
                 <Button 
                   basic 
@@ -124,7 +147,9 @@ const handleLanguagesSpoken = (e, {value}) => {
                   onClick={() => setModalOpen(true)}>
                     Change Password
                 </Button>
+                {(role !== "admin") &&
                 <Button color="blue" onClick={handleSave}>Save</Button>
+                }
               </div>
               <div className={passwordStatus.success ? "passwordStatus pass" : "passwordStatus fail"}>
                 {passwordStatus.message}

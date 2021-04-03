@@ -18,25 +18,51 @@ const CreateSessionModal = ({
   isOpen,
   close,
   createSession,
+  editSession,
   books,
   createBook,
   userId,
-  studentId,
+  session,
 }) => {
   const [expandBook, setExpandBook] = useState(false);
-  const [date, setNewDate] = useState(null);
-  const [note, setNote] = useState("");
-  const [comprehensionLevel, setComprehensionlevel] = useState(null);
-  const [bookId, setBookId] = useState("");
   const [reload, setReload] = useState(false);
+  const [inputData, setInputData] = useState({
+    date: null,
+    notes: "",
+    comprehensionLevel: null,
+    bookId: "",
+  });
 
   useEffect(
     () => {
-      if (reload) setBookId(books[books.length - 1]._id);
+      if (reload)
+        setInputData({ ...inputData, bookId: books[books.length - 1]._id });
     },
     [books[books.length - 1]?._id],
     reload
   );
+
+  useEffect(() => {
+    if (session) {
+      setInputData({
+        date: new Date(session.date),
+        notes: session.notes || "",
+        comprehensionLevel: session.comprehensionLevel,
+        bookId: session.bookId,
+      });
+    } else {
+      resetInputs();
+    }
+  }, [session]);
+
+  const resetInputs = () => {
+    setInputData({
+      date: null,
+      notes: "",
+      comprehensionLevel: null,
+      bookId: "",
+    });
+  };
 
   const addNewBook = () => setExpandBook(!expandBook);
 
@@ -46,18 +72,20 @@ const CreateSessionModal = ({
     setReload(true);
   };
 
-  const selectDate = (_event, { value }) => setNewDate(value);
+  const selectDate = (_event, { value }) => handleChange("date", value);
 
   const handleSave = () => {
+    if (session) {
+      editSession(session._id, inputData);
+    } else {
+      createSession({
+        ...inputData,
+        userId,
+      });
+    }
+
     close();
-    createSession({
-      note,
-      date,
-      bookId,
-      userId,
-      studentId,
-      comprehensionLevel,
-    });
+    resetInputs();
   };
 
   const options = books.map((book) => ({
@@ -67,8 +95,16 @@ const CreateSessionModal = ({
   }));
 
   const handleComprehensionLevelChange = (e, { value }) =>
-    setComprehensionlevel(value);
+    handleChange("comprehensionLevel", value);
 
+  const handleChange = (key, value) => {
+    setInputData({
+      ...inputData,
+      [key]: value,
+    });
+  };
+
+  console.log(inputData);
   return (
     <>
       <Modal onClose={close} open={isOpen}>
@@ -80,7 +116,10 @@ const CreateSessionModal = ({
                 <Grid.Column width="11">
                   <Form.Field className="create-session-datepicker">
                     <label>Date of Meeting</label>
-                    <SemanticDatepicker onChange={selectDate} value={date} />
+                    <SemanticDatepicker
+                      onChange={selectDate}
+                      value={inputData.date}
+                    />
                   </Form.Field>
                 </Grid.Column>
               </Grid.Row>
@@ -104,11 +143,13 @@ const CreateSessionModal = ({
                             label="Book Read"
                             placeholder="Book Read"
                             options={options}
-                            value={bookId}
+                            value={inputData.bookId}
                             search
                             fluid
                             selection
-                            onChange={(_event, { value }) => setBookId(value)}
+                            onChange={(_event, { value }) =>
+                              handleChange("bookId", value)
+                            }
                           />
                         </Form.Field>
                       </Grid.Column>
@@ -129,8 +170,8 @@ const CreateSessionModal = ({
                         <label>Reading Level</label>
                         <input
                           value={
-                            books.find((book) => book._id === bookId)
-                              ?.readingLevel
+                            books.find((book) => book._id === inputData.bookId)
+                              ?.readingLevel || ""
                           }
                           readOnly
                         />
@@ -154,35 +195,35 @@ const CreateSessionModal = ({
                     label="1"
                     name="comprehensionLevel"
                     value={1}
-                    checked={comprehensionLevel === 1}
+                    checked={inputData.comprehensionLevel === 1}
                     onChange={handleComprehensionLevelChange}
                   />
                   <Radio
                     label="2"
                     name="comprehensionLevel"
                     value={2}
-                    checked={comprehensionLevel === 2}
+                    checked={inputData.comprehensionLevel === 2}
                     onChange={handleComprehensionLevelChange}
                   />
                   <Radio
                     label="3"
                     name="comprehensionLevel"
                     value={3}
-                    checked={comprehensionLevel === 3}
+                    checked={inputData.comprehensionLevel === 3}
                     onChange={handleComprehensionLevelChange}
                   />
                   <Radio
                     label="4"
                     name="comprehensionLevel"
                     value={4}
-                    checked={comprehensionLevel === 4}
+                    checked={inputData.comprehensionLevel === 4}
                     onChange={handleComprehensionLevelChange}
                   />
                   <Radio
                     label="5"
                     name="comprehensionLevel"
                     value={5}
-                    checked={comprehensionLevel === 5}
+                    checked={inputData.comprehensionLevel === 5}
                     onChange={handleComprehensionLevelChange}
                   />
                 </Grid.Column>
@@ -193,8 +234,10 @@ const CreateSessionModal = ({
                     <label>Notes</label>
                     <TextArea
                       placeholder="Type additional notes here..."
-                      value={note}
-                      onChange={(event) => setNote(event.target.value)}
+                      value={inputData.notes}
+                      onChange={(event) =>
+                        handleChange("notes", event.target.value)
+                      }
                     />
                   </Form.Field>
                 </Grid.Column>

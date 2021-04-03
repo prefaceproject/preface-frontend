@@ -1,10 +1,18 @@
 import React from "react";
-import { Card, Grid, Image, Label } from "semantic-ui-react";
+import { Card, Grid, Image } from "semantic-ui-react";
 import { useHistory } from "react-router-dom";
+import UpdateAmbassadorModal from "../../Modals/UpdateAmbassadorModal";
 import "./StudentCard.css";
 
 const AmbassadorCard = ({ profile, ...rest }) => {
-  const { firstName, lastName, email, isActive, _id } = profile;
+  const {
+    firstName,
+    lastName,
+    email,
+    languagesSpoken,
+    isActive,
+    _id,
+  } = profile;
   let history = useHistory();
 
   const pretifyName = (f, l) => {
@@ -27,7 +35,13 @@ const AmbassadorCard = ({ profile, ...rest }) => {
   };
 
   return (
-    <Card fluid centered color="black" className={isActive ? "" : "inactiveText"} {...rest}>
+    <Card
+      fluid
+      centered
+      color="black"
+      className={isActive ? "" : "inactiveText"}
+      {...rest}
+    >
       <Card.Content>
         <Grid padded="vertically">
           <Grid.Row>
@@ -46,13 +60,21 @@ const AmbassadorCard = ({ profile, ...rest }) => {
               <h5>E-mail Address</h5>
               <p>{email}</p>
             </Grid.Column>
-            <Grid.Column width={5} verticalAlign="middle"></Grid.Column>
+
             <Grid.Column width={3} verticalAlign="middle">
+              <h5>Languages Spoken</h5>
+              <p>{languagesSpoken ? languagesSpoken.join(", ") : "English"}</p>
+            </Grid.Column>
+            <Grid.Column width={2} verticalAlign="middle"></Grid.Column>
+            <Grid.Column width={2} verticalAlign="middle">
               <div className="AvatarColumn">
                 <div className={isActive ? "status active" : "status inactive"}>
                   {isActive ? "  Active  " : "  Inactive  "}
                 </div>
               </div>
+            </Grid.Column>
+            <Grid.Column width={1} verticalAlign="middle">
+              <UpdateAmbassadorModal profile={profile} />
             </Grid.Column>
           </Grid.Row>
         </Grid>

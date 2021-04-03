@@ -20,6 +20,7 @@ import UpdateStudentModal from "../components/Modals/UpdateStudentModal";
 const Sessions = (props) => {
   const dispatch = useDispatch();
   const [createModalStatus, setCreateModalStatus] = useState(false);
+  const [sessionEditing, setSessionEditing] = useState(null);
   const { id } = useParams();
 
   const sessions = useSelector(sessionsSelectors.getSessions);
@@ -27,6 +28,11 @@ const Sessions = (props) => {
   const user = useSelector(userSelectors.getUser);
   const student = useSelector(studentSelectors.getStudentById);
   const studentLoading = useSelector(studentSelectors.getStudentLoading);
+
+  const { role } = user;
+  const isTeacher = role === "teacher";
+  const isAmbassador = role === "ambassador";
+  const isAdmin = role === "admin";
 
   if (!id) return <Redirect to="/dashboard" />;
 
@@ -48,6 +54,7 @@ const Sessions = (props) => {
 
   const closeCreateSessionModal = () => {
     setCreateModalStatus(false);
+    setSessionEditing(null);
   };
 
   const createSession = (sessionData) => {
@@ -64,19 +71,42 @@ const Sessions = (props) => {
     dispatch(booksActions.createBook(newBook));
   };
 
+  const editSession = (sessionId, inputData) => {
+    dispatch(sessionsActions.editSession(sessionId, id, inputData));
+  };
+
+  const onEditClick = (session) => {
+    setSessionEditing(session);
+    openCreateSessionModal();
+  };
+
+  const onDeleteClick = (sessionId) => {
+    dispatch(sessionsActions.deleteSession(sessionId, id));
+  };
+
   return (
     <>
       <Layout>
         <Grid>
-          <SessionsPageHeader openCreateSessionModal={openCreateSessionModal} />
+          <SessionsPageHeader
+            role={user.role}
+            openCreateSessionModal={openCreateSessionModal}
+          />
           <Grid.Column width={4}>
             <div className="ui medium header"> Student Info</div>
             <StudentCard userId={user?._id} profile={student}></StudentCard>
-            <UpdateStudentModal student={student} loading={studentLoading} />
+            {isAdmin ? (
+              <UpdateStudentModal student={student} loading={studentLoading} />
+            ) : null}
           </Grid.Column>
           <Grid.Column width={12}>
             <div className="ui medium header"> All Sessions </div>
-            <SessionList sessions={sessions}></SessionList>
+            <SessionList
+              editable={isAdmin || isAmbassador}
+              sessions={sessions}
+              onEditClick={onEditClick}
+              onDeleteClick={onDeleteClick}
+            ></SessionList>
           </Grid.Column>
         </Grid>
       </Layout>
@@ -84,9 +114,11 @@ const Sessions = (props) => {
         isOpen={createModalStatus}
         close={closeCreateSessionModal}
         createSession={createSession}
+        editSession={editSession}
         books={books}
         createBook={createBook}
         userId={user?._id}
+        session={sessionEditing}
       />
     </>
   );

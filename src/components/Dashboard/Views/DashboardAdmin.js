@@ -10,12 +10,14 @@ import { Menu, Icon } from "semantic-ui-react";
 import CardContainer from "../../CardContainer";
 import StudentCard from "../Cards/StudentCard";
 import AmbassadorCard from "../Cards/AmbassadorCard";
-import TeacherCard from "../Cards/TeacherCard";
 
 // Modals
 import CreateAmbassadorModal from "../../Modals/CreateAmbassadorModal";
 import CreateTeacherModal from "../../Modals/CreateTeacherModal";
 import CreateStudentModal from "../../Modals/CreateStudentModal";
+
+import UpdateTeacherModal from "../../Modals/UpdateTeacherModal";
+import TeacherCard from "../Cards/TeacherCard";
 
 const DashboardAdmin = ({ user, students, ambassadors, teachers }) => {
   const [menuState, setMenuState] = useState("Students");
@@ -48,20 +50,13 @@ const DashboardAdmin = ({ user, students, ambassadors, teachers }) => {
       case "Ambassadors":
         return ambassadors && ambassadors.length > 0
           ? ambassadors.map((profile) => {
-              return (
-                <AmbassadorCard
-                  profile={profile}
-                  key={profile._id}
-                ></AmbassadorCard>
-              );
+              return <AmbassadorCard profile={profile}></AmbassadorCard>;
             })
           : [];
       case "Teachers":
         return teachers && teachers.length > 0
           ? teachers.map((profile) => {
-              return (
-                <TeacherCard profile={profile} key={profile._id}></TeacherCard>
-              );
+              return <TeacherCard profile={profile}></TeacherCard>;
             })
           : [];
       default:

@@ -24,8 +24,8 @@ function CreateAmbassadorModal({students}) {
     const [firstName, setFirstName] = useState('')
     const [lastName, setLastName] = useState('')
     const [email, setEmail] = useState('')
-    const [languagesSpoken, setLanguagesSpoken] = useState('')
-    const [assignedStudents, setAssignedStudents] = useState('')
+    const [languagesSpoken, setLanguagesSpoken] = useState([])
+    const [assignedStudents, setAssignedStudents] = useState([])
     const [isActive, setIsActive] = useState(true)
     const dispatch = useDispatch()
 
@@ -54,6 +54,10 @@ function CreateAmbassadorModal({students}) {
             } 
         }))        
         setOpen(false)
+        setEmail('')
+        setLanguagesSpoken([])
+        setAssignedStudents([])
+        setIsActive(true)
     }
 
     const handleLanguagesSpoken = (e, {value}) => {
@@ -75,7 +79,7 @@ function CreateAmbassadorModal({students}) {
             onClose={() => setOpen(false)}
             onOpen={() => setOpen(true)}
             open={open}
-            trigger={<Button>Create New Ambassador</Button>}
+            trigger={<Button primary>Create New Ambassador</Button>}
         >
         <Modal.Header>Create New Ambassador Profile</Modal.Header>
         <Modal.Content>

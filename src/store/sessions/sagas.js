@@ -14,6 +14,28 @@ const createSession = function* ({ payload }) {
   }
 };
 
+const editSession = function* ({ payload }) {
+  try {
+    yield call(
+      Axios.put,
+      backend_url + `/api/sessions/${payload.id}`,
+      payload.data
+    );
+    yield put(actions.requestStudentSessions(payload.studentId));
+  } catch (err) {
+    yield put(actions.setError(err));
+  }
+};
+
+const deleteSession = function* ({ payload }) {
+  try {
+    yield call(Axios.delete, backend_url + `/api/sessions/${payload.id}`);
+    yield put(actions.requestStudentSessions(payload.studentId));
+  } catch (err) {
+    yield put(actions.setError(err));
+  }
+};
+
 const requestStudentSessions = function* ({ payload }) {
   const { id } = payload;
   try {
@@ -28,6 +50,8 @@ const requestStudentSessions = function* ({ payload }) {
 
 export default function* SessionsSaga() {
   yield takeLatest(actionTypes.CREATE_SESSION, createSession);
+  yield takeLatest(actionTypes.EDIT_SESSION, editSession);
+  yield takeLatest(actionTypes.DELETE_SESSION, deleteSession);
   yield takeLatest(
     actionTypes.REQUEST_STUDENT_SESSIONS,
     requestStudentSessions

@@ -1,10 +1,10 @@
 import React from "react";
-import { List } from "semantic-ui-react";
+import { List, Loader } from "semantic-ui-react";
 import SessionListItem from "./SessionListItem";
 
 import "./SessionList.css";
 
-const SessionList = ({ sessions }) => {
+const SessionList = ({ sessions, onEditClick, onDeleteClick, editable }) => {
   return (
     <>
       <div className="session-headers">
@@ -22,15 +22,27 @@ const SessionList = ({ sessions }) => {
             <h4>Comprehension Level</h4>
           </div>
         </div>
-        <div className="session-header-actions">
-          <h4>Actions</h4>
-        </div>
+        {editable ? (
+          <div className="session-header-actions">
+            <h4>Actions</h4>
+          </div>
+        ) : null}
       </div>
-      <List celled>
-        {sessions.map((session, index) => (
-          <SessionListItem session={session} key={session._id} />
-        ))}
-      </List>
+      {!sessions?.length ? (
+        <Loader />
+      ) : (
+        <List celled>
+          {sessions.map((session, index) => (
+            <SessionListItem
+              session={session}
+              key={session._id}
+              onEditClick={onEditClick}
+              onDeleteClick={onDeleteClick}
+              editable={editable}
+            />
+          ))}
+        </List>
+      )}
     </>
   );
 };
