@@ -27,8 +27,7 @@ const StudentCard = ({ userId, students }) => {
   return (
     <Card>
       <div style={{padding:"32px"}}>
-      <Image src={img} wrapped ui={false} style={{maxWidth: "100%",
-    maxHeight: "100%"}}/>
+      <Image src={img} wrapped ui={false}/>
       </div>
       <Card.Content>
         <Card.Header>{firstName + " " + lastName}</Card.Header>
