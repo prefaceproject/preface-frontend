@@ -26,7 +26,9 @@ const StudentCard = ({ userId, students }) => {
   const img = "https://robohash.org/" + id + ".png/?set=set4";
   return (
     <Card>
+      <div style={{padding:"32px"}}>
       <Image src={img} wrapped ui={false}/>
+      </div>
       <Card.Content>
         <Card.Header>{firstName + " " + lastName}</Card.Header>
         <Card.Meta>
