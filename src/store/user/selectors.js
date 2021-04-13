@@ -8,3 +8,6 @@ export const getResetPasswordError = ({ user: { resetPasswordError } }) => reset
 export const getLoginError = ({ user: { loginError } }) => loginError;
 export const getAutoLoginError = ({ user: { autoLoginError } }) =>
   autoLoginError;
+export const getUpdateProfileError = ({ user: { updateProfileError } }) =>
+  updateProfileError;
+

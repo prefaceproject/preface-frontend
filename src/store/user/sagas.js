@@ -236,6 +236,7 @@ const fetchUser = function* ({}) {
 
 const updateAmbassadorProfile = function* ({ payload }) {
   try {
+
     const headerParams = {
       mode: "cors",
       credentials: "same-origin",
@@ -246,9 +247,13 @@ const updateAmbassadorProfile = function* ({ payload }) {
       payload,
       headerParams
     );
+
     if (response.data.success) {
+      yield put(actions.setUpdateProfileError(response.data.message));
       yield put(actions.fetchAllAmbassadors());
       yield put(actions.fetchUser());
+    } else {
+      yield put(actions.setUpdateProfileError(response.data.message));
     }
   } catch (err) {
     console.log(err);
@@ -269,13 +274,27 @@ const updateTeacherProfile = function* ({ payload }) {
     );
 
     if (response.data.success) {
+      yield put(actions.setUpdateProfileError(response.data.message));
       yield put(actions.fetchAllTeachers());
       yield put(actions.fetchUser());
+    } else {
+      yield put(actions.setUpdateProfileError(response.data.message));
     }
   } catch (err) {
     console.log(err);
   }
 };
+
+const removeErrorMessage = function* ({ payload }) {
+  try {
+
+    yield put(actions.setUpdateProfileError(""));
+
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 
 export default function* UserSaga() {
   yield all([
@@ -292,5 +311,6 @@ export default function* UserSaga() {
     takeLatest(actionTypes.FETCH_USER, fetchUser),
     takeLatest(actionTypes.UPDATE_AMBASSADOR_PROFILE, updateAmbassadorProfile),
     takeLatest(actionTypes.UPDATE_TEACHER_PROFILE, updateTeacherProfile),
+    takeLatest(actionTypes.REMOVE_ERROR_MESSAGE, removeErrorMessage),
   ]);
 }

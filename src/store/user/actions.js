@@ -59,3 +59,11 @@ export const updateAmbassadorProfile = (data) =>
 
 export const updateTeacherProfile = (data) =>
   action(actionTypes.UPDATE_TEACHER_PROFILE, data);
+
+export const setUpdateProfileError = (data) =>
+  action(actionTypes.SET_UPDATE_PROFILE_ERROR, data);  
+
+export const removeErrorMessage = (data) =>
+  action(actionTypes.REMOVE_ERROR_MESSAGE, data);  
+
+

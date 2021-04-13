@@ -29,3 +29,7 @@ export const FETCH_USER = "@@user/fetch_user";
 export const UPDATE_AMBASSADOR_PROFILE = "@@user/update_ambassador_profile";
 
 export const UPDATE_TEACHER_PROFILE = "@@user/update_teacher_profile";
+
+export const SET_UPDATE_PROFILE_ERROR = "@@user/set_update_profile_error";
+
+export const REMOVE_ERROR_MESSAGE = "@@user/remove_error_message";
