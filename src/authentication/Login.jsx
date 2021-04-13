@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { Button, Form } from "semantic-ui-react";
 import { useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
+
 import Logo from "../assets/logo.png";
 import HelpModal from "../components/Modals/HelpModal";
-
 import * as userActions from "../store/user/actions";
-
 import "./Registration.css";
 
 const Login = ({ loginErrorMsg }) => {
@@ -51,9 +51,19 @@ const Login = ({ loginErrorMsg }) => {
             Forgot Password?
           </div>
           <div className="button-container">
-            <Button type="submit" className="blue">
+            <Button
+              disabled={!email || !password}
+              type="submit"
+              className="blue"
+              fluid
+            >
               Login
             </Button>
+            <Link to="/register">
+              <Button color="violet" fluid>
+                Register
+              </Button>
+            </Link>
           </div>
           <div className="error-container">
             <span className="error">{loginErrorMsg || ""}</span>

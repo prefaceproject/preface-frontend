@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { Button, Form, Grid, Image } from "semantic-ui-react";
-import axios from "axios";
+import { Button, Form } from "semantic-ui-react";
+import { Link } from "react-router-dom";
 
 import Logo from "../assets/logo.png";
 
@@ -13,7 +13,7 @@ const Registration = (props) => {
   let [lastName, setLastName] = useState("");
   let [password, setPassword] = useState("");
   let [email, setEmail] = useState("");
-  let [confirmPassword, setconfirmPassword] = useState("");
+  let [passwordConfirmation, setPasswordConfirmation] = useState("");
 
   const handleSubmit = () => {
     const user = { email, firstName, lastName, password };
@@ -81,14 +81,30 @@ const Registration = (props) => {
             <input
               type="password"
               onChange={(e) => {
-                setconfirmPassword(e.target.value);
+                setPasswordConfirmation(e.target.value);
               }}
             />
           </Form.Field>
           <div className="button-container">
-            <Button type="submit" className="blue">
+            <Button
+              disabled={
+                !firstName ||
+                !lastName ||
+                !email ||
+                !password ||
+                !passwordConfirmation ||
+                password !== passwordConfirmation
+              }
+              type="submit"
+              className="blue"
+            >
               Create Account
             </Button>
+            <Link to="/login">
+              <Button color="violet" fluid>
+                Login
+              </Button>
+            </Link>
           </div>
         </Form>
       </div>
