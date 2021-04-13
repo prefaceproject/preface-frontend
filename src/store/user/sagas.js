@@ -59,7 +59,6 @@ const fetchAllAmbassadors = function* () {
       headerParams
     );
     if (response.data.success) {
-      console.log("here", response.data.list);
       yield put(actions.setAllAmbassadors(response.data.list));
     }
   } catch (err) {
@@ -109,8 +108,6 @@ const initializeAmbassador = function* ({ payload }) {
 
 const updateAmbassador = function* ({ payload }) {
   try {
-
-    console.log("in update ambassador", payload)
     const headerParams = {
       mode: "cors",
       credentials: "same-origin",
@@ -183,7 +180,6 @@ const changePassword = function* ({ payload }) {
       payload,
       headerParams
     );
-    console.log(response.data);
     yield put(actions.setPasswordError(response.data));
   } catch {
     yield put(
@@ -208,7 +204,6 @@ const resetPassword = function* ({ payload }) {
       payload,
       headerParams
     );
-    console.log(response.data);
     yield put(actions.setResetPasswordError(response.data));
   } catch {
     yield put(
@@ -232,7 +227,6 @@ const fetchUser = function* ({}) {
     });
 
     if (data.success) {
-      console.log("data success");
       yield put(actions.setUser(data.user));
     }
   } catch (err) {
@@ -242,8 +236,6 @@ const fetchUser = function* ({}) {
 
 const updateAmbassadorProfile = function* ({ payload }) {
   try {
-
-    console.log("in update ambassador", payload)
     const headerParams = {
       mode: "cors",
       credentials: "same-origin",
@@ -284,7 +276,6 @@ const updateTeacherProfile = function* ({ payload }) {
     console.log(err);
   }
 };
-
 
 export default function* UserSaga() {
   yield all([
