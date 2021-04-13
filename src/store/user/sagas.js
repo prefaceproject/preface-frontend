@@ -236,10 +236,7 @@ const fetchUser = function* ({}) {
 
 const updateAmbassadorProfile = function* ({ payload }) {
   try {
-<<<<<<< HEAD
 
-=======
->>>>>>> d19a0fdd60e9dc219190132db9160075dda0559c
     const headerParams = {
       mode: "cors",
       credentials: "same-origin",
@@ -288,7 +285,6 @@ const updateTeacherProfile = function* ({ payload }) {
   }
 };
 
-<<<<<<< HEAD
 const removeErrorMessage = function* ({ payload }) {
   try {
 
@@ -300,8 +296,6 @@ const removeErrorMessage = function* ({ payload }) {
 };
 
 
-=======
->>>>>>> d19a0fdd60e9dc219190132db9160075dda0559c
 export default function* UserSaga() {
   yield all([
     takeLatest(actionTypes.LOGIN_USER, loginUser),
