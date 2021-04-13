@@ -11,6 +11,7 @@ export const initialState = {
   autoLoginError: null,
   ambassadorList: [],
   teacherList: [],
+  updateProfileError: null
 };
 
 const reducerActions = {
@@ -63,6 +64,12 @@ const reducerActions = {
     return {
       ...state,
       autoLoginError: action.payload,
+    };
+  },
+  [actionTypes.SET_UPDATE_PROFILE_ERROR](state, action) {
+    return {
+      ...state,
+      updateProfileError: action.payload,
     };
   },
 };

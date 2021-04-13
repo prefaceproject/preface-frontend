@@ -17,8 +17,8 @@ import * as userSelectors from "../store/user/selectors";
 const Profile = ({ }) => {
 
   const user = useSelector(userSelectors.getUser);
+  const updateProfileError = useSelector(userSelectors.getUpdateProfileError);
 
-  console.log(user);
   const [firstName, setFirstName] = useState(user.firstName);
   const [lastName, setLastName] = useState(user.lastName);
   const [email, setEmail] = useState(user.email);
@@ -28,6 +28,7 @@ const Profile = ({ }) => {
   const [languagesSpoken, setLanguagesSpoken] = useState(user.languagesSpoken);
   const [isActive, setIsActive] = useState(user.isActive);
   const [students, setStudents] = useState(user.students);
+  const [updateProfileMessage, setUpdateProfileMessage] = useState(updateProfileError);
   const { role } = user;
   const dispatch = useDispatch();
 
@@ -40,6 +41,21 @@ const Profile = ({ }) => {
     setIsActive(user.isActive)
     setStudents(user.students)
   }, [user]);
+
+  useEffect(() => {
+    setUpdateProfileMessage(updateProfileError)
+    setTimeout(() => {
+        dispatch(userActions.removeErrorMessage({}))
+    }, 1000)
+    
+
+    return () => {
+      setTimeout(() => {
+        dispatch(userActions.removeErrorMessage({}))
+      }, 1000)
+
+    }
+  }, [updateProfileError]);
 
   const languagesSpokenOptions = [
     { key: 'English', value: 'English', text: 'English' },
@@ -111,11 +127,17 @@ const handleLanguagesSpoken = (e, {value}) => {
             <Form>
               <Form.Field>
                 <label>First Name</label>
-                <input placeholder="First Name" value={firstName} readOnly />
+                {(role === "admin") ?
+                <input placeholder="First Name" value={firstName} readOnly /> :
+                <input placeholder="First Name" value={firstName} onChange={(event) => setFirstName(event.target.value)} />
+                }
               </Form.Field>
               <Form.Field>
                 <label>Last Name</label>
-                <input placeholder="Last Name" value={lastName} readOnly />
+                {(role === "admin") ?
+                <input placeholder="Last Name" value={lastName} readOnly /> :
+                <input placeholder="Last Name" value={lastName} onChange={(event) => setLastName(event.target.value)} />
+                }
               </Form.Field>
               <Form.Field>
                 <label>Email</label>
@@ -150,6 +172,10 @@ const handleLanguagesSpoken = (e, {value}) => {
                 {(role !== "admin") &&
                 <Button color="blue" onClick={handleSave}>Save</Button>
                 }
+                
+              </div>
+              <div>
+                {updateProfileMessage}
               </div>
               <div className={passwordStatus.success ? "passwordStatus pass" : "passwordStatus fail"}>
                 {passwordStatus.message}
