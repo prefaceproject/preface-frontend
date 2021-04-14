@@ -14,6 +14,7 @@ const Registration = (props) => {
   let [password, setPassword] = useState("");
   let [email, setEmail] = useState("");
   let [passwordConfirmation, setPasswordConfirmation] = useState("");
+  let [registrationError, setRegistrationError] = useState("");
 
   const handleSubmit = () => {
     const user = { email, firstName, lastName, password };
@@ -35,6 +36,12 @@ const Registration = (props) => {
       .then((res) => {
         if (res.success) {
           props.setRegisterSuccess(true);
+        } else {
+          console.log("in error")
+          setRegistrationError(res.errors)
+          setTimeout(() => {
+              setRegistrationError("")
+          }, 2000)
         }
       });
   };
@@ -100,11 +107,13 @@ const Registration = (props) => {
             >
               Create Account
             </Button>
+            
             <Link to="/login">
               <Button color="violet" fluid>
-                Login
+                Back to Login
               </Button>
             </Link>
+            {registrationError}
           </div>
         </Form>
       </div>

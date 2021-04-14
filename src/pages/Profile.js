@@ -29,6 +29,7 @@ const Profile = ({ }) => {
   const [isActive, setIsActive] = useState(user.isActive);
   const [students, setStudents] = useState(user.students);
   const [updateProfileMessage, setUpdateProfileMessage] = useState(updateProfileError);
+  const [isDirtyForm, setIsDirtyForm] = useState(false)
   const { role } = user;
   const dispatch = useDispatch();
 
@@ -41,6 +42,25 @@ const Profile = ({ }) => {
     setIsActive(user.isActive)
     setStudents(user.students)
   }, [user]);
+
+  useEffect(() => {
+    if (
+      user.firstName == firstName &&
+      user.lastName == lastName &&
+      user.email == email &&
+      user.school == school
+    ) {
+
+      for (var i = 0; i < languagesSpoken.length; ++i) {
+        if (user.languagesSpoken[i] !== languagesSpoken[i]) return setIsDirtyForm(true);
+      }
+
+      setIsDirtyForm(false)
+    } else {
+
+      setIsDirtyForm(true)
+    }
+  }, [firstName, lastName, email, school, languagesSpoken]);
 
   useEffect(() => {
     setUpdateProfileMessage(updateProfileError)
@@ -170,7 +190,7 @@ const handleLanguagesSpoken = (e, {value}) => {
                     Change Password
                 </Button>
                 {(role !== "admin") &&
-                <Button color="blue" onClick={handleSave}>Save</Button>
+                <Button color="blue" onClick={handleSave} disabled={!firstName || !lastName || !isDirtyForm}>Save</Button>
                 }
                 
               </div>
