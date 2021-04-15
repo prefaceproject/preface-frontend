@@ -58,12 +58,13 @@ const CreateBookForm = ({ saveNewBook, cancel }) => {
         <Grid.Column width={4}>
           <Button
             primary
+            disabled={!title || !author || !language || !readingLevel}
             fluid
             onClick={() =>
               saveNewBook({ title, author, language, readingLevel })
             }
           >
-            Save
+            Save Book
           </Button>
         </Grid.Column>
       </Grid.Row>
