@@ -33,3 +33,7 @@
   width: 10%;
   padding-left: 5px;
 }
+
+.icon {
+  cursor: pointer;
+}

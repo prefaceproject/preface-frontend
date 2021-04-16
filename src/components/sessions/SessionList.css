@@ -35,3 +35,14 @@
 .session-header-actions {
   width: 10%;
 }
+
+.sessions-list-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+}
+
+.sessions-list {
+  width: 100%;
+}

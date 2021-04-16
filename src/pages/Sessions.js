@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import { Grid } from "semantic-ui-react";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams, Redirect } from "react-router-dom";
@@ -35,6 +35,18 @@ const Sessions = (props) => {
   const isAdmin = role === "admin";
 
   if (!id) return <Redirect to="/dashboard" />;
+
+  const sortedSessions = useMemo(() => {
+    sessions.sort((a, b) => {
+      const dateA = new Date(a.date);
+      const dateB = new Date(b.date);
+      if (dateA < dateB) {
+        return 1;
+      }
+      return -1;
+    });
+    return sessions;
+  }, [sessions]);
 
   useEffect(() => {
     if (createModalStatus) dispatch(booksActions.requestBooks());
@@ -103,7 +115,7 @@ const Sessions = (props) => {
             <div className="ui medium header"> All Sessions </div>
             <SessionList
               editable={isAdmin || isAmbassador}
-              sessions={sessions}
+              sessions={sortedSessions}
               onEditClick={onEditClick}
               onDeleteClick={onDeleteClick}
             ></SessionList>
