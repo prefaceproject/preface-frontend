@@ -51,7 +51,7 @@ const Profile = ({ }) => {
       user.school == school
     ) {
 
-      for (var i = 0; i < languagesSpoken.length; ++i) {
+      for (var i = 0; i < user.languagesSpoken.length; ++i) {
         if (user.languagesSpoken[i] !== languagesSpoken[i]) return setIsDirtyForm(true);
       }
 
