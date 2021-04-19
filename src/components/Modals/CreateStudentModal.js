@@ -27,7 +27,7 @@ function CreateStudentModal() {
     const [grade, setGrade] = useState('')
     const [joinDate, setJoinDate] = useState('')
     const [school, setSchool] = useState('')
-    const [languagesSpoken, setLanguagesSpoken] = useState('')
+    const [languagesSpoken, setLanguagesSpoken] = useState([])
     const [assignedStudents, setAssignedStudents] = useState('')
     const [isActive, setIsActive] = useState(true)
     const dispatch = useDispatch()
@@ -105,7 +105,7 @@ function CreateStudentModal() {
             <Button onClick={() => setOpen(false)}>
                 Cancel
             </Button>
-            <Button onClick={handleSave}>
+            <Button color="blue" onClick={handleSave} disabled={!firstName || !lastName || !readingLevel || !grade || !school || !languagesSpoken.length}>
                 Save
             </Button>
         </Modal.Actions>

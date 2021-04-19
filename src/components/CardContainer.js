@@ -1,14 +1,21 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Card, Pagination, Container } from "semantic-ui-react";
 
 const CardContainer = ({ cards, title, cardsPerPage = 5 }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const size = cards ? cards.length : 0;
   const totalPages = Math.ceil(size / cardsPerPage);
-  const currentCards = cards.slice(
+  var currentCards = cards.slice(
     (currentPage - 1) * cardsPerPage,
     currentPage * cardsPerPage
   );
+
+  useEffect(() => {
+    currentCards = cards.slice(
+      (currentPage - 1) * cardsPerPage,
+      currentPage * cardsPerPage
+    );
+  }, [cards])
 
   const handlePaginationChange = (e, { activePage }) =>
     setCurrentPage(activePage);

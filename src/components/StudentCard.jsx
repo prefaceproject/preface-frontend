@@ -31,11 +31,11 @@ const StudentCard = ({ userId, students }) => {
       </div>
       <Card.Content>
         <Card.Header>{firstName + " " + lastName}</Card.Header>
-        <Card.Meta>
+        {/* <Card.Meta>
           <span className="date">
             Joined in {new Date(joinDate).getFullYear()}
           </span>
-        </Card.Meta>
+        </Card.Meta> */}
         <br />
         <div>
           <strong>Grade: </strong>

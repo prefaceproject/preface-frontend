@@ -120,7 +120,7 @@ function CreateAmbassadorModal({students}) {
             <Button onClick={() => setOpen(false)}>
                 Cancel
             </Button>
-            <Button onClick={handleSave}>
+            <Button color="blue" onClick={handleSave} disabled={!email}>
                 Save
             </Button>
         </Modal.Actions>
