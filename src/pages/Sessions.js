@@ -108,7 +108,7 @@ const Sessions = (props) => {
             <div className="ui medium header"> Student Info</div>
             <StudentCard userId={user?._id} profile={student}></StudentCard>
             {isAdmin ? (
-              <UpdateStudentModal student={student} loading={studentLoading} />
+              <UpdateStudentModal userId={user?._id} student={student} loading={studentLoading} />
             ) : null}
           </Grid.Column>
           <Grid.Column width={12}>

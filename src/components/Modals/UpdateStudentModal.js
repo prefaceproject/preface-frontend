@@ -19,6 +19,9 @@ function UpdateStudentModal({ student, loading }) {
     { key: "Japanese", value: "Japanese", text: "Japanese" },
   ];
 
+  const [isDirtyForm, setIsDirtyForm] = useState(false)
+
+
   const user = useSelector(userSelectors.getUser);
 
   const [studentInput, setStudentInput] = useState({
@@ -30,7 +33,6 @@ function UpdateStudentModal({ student, loading }) {
     languagesSpoken: [],
   });
 
-  
   useEffect(() => {
     setStudentInput({
       firstName: student.firstName,
@@ -41,6 +43,33 @@ function UpdateStudentModal({ student, loading }) {
       languagesSpoken: student.languagesSpoken,
     });
   }, [student]);
+
+   useEffect(() => {
+    if (
+      student.firstName == studentInput.firstName &&
+      student.lastName == studentInput.lastName &&
+      student.readingLevel == studentInput.readingLevel &&
+      student.grade == studentInput.grade &&
+      student.school == studentInput.school
+    ) {
+
+      if (student.languagesSpoken == null || student.languagesSpoken?.length == 0) {
+        if (languagesSpoken?.length > 0) return setIsDirtyForm(true);
+      } else if (student.languagesSpoken?.length != studentInput.languagesSpoken?.length) {
+        return setIsDirtyForm(true);
+      } else {
+        for (var i = 0; i < student.languagesSpoken.length; ++i) {
+          if (student.languagesSpoken[i] !== studentInput.languagesSpoken[i]) return setIsDirtyForm(true);
+        }
+      }
+      
+
+      setIsDirtyForm(false)
+    } else {
+
+      setIsDirtyForm(true)
+    }
+  }, [studentInput]);
 
 
   const [open, setOpen] = useState(false);
@@ -138,7 +167,9 @@ function UpdateStudentModal({ student, loading }) {
 
       <Modal.Actions>
         <Button onClick={() => setOpen(false)}>Cancel</Button>
-        <Button onClick={handleSave}>Save</Button>
+        <Button color="blue" onClick={handleSave} disabled={!firstName || !lastName || !readingLevel || !grade || !school || !languagesSpoken.length || !isDirtyForm}>
+          Save
+        </Button>
       </Modal.Actions>
     </Modal>
   );

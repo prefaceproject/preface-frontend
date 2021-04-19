@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Button,
   Form,
@@ -37,9 +37,46 @@ function UpdateTeacherModal({ profile }) {
   const [assignedStudents, setAssignedStudents] = useState(profile.students);
   const [isActive, setIsActive] = useState(profile.isActive);
   const [resetModalOpen, setResetModalOpen] = useState(false);
+  const [isDirtyForm, setIsDirtyForm] = useState(false)
+
   const dispatch = useDispatch();
 
   const students = useSelector(studentsSelectors.getAllStudents);
+
+  useEffect(() => {
+    setFirstName(profile.firstName)
+    setLastName(profile.lastName)
+    setEmail(profile.email)
+    setLanguagesSpoken(profile.languagesSpoken)
+    setAssignedStudents(profile.students)
+    setIsActive(profile.isActive)
+  }, [profile])
+
+  useEffect(() => {
+    if (
+      profile.firstName == firstName &&
+      profile.lastName == lastName &&
+      profile.email == email &&
+      profile.isActive == isActive
+    ) {
+
+      if (profile.students == null || profile.students?.length == 0) {
+        if (assignedStudents?.length > 0) return setIsDirtyForm(true);
+      } else if (profile.students?.length != assignedStudents?.length) {
+        return setIsDirtyForm(true);
+      } else {
+        for (var i = 0; i < profile.students.length; ++i) {
+          if (profile.students[i] !== assignedStudents[i]) return setIsDirtyForm(true);
+        }
+      }
+      
+
+      setIsDirtyForm(false)
+    } else {
+
+      setIsDirtyForm(true)
+    }
+  }, [firstName, lastName, email, assignedStudents, isActive]);
 
   function handleSave() {
     dispatch(
@@ -123,6 +160,7 @@ function UpdateTeacherModal({ profile }) {
             <Form.Field>
               <label>Email</label>
               <input
+                readOnly
                 value={email}
                 onChange={(event) => setEmail(event.target.value)}
               />
@@ -155,7 +193,9 @@ function UpdateTeacherModal({ profile }) {
 
         <Modal.Actions>
           <Button onClick={() => setOpen(false)}>Cancel</Button>
-          <Button onClick={handleSave}>Save</Button>
+          <Button color="blue" onClick={handleSave} disabled={!firstName || !lastName || !email || !isDirtyForm}>
+            Save
+          </Button>
         </Modal.Actions>
       </Modal>
       <AdminResetPasswordModal
