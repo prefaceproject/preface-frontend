@@ -5,13 +5,18 @@ import { Link } from "react-router-dom";
 import Breadcrumbs from "./Breadcrumbs";
 import { Header } from "./Header";
 
-const SessionsPageHeader = ({ openCreateSessionModal, role }) => {
+const SessionsPageHeader = ({
+  firstName,
+  lastName,
+  openCreateSessionModal,
+  role,
+}) => {
   return (
     <Header>
       <Breadcrumbs
         items={[
-          { content: <Link to="/dashboard">View All Students</Link> },
-          { content: "Student Info" },
+          { content: <Link to="/dashboard">Dashboard</Link> },
+          { content: `${firstName} ${lastName}` },
         ]}
       />
       {role === "teacher" ? null : (
