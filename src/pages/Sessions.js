@@ -5,7 +5,7 @@ import { useParams, Redirect } from "react-router-dom";
 
 import Layout from "../components/Layout";
 import StudentCard from "../components/StudentCard";
-import SessionList from "../components/sessions/SessionsList";
+import SessionList from "../components/Sessions/SessionsList";
 import * as sessionsSelectors from "../store/sessions/selectors";
 import * as sessionsActions from "../store/sessions/actions";
 import * as booksSelectors from "../store/books/selectors";
@@ -101,14 +101,20 @@ const Sessions = (props) => {
       <Layout>
         <Grid>
           <SessionsPageHeader
-            role={user.role}
+            firstName={student.firstName}
+            lastName={student.lastName}
             openCreateSessionModal={openCreateSessionModal}
+            role={user.role}
           />
           <Grid.Column width={4}>
             <div className="ui medium header"> Student Info</div>
             <StudentCard userId={user?._id} profile={student}></StudentCard>
             {isAdmin ? (
-              <UpdateStudentModal userId={user?._id} student={student} loading={studentLoading} />
+              <UpdateStudentModal
+                userId={user?._id}
+                student={student}
+                loading={studentLoading}
+              />
             ) : null}
           </Grid.Column>
           <Grid.Column width={12}>
