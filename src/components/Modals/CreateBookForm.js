@@ -1,11 +1,16 @@
 import React, { useState } from "react";
-import { Button, Form, Grid } from "semantic-ui-react";
+import { Button, Form, Grid, Dropdown } from "semantic-ui-react";
+import {languagesSpokenOptions} from "../../constants/languages";
 
 const CreateBookForm = ({ saveNewBook, cancel }) => {
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
   const [language, setLanguage] = useState("");
   const [readingLevel, setReadingLevel] = useState("");
+
+  const handleBookLanguage = (e, {value}) => {
+    setLanguage(value)
+}
 
   return (
     <Grid className="create-book-grid">
@@ -31,13 +36,16 @@ const CreateBookForm = ({ saveNewBook, cancel }) => {
       </Grid.Row>
       <Grid.Row>
         <Grid.Column width={8}>
-          <Form.Input
-            fluid
-            label="Book Language"
-            placeholder="Book Language"
-            value={language}
-            onChange={(event) => setLanguage(event.target.value)}
-          />
+            <Form.Field>
+              <label>Book Language</label>
+              <Dropdown 
+                onChange={handleBookLanguage.bind(this)} 
+                placeholder="Book Language"
+                fluid 
+                selection 
+                options={languagesSpokenOptions} 
+              />
+            </Form.Field>
         </Grid.Column>
         <Grid.Column width={8}>
           <Form.Input
