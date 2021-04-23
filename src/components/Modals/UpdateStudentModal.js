@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { Button, Form, Modal, Dropdown, Loader } from "semantic-ui-react";
-
+import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import * as studentsActions from "../../store/students/actions";
 import * as userSelectors from "../../store/user/selectors";
+import * as studentsSelectors from "../../store/students/selectors";
 
-function UpdateStudentModal({ student, loading }) {
+function UpdateStudentModal({ studentTest, loading }) {
   const dispatch = useDispatch();
+
+  const { id } = useParams();
 
   const languagesSpokenOptions = [
     { key: "English", value: "English", text: "English" },
@@ -19,11 +22,12 @@ function UpdateStudentModal({ student, loading }) {
     { key: "Japanese", value: "Japanese", text: "Japanese" },
   ];
 
-  const [isDirtyForm, setIsDirtyForm] = useState(false)
-
-
   const user = useSelector(userSelectors.getUser);
+  const students = useSelector(studentsSelectors.getAllStudents);
 
+  
+  var [student] = students.filter((s) => id === s._id);
+  
   const [studentInput, setStudentInput] = useState({
     firstName: "",
     lastName: "",
@@ -33,33 +37,40 @@ function UpdateStudentModal({ student, loading }) {
     languagesSpoken: [],
   });
 
-  useEffect(() => {
-    setStudentInput({
-      firstName: student.firstName,
-      lastName: student.lastName,
-      readingLevel: student.readingLevel,
-      grade: student.grade,
-      school: student.school,
-      languagesSpoken: student.languagesSpoken,
-    });
-  }, [student]);
+  const [isDirtyForm, setIsDirtyForm] = useState(false)
 
-   useEffect(() => {
+  useEffect(() => {
+
+    [student] = students.filter((s) => id === s._id);
+
+    setStudentInput({
+      firstName: student?.firstName,
+      lastName: student?.lastName,
+      readingLevel: student?.readingLevel,
+      grade: student?.grade,
+      school: student?.school,
+      languagesSpoken: student?.languagesSpoken,
+    });
+
+    
+  }, [students]);
+
+  useEffect(() => {
     if (
-      student.firstName == studentInput.firstName &&
-      student.lastName == studentInput.lastName &&
-      student.readingLevel == studentInput.readingLevel &&
-      student.grade == studentInput.grade &&
-      student.school == studentInput.school
+      student?.firstName == studentInput.firstName &&
+      student?.lastName == studentInput.lastName &&
+      student?.readingLevel == studentInput.readingLevel &&
+      student?.grade == studentInput.grade &&
+      student?.school == studentInput.school
     ) {
 
-      if (student.languagesSpoken == null || student.languagesSpoken?.length == 0) {
+      if (student?.languagesSpoken == null || student?.languagesSpoken?.length == 0) {
         if (languagesSpoken?.length > 0) return setIsDirtyForm(true);
-      } else if (student.languagesSpoken?.length != studentInput.languagesSpoken?.length) {
+      } else if (student?.languagesSpoken?.length != studentInput.languagesSpoken?.length) {
         return setIsDirtyForm(true);
       } else {
-        for (var i = 0; i < student.languagesSpoken.length; ++i) {
-          if (student.languagesSpoken[i] !== studentInput.languagesSpoken[i]) return setIsDirtyForm(true);
+        for (var i = 0; i < student?.languagesSpoken.length; ++i) {
+          if (student?.languagesSpoken[i] !== studentInput.languagesSpoken[i]) return setIsDirtyForm(true);
         }
       }
       
