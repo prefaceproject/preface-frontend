@@ -289,6 +289,7 @@ const removeErrorMessage = function* ({ payload }) {
   try {
 
     yield put(actions.setUpdateProfileError(""));
+    yield put(actions.setPasswordError(""));
 
   } catch (err) {
     console.log(err);

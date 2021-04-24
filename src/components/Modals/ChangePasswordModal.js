@@ -49,6 +49,22 @@ const ChangePasswordModal = ({isOpen, close, setStatus}) => {
     }
   }, [passwordError])
 
+  useEffect(() => {
+
+    console.log("in use effect", passwordError)
+    setTimeout(() => {
+      setStatus("")
+      dispatch(userActions.removeErrorMessage({}));
+    }, 1000);
+
+    return () => {
+      setTimeout(() => {
+        setStatus("")
+        dispatch(userActions.removeErrorMessage({}));
+      }, 1000);
+    };
+  }, [passwordError]);
+
   const handleSubmit = () => {
     const payload = {
       email: email,
