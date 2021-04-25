@@ -34,7 +34,7 @@ const SessionListItem = ({
                 <Icon
                   className="icon"
                   name="trash alternate outline"
-                  onClick={() => onDeleteClick(session._id)}
+                  onClick={() => onDeleteClick(session)}
                 />
               </>
             </div>

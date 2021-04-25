@@ -16,11 +16,14 @@ import * as studentSelectors from "../store/students/selectors";
 import SessionsPageHeader from "../components/SessionsPageHeader";
 import CreateSessionModal from "../components/Modals/CreateSessionModal";
 import UpdateStudentModal from "../components/Modals/UpdateStudentModal";
+import ConfirmModal from "../components/Modals/ConfirmModal";
 
 const Sessions = (props) => {
   const dispatch = useDispatch();
   const [createModalStatus, setCreateModalStatus] = useState(false);
   const [sessionEditing, setSessionEditing] = useState(null);
+  const [sessionDeleting, setSessionDeleting] = useState(null);
+  const [deleteModalStatus, setDeleteModalStatus] = useState(false);
   const { id } = useParams();
 
   const sessions = useSelector(sessionsSelectors.getSessions);
@@ -92,8 +95,23 @@ const Sessions = (props) => {
     openCreateSessionModal();
   };
 
-  const onDeleteClick = (sessionId) => {
-    dispatch(sessionsActions.deleteSession(sessionId, id));
+  const onDeleteClick = (session) => {
+    setSessionDeleting(session);
+    setDeleteModalStatus(true);
+    console.log(session);
+  };
+
+  const onCloseDeleteModal = () => {
+    setSessionDeleting(null);
+    setDeleteModalStatus(false);
+  };
+
+  const onConfirmDeleteModal = () => {
+    if (sessionDeleting) {
+      dispatch(sessionsActions.deleteSession(sessionDeleting._id, id));
+    }
+    setSessionDeleting(null);
+    setDeleteModalStatus(false);
   };
 
   return (
@@ -138,6 +156,15 @@ const Sessions = (props) => {
         userId={user?._id}
         session={sessionEditing}
       />
+      <ConfirmModal
+        isOpen={deleteModalStatus}
+        onClose={onCloseDeleteModal}
+        onConfirm={onConfirmDeleteModal}
+        header={"Delete Session"}
+        confirmButtonText={"Delete"}
+        rejectButtonText={"Cancel"}
+        text={`Are you sure you want to delete session?`}
+      ></ConfirmModal>
     </>
   );
 };
