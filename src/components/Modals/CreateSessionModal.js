@@ -104,7 +104,6 @@ const CreateSessionModal = ({
     });
   };
 
-  console.log(inputData);
   return (
     <>
       <Modal onClose={close} open={isOpen}>
@@ -249,10 +248,15 @@ const CreateSessionModal = ({
         {/* {props.children} */}
         <Modal.Actions>
           <Button onClick={close}>Cancel</Button>
-          <Button 
-            disabled={!inputData.date || !inputData.comprehensionLevel || !inputData.bookId} 
-            onClick={handleSave} 
-            primary>
+          <Button
+            disabled={
+              !inputData.date ||
+              !inputData.comprehensionLevel ||
+              !inputData.bookId
+            }
+            onClick={handleSave}
+            primary
+          >
             Save
           </Button>
         </Modal.Actions>
