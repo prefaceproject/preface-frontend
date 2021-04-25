@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 
 // Redux
 import { connect, useDispatch, useSelector } from "react-redux";
@@ -37,25 +37,48 @@ const DashboardAdmin = ({ user, students, ambassadors, teachers }) => {
     };
   };
 
+  const sortedStudents = useMemo(() => {
+    const sortedStudents = [...students].sort((s1, s2) => {
+      const { createdAt: s1CreatedAt } = s1;
+      const { createdAt: s2CreatedAt } = s2;
+
+      if (new Date(s1CreatedAt) > new Date(s2CreatedAt)) return -1;
+      return 1;
+    });
+    return sortedStudents;
+  }, [students]);
+
+  const sortedAmbassdors = useMemo(() => {
+    const sortedAmbassadors = [...ambassadors];
+    sortedAmbassadors.reverse();
+    return sortedAmbassadors;
+  });
+
+  const sortedTeachers = useMemo(() => {
+    const sortedTeachers = [...teachers];
+    sortedTeachers.reverse();
+    return sortedTeachers;
+  });
+
   const getCards = (state) => {
     switch (state) {
       case "Students":
-        return students && students.length > 0
-          ? students.map((profile) => {
+        return sortedStudents && sortedStudents.length > 0
+          ? sortedStudents.map((profile) => {
               return (
                 <StudentCard profile={profile} key={profile._id}></StudentCard>
               );
             })
           : [];
       case "Ambassadors":
-        return ambassadors && ambassadors.length > 0
-          ? ambassadors.map((profile) => {
+        return sortedAmbassdors && sortedAmbassdors.length > 0
+          ? sortedAmbassdors.map((profile) => {
               return <AmbassadorCard profile={profile}></AmbassadorCard>;
             })
           : [];
       case "Teachers":
-        return teachers && teachers.length > 0
-          ? teachers.map((profile) => {
+        return sortedTeachers && sortedTeachers.length > 0
+          ? sortedTeachers.map((profile) => {
               return <TeacherCard profile={profile}></TeacherCard>;
             })
           : [];
