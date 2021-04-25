@@ -19,9 +19,13 @@ import Profile from "../../pages/Profile";
 import StudentCard from "../../components/StudentCard";
 import * as userSelectors from "../../store/user/selectors";
 import * as userActions from "../../store/user/actions";
+ 
 
 import "./styles.css";
 import "semantic-ui-css/semantic.min.css";
+import ToastWarning from "../../components/Alerts/ToastWarning";
+import ToastSuccess from "../../components/Alerts/ToastSuccess";
+import ToastError from "../../components/Alerts/ToastError";
 
 
 function App() {
@@ -51,6 +55,16 @@ function App() {
             {/* <Route path="/login">
               {user ? <Redirect to="/dashboard" /> : <Login />}
             </Route> */}
+            <ProtectedRoute path="/toastwarning">
+              <ToastWarning />
+            </ProtectedRoute>
+            <ProtectedRoute path="/toastsuccess">
+              <ToastSuccess />
+            </ProtectedRoute>
+            <ProtectedRoute path="/toasterror">
+              <ToastError />
+            </ProtectedRoute>
+
             <ProtectedRoute path="/dashboard">
               <Dashboard />
             </ProtectedRoute>
