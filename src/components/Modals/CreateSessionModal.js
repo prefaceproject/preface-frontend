@@ -8,10 +8,12 @@ import {
   Radio,
   Dropdown,
 } from "semantic-ui-react";
-import SemanticDatepicker from "react-semantic-ui-datepickers";
-import "react-semantic-ui-datepickers/dist/react-semantic-ui-datepickers.css";
 
+import SemanticDatepicker from "react-semantic-ui-datepickers";
 import CreateBookForm from "./CreateBookForm";
+import ReadingDifficultyLevelInfo from "../sessions/ReadingDifficultyLevelInfo";
+
+import "react-semantic-ui-datepickers/dist/react-semantic-ui-datepickers.css";
 import "./CreateSessionModal.css";
 
 const CreateSessionModal = ({
@@ -152,14 +154,14 @@ const CreateSessionModal = ({
                           />
                         </Form.Field>
                       </Grid.Column>
-                      <Grid.Column width="3" verticalAlign="bottom">
+                      <Grid.Column width="4" verticalAlign="bottom">
                         <Button
                           primary
                           fluid
                           onClick={addNewBook}
                           className="add-new-book-toggle"
                         >
-                          Add Book
+                          Add New Book
                         </Button>
                       </Grid.Column>
                     </>
@@ -183,8 +185,7 @@ const CreateSessionModal = ({
               <Grid.Row>
                 <Grid.Column width="11">
                   <label className="comprehension-level-label">
-                    Reading Comprehension Difficulty Level (1 being the easiest
-                    and 5 being the hardest)
+                    Reading Comprehension Difficulty Level
                   </label>
                 </Grid.Column>
                 <Grid.Column
@@ -226,6 +227,7 @@ const CreateSessionModal = ({
                     checked={inputData.comprehensionLevel === 5}
                     onChange={handleComprehensionLevelChange}
                   />
+                  <ReadingDifficultyLevelInfo />
                 </Grid.Column>
               </Grid.Row>
               <Grid.Row>

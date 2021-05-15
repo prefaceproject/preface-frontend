@@ -1,0 +1,9 @@
+.ReadingDifficultyLevelInfo {
+  margin-top: 25px;
+}
+
+.ReadingDifficultyLevelInfo__title {
+  text-align: center;
+  width: 100%;
+  margin: 0;
+}
