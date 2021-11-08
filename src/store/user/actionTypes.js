@@ -33,3 +33,6 @@ export const UPDATE_TEACHER_PROFILE = "@@user/update_teacher_profile";
 export const SET_UPDATE_PROFILE_ERROR = "@@user/set_update_profile_error";
 
 export const REMOVE_ERROR_MESSAGE = "@@user/remove_error_message";
+
+export const INVALIDATE_AMBASSADOR_CACHE = "@@user/invalidate_ambassador_cache";
+export const INVALIDATE_TEACHER_CACHE = "@@user/invalidate_teacher_cache";

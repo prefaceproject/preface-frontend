@@ -11,7 +11,11 @@ export const initialState = {
   autoLoginError: null,
   ambassadorList: [],
   teacherList: [],
-  updateProfileError: null
+  updateProfileError: null,
+  totalAmbassadors: 0,
+  totalTeachers: 0,
+  validAmbassadorCache: true,
+  validTeacherCache: true,
 };
 
 const reducerActions = {
@@ -27,13 +31,17 @@ const reducerActions = {
   [actionTypes.SET_ALL_AMBASSADORS](state, action) {
     return {
       ...state,
-      ambassadorList: action.payload,
+      ambassadorList: action.payload.results,
+      totalAmbassadors: action.payload.total,
+      validAmbassadorCache: true,
     };
   },
   [actionTypes.SET_ALL_TEACHERS](state, action) {
     return {
       ...state,
-      teacherList: action.payload,
+      teacherList: action.payload.results,
+      totalTeachers: action.payload.total,
+      validTeacherCache: true,
     };
   },
   [actionTypes.SET_ERROR](state, action) {
@@ -70,6 +78,20 @@ const reducerActions = {
     return {
       ...state,
       updateProfileError: action.payload,
+    };
+  },
+
+  [actionTypes.INVALIDATE_AMBASSADOR_CACHE](state) {
+    return {
+      ...state,
+      validAmbassadorCache: false,
+    };
+  },
+
+  [actionTypes.INVALIDATE_TEACHER_CACHE](state) {
+    return {
+      ...state,
+      validTeacherCache: false,
     };
   },
 };

@@ -1,14 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {
-  Button,
-  Form,
-  Header,
-  Image,
-  Modal,
-  Checkbox,
-  Dropdown,
-  Icon,
-} from "semantic-ui-react";
+import { Button, Form, Modal, Dropdown, Icon } from "semantic-ui-react";
 
 import { useDispatch, useSelector } from "react-redux";
 import * as userActions from "../../store/user/actions";
@@ -37,20 +28,20 @@ function UpdateTeacherModal({ profile }) {
   const [assignedStudents, setAssignedStudents] = useState(profile.students);
   const [isActive, setIsActive] = useState(profile.isActive);
   const [resetModalOpen, setResetModalOpen] = useState(false);
-  const [isDirtyForm, setIsDirtyForm] = useState(false)
+  const [isDirtyForm, setIsDirtyForm] = useState(false);
 
   const dispatch = useDispatch();
 
   const students = useSelector(studentsSelectors.getAllStudents);
 
   useEffect(() => {
-    setFirstName(profile.firstName)
-    setLastName(profile.lastName)
-    setEmail(profile.email)
-    setLanguagesSpoken(profile.languagesSpoken)
-    setAssignedStudents(profile.students)
-    setIsActive(profile.isActive)
-  }, [profile])
+    setFirstName(profile.firstName);
+    setLastName(profile.lastName);
+    setEmail(profile.email);
+    setLanguagesSpoken(profile.languagesSpoken);
+    setAssignedStudents(profile.students);
+    setIsActive(profile.isActive);
+  }, [profile]);
 
   useEffect(() => {
     if (
@@ -59,22 +50,20 @@ function UpdateTeacherModal({ profile }) {
       profile.email == email &&
       profile.isActive == isActive
     ) {
-
       if (profile.students == null || profile.students?.length == 0) {
         if (assignedStudents?.length > 0) return setIsDirtyForm(true);
       } else if (profile.students?.length != assignedStudents?.length) {
         return setIsDirtyForm(true);
       } else {
         for (var i = 0; i < profile.students.length; ++i) {
-          if (profile.students[i] !== assignedStudents[i]) return setIsDirtyForm(true);
+          if (profile.students[i] !== assignedStudents[i])
+            return setIsDirtyForm(true);
         }
       }
-      
 
-      setIsDirtyForm(false)
+      setIsDirtyForm(false);
     } else {
-
-      setIsDirtyForm(true)
+      setIsDirtyForm(true);
     }
   }, [firstName, lastName, email, assignedStudents, isActive]);
 
@@ -106,9 +95,6 @@ function UpdateTeacherModal({ profile }) {
         text: student.firstName + " " + student.lastName,
       });
     });
-
-    console.log("studentList", studentList);
-
     return studentList;
   }
 
@@ -193,7 +179,11 @@ function UpdateTeacherModal({ profile }) {
 
         <Modal.Actions>
           <Button onClick={() => setOpen(false)}>Cancel</Button>
-          <Button color="blue" onClick={handleSave} disabled={!firstName || !lastName || !email || !isDirtyForm}>
+          <Button
+            color="blue"
+            onClick={handleSave}
+            disabled={!firstName || !lastName || !email || !isDirtyForm}
+          >
             Save
           </Button>
         </Modal.Actions>

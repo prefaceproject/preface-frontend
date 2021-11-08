@@ -1,17 +1,11 @@
 import React from "react";
-import { Card, Grid, Image, Label } from "semantic-ui-react";
+import { Card, Grid, Image } from "semantic-ui-react";
 import { useHistory } from "react-router-dom";
 import "./StudentCard.css";
 
-const StudentCard = ({ profile, ...rest }) => {
-  const {
-    firstName,
-    lastName,
-    sessions,
-    school,
-    languagesSpoken,
-    _id,
-  } = profile;
+const StudentCard = ({ profile }) => {
+  const { firstName, lastName, sessions, school, languagesSpoken, _id } =
+    profile;
   let history = useHistory();
 
   const toSessions = () => {
@@ -19,10 +13,7 @@ const StudentCard = ({ profile, ...rest }) => {
   };
 
   return (
-    <Card fluid centered color="black" 
-    onClick={toSessions}
-
-    >
+    <Card fluid centered color="black" onClick={toSessions}>
       <Card.Content>
         <Grid padded="vertically">
           <Grid.Row>
@@ -49,8 +40,6 @@ const StudentCard = ({ profile, ...rest }) => {
                   : "Languages can be added on student's profile"}
               </p>
             </Grid.Column>
-           
-            
           </Grid.Row>
         </Grid>
       </Card.Content>

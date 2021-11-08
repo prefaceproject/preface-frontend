@@ -25,9 +25,8 @@ function UpdateStudentModal({ studentTest, loading }) {
   const user = useSelector(userSelectors.getUser);
   const students = useSelector(studentsSelectors.getAllStudents);
 
-  
   var [student] = students.filter((s) => id === s._id);
-  
+
   const [studentInput, setStudentInput] = useState({
     firstName: "",
     lastName: "",
@@ -37,10 +36,9 @@ function UpdateStudentModal({ studentTest, loading }) {
     languagesSpoken: [],
   });
 
-  const [isDirtyForm, setIsDirtyForm] = useState(false)
+  const [isDirtyForm, setIsDirtyForm] = useState(false);
 
   useEffect(() => {
-
     [student] = students.filter((s) => id === s._id);
 
     setStudentInput({
@@ -51,8 +49,6 @@ function UpdateStudentModal({ studentTest, loading }) {
       school: student?.school,
       languagesSpoken: student?.languagesSpoken,
     });
-
-    
   }, [students]);
 
   useEffect(() => {
@@ -63,25 +59,27 @@ function UpdateStudentModal({ studentTest, loading }) {
       student?.grade == studentInput.grade &&
       student?.school == studentInput.school
     ) {
-
-      if (student?.languagesSpoken == null || student?.languagesSpoken?.length == 0) {
+      if (
+        student?.languagesSpoken == null ||
+        student?.languagesSpoken?.length == 0
+      ) {
         if (languagesSpoken?.length > 0) return setIsDirtyForm(true);
-      } else if (student?.languagesSpoken?.length != studentInput.languagesSpoken?.length) {
+      } else if (
+        student?.languagesSpoken?.length != studentInput.languagesSpoken?.length
+      ) {
         return setIsDirtyForm(true);
       } else {
         for (var i = 0; i < student?.languagesSpoken.length; ++i) {
-          if (student?.languagesSpoken[i] !== studentInput.languagesSpoken[i]) return setIsDirtyForm(true);
+          if (student?.languagesSpoken[i] !== studentInput.languagesSpoken[i])
+            return setIsDirtyForm(true);
         }
       }
-      
 
-      setIsDirtyForm(false)
+      setIsDirtyForm(false);
     } else {
-
-      setIsDirtyForm(true)
+      setIsDirtyForm(true);
     }
   }, [studentInput]);
-
 
   const [open, setOpen] = useState(false);
 
@@ -103,17 +101,11 @@ function UpdateStudentModal({ studentTest, loading }) {
   };
 
   const handleLanguagesSpoken = (e, { value }) => {
-    setStudentInput({ ...studentInput, "languagesSpoken": value});
+    setStudentInput({ ...studentInput, languagesSpoken: value });
   };
 
-  const {
-    firstName,
-    lastName,
-    readingLevel,
-    grade,
-    school,
-    languagesSpoken,
-  } = studentInput;
+  const { firstName, lastName, readingLevel, grade, school, languagesSpoken } =
+    studentInput;
 
   if (loading) return <Loader />;
 
@@ -178,7 +170,19 @@ function UpdateStudentModal({ studentTest, loading }) {
 
       <Modal.Actions>
         <Button onClick={() => setOpen(false)}>Cancel</Button>
-        <Button color="blue" onClick={handleSave} disabled={!firstName || !lastName || !readingLevel || !grade || !school || !languagesSpoken.length || !isDirtyForm}>
+        <Button
+          color="blue"
+          onClick={handleSave}
+          disabled={
+            !firstName ||
+            !lastName ||
+            !readingLevel ||
+            !grade ||
+            !school ||
+            !languagesSpoken.length ||
+            !isDirtyForm
+          }
+        >
           Save
         </Button>
       </Modal.Actions>

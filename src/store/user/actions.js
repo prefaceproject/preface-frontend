@@ -13,20 +13,19 @@ export const logOut = () => action(actionTypes.LOG_OUT);
 export const changePassword = (data) =>
   action(actionTypes.CHANGE_PASSWORD, data);
 
-export const resetPassword = (data) =>
-  action(actionTypes.RESET_PASSWORD, data);
+export const resetPassword = (data) => action(actionTypes.RESET_PASSWORD, data);
 
-export const setAllAmbassadors = (role) =>
-  action(actionTypes.SET_ALL_AMBASSADORS, role);
+export const setAllAmbassadors = (results, total) =>
+  action(actionTypes.SET_ALL_AMBASSADORS, { results, total });
 
-export const fetchAllAmbassadors = (role) =>
-  action(actionTypes.FETCH_ALL_AMBASSADORS, role);
+export const fetchAllAmbassadors = (options = {}) =>
+  action(actionTypes.FETCH_ALL_AMBASSADORS, options);
 
-export const setAllTeachers = (role) =>
-  action(actionTypes.SET_ALL_TEACHERS, role);
+export const setAllTeachers = (results, total) =>
+  action(actionTypes.SET_ALL_TEACHERS, { results, total });
 
-export const fetchAllTeachers = (role) =>
-  action(actionTypes.FETCH_ALL_TEACHERS, role);
+export const fetchAllTeachers = (options = {}) =>
+  action(actionTypes.FETCH_ALL_TEACHERS, options);
 
 export const initializeAmbassador = (data) =>
   action(actionTypes.INITIALIZE_AMBASSADOR, data);
@@ -61,9 +60,13 @@ export const updateTeacherProfile = (data) =>
   action(actionTypes.UPDATE_TEACHER_PROFILE, data);
 
 export const setUpdateProfileError = (data) =>
-  action(actionTypes.SET_UPDATE_PROFILE_ERROR, data);  
+  action(actionTypes.SET_UPDATE_PROFILE_ERROR, data);
 
 export const removeErrorMessage = (data) =>
-  action(actionTypes.REMOVE_ERROR_MESSAGE, data);  
+  action(actionTypes.REMOVE_ERROR_MESSAGE, data);
 
+export const invalidateAmbassadorCache = () =>
+  action(actionTypes.INVALIDATE_AMBASSADOR_CACHE);
 
+export const invalidateTeacherCache = () =>
+  action(actionTypes.INVALIDATE_TEACHER_CACHE);

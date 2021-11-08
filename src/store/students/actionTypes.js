@@ -1,6 +1,9 @@
-export const SET_ALL_STUDENTS = "@@students/set_all_students"
-export const FETCH_ALL_STUDENTS = "@@students/fetch_all_students"
-export const CREATE_STUDENT = "@@students/create_student"
-export const UPDATE_STUDENT = "@@students/update_student"
-export const FETCH_STUDENT_BY_ID = "@@students/fetch_student_by_id"
-export const SET_STUDENT_BY_ID = "@@students/set_student_by_id"
+export const SET_ALL_STUDENTS = "@@students/set_all_students";
+export const FETCH_ALL_STUDENTS = "@@students/fetch_all_students";
+export const CREATE_STUDENT = "@@students/create_student";
+export const UPDATE_STUDENT = "@@students/update_student";
+export const FETCH_STUDENT_BY_ID = "@@students/fetch_student_by_id";
+export const SET_STUDENT_BY_ID = "@@students/set_student_by_id";
+export const SET_PAGE = "@@students/set_page";
+export const SET_SORT = "@@students/set_order";
+export const INVALIDATE_CACHE = "@@students/invalidate_cache";

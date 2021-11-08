@@ -41,20 +41,20 @@ function UpdateAmbassadorModal({ profile }) {
   const [assignedStudents, setAssignedStudents] = useState(profile.students);
   const [isActive, setIsActive] = useState(profile.isActive);
   const [resetModalOpen, setResetModalOpen] = useState(false);
-  const [isDirtyForm, setIsDirtyForm] = useState(false)
+  const [isDirtyForm, setIsDirtyForm] = useState(false);
 
   const dispatch = useDispatch();
 
   const students = useSelector(studentsSelectors.getAllStudents);
 
   useEffect(() => {
-    setFirstName(profile.firstName)
-    setLastName(profile.lastName)
-    setEmail(profile.email)
-    setLanguagesSpoken(profile.languagesSpoken)
-    setAssignedStudents(profile.students)
-    setIsActive(profile.isActive)
-  }, [profile])
+    setFirstName(profile.firstName);
+    setLastName(profile.lastName);
+    setEmail(profile.email);
+    setLanguagesSpoken(profile.languagesSpoken);
+    setAssignedStudents(profile.students);
+    setIsActive(profile.isActive);
+  }, [profile]);
 
   useEffect(() => {
     if (
@@ -63,14 +63,17 @@ function UpdateAmbassadorModal({ profile }) {
       profile.email == email &&
       profile.isActive == isActive
     ) {
-
-      if (profile.languagesSpoken == null || profile.languagesSpoken?.length == 0) {
+      if (
+        profile.languagesSpoken == null ||
+        profile.languagesSpoken?.length == 0
+      ) {
         if (languagesSpoken?.length > 0) return setIsDirtyForm(true);
       } else if (profile.languagesSpoken?.length != languagesSpoken?.length) {
         return setIsDirtyForm(true);
       } else {
         for (var i = 0; i < profile.languagesSpoken.length; ++i) {
-          if (profile.languagesSpoken[i] !== languagesSpoken[i]) return setIsDirtyForm(true);
+          if (profile.languagesSpoken[i] !== languagesSpoken[i])
+            return setIsDirtyForm(true);
         }
       }
 
@@ -80,15 +83,14 @@ function UpdateAmbassadorModal({ profile }) {
         return setIsDirtyForm(true);
       } else {
         for (var i = 0; i < profile.students.length; ++i) {
-          if (profile.students[i] !== assignedStudents[i]) return setIsDirtyForm(true);
+          if (profile.students[i] !== assignedStudents[i])
+            return setIsDirtyForm(true);
         }
       }
-      
 
-      setIsDirtyForm(false)
+      setIsDirtyForm(false);
     } else {
-
-      setIsDirtyForm(true)
+      setIsDirtyForm(true);
     }
   }, [firstName, lastName, email, languagesSpoken, assignedStudents, isActive]);
 
@@ -213,7 +215,11 @@ function UpdateAmbassadorModal({ profile }) {
 
         <Modal.Actions>
           <Button onClick={() => setOpen(false)}>Cancel</Button>
-          <Button color="blue" onClick={handleSave} disabled={!firstName || !lastName || !email || !isDirtyForm}>
+          <Button
+            color="blue"
+            onClick={handleSave}
+            disabled={!firstName || !lastName || !email || !isDirtyForm}
+          >
             Save
           </Button>
         </Modal.Actions>

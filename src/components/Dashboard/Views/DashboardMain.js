@@ -8,7 +8,7 @@ import { connect } from "react-redux";
 import CardContainer from "../../CardContainer";
 import StudentCard from "../Cards/StudentCard";
 
-const DashboardMain = ({ user, students }) => {
+const DashboardMain = ({ students }) => {
   const getCards = (list) => {
     return list && list.length > 0
       ? list.map((profile) => {
