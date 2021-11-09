@@ -2,23 +2,41 @@ import Axios from "axios";
 import { all, call, put, takeLatest } from "redux-saga/effects";
 import * as actionTypes from "./actionTypes";
 import * as actions from "./actions";
-import { backend_url } from "../../constants/url";
+import {
+  backend_url,
+  defaultLimit,
+  defaultSortBy,
+  defaultSortOrder,
+  defaultPage,
+} from "../../constants";
 
 const fetchAllStudents = function* ({ payload }) {
+  const {
+    userId,
+    options: {
+      sortBy = defaultSortBy,
+      sortOrder = defaultSortOrder,
+      page = defaultPage,
+      limit = defaultLimit,
+      searchTerm = "",
+    },
+  } = payload;
+
+  const params = {
+    _id: userId,
+    sortBy,
+    sortOrder,
+    offset: (page - 1) * limit,
+    limit,
+    searchTerm,
+  };
   try {
-    const headerParams = {
-      mode: "cors",
-      credentials: "same-origin",
-    };
-    const response = yield call(
-      Axios.get,
-      backend_url + "/api/students",
-      { params: payload },
-      headerParams
-    );
+    const response = yield call(Axios.get, backend_url + "/api/students", {
+      params,
+    });
 
     if (response.status == 200) {
-      yield put(actions.setAllStudents(response.data));
+      yield put(actions.setAllStudents(response.data, response.headers.total));
     }
   } catch (err) {
     console.log(err);
@@ -26,7 +44,6 @@ const fetchAllStudents = function* ({ payload }) {
 };
 
 const createStudent = function* ({ payload }) {
-  console.log(payload);
   try {
     const headerParams = {
       mode: "cors",
@@ -39,7 +56,7 @@ const createStudent = function* ({ payload }) {
       headerParams
     );
     if (response.status == 200) {
-      yield put(actions.fetchAllStudents({ _id: payload.user }));
+      yield put(actions.invalidateCache());
     }
   } catch (err) {
     console.log(err);
@@ -49,7 +66,6 @@ const createStudent = function* ({ payload }) {
 const updateStudent = function* ({ payload }) {
   try {
     var student = payload.student;
-    var user = payload.user;
 
     const headerParams = {
       mode: "cors",
@@ -62,7 +78,7 @@ const updateStudent = function* ({ payload }) {
       headerParams
     );
     if (response.status == 200) {
-      yield put(actions.fetchAllStudents({ _id: user }));
+      yield put(actions.invalidateCache());
     }
   } catch (err) {
     console.log(err);

@@ -29,13 +29,14 @@ const TeacherCard = ({ profile, ...rest }) => {
     return string;
   };
 
-  useEffect(() => {
-    console.log("profile", profile);
-    console.log("email", email);
-  }, []);
-
   return (
-    <Card fluid centered color="black" className={isActive ? "" : "inactiveText"} {...rest}>
+    <Card
+      fluid
+      centered
+      color="black"
+      className={isActive ? "" : "inactiveText"}
+      {...rest}
+    >
       <Card.Content>
         <Grid padded="vertically">
           <Grid.Row>

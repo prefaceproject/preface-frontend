@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import Logo from "../assets/small_white_logo.png";
 import { Popup } from "semantic-ui-react";
@@ -11,7 +11,6 @@ import * as userActions from "../store/user/actions";
 import "./Navbar.css";
 
 const Navbar = ({ user }) => {
-  const signOut = () => {};
   const firstInitial = user ? user.firstName[0] : "";
   const lastInitial = user ? user.lastName[0] : "";
   const dispatch = useDispatch();

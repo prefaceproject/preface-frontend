@@ -1,19 +1,10 @@
 import React from "react";
 import { Card, Grid, Image } from "semantic-ui-react";
-import { useHistory } from "react-router-dom";
 import UpdateAmbassadorModal from "../../Modals/UpdateAmbassadorModal";
 import "./StudentCard.css";
 
 const AmbassadorCard = ({ profile, ...rest }) => {
-  const {
-    firstName,
-    lastName,
-    email,
-    languagesSpoken,
-    isActive,
-    _id,
-  } = profile;
-  let history = useHistory();
+  const { firstName, lastName, email, languagesSpoken, isActive } = profile;
 
   const pretifyName = (f, l) => {
     if (!f && !l) {

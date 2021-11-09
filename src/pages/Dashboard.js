@@ -6,7 +6,6 @@ import { connect } from "react-redux";
 import { useDispatch, useSelector } from "react-redux";
 
 import * as userActions from "../store/user/actions";
-import * as studentsActions from "../store/students/actions";
 import * as userSelectors from "../store/user/selectors";
 
 // SemanticUI + Components
@@ -19,7 +18,7 @@ import HelpModal from "../components/Modals/HelpModal";
 // Styles
 import "./styles/Dashboard.css";
 
-const Dashboard = ({ students, teachers, ambassadors }) => {
+const Dashboard = () => {
   // Global State
   const dispatch = useDispatch();
   const user = useSelector(userSelectors.getUser);
@@ -28,33 +27,14 @@ const Dashboard = ({ students, teachers, ambassadors }) => {
   useEffect(() => {
     dispatch(userActions.fetchAllAmbassadors());
     dispatch(userActions.fetchAllTeachers());
-    dispatch(studentsActions.fetchAllStudents({ _id: user._id }));
   }, []);
 
   // User Interface State
-  const [modelOpen, setModelOpen] = useState(false);
   const [isHelpModalOpen, setIsHelpModalOpen] = useState(false);
-
-  const closeModal = () => {
-    setModelOpen(false);
-  };
 
   const closeHelpModal = () => {
     setIsHelpModalOpen(false);
   };
-
-  // const getCreateModal = (state) => {
-  //   switch (state) {
-  //     case "Students":
-  //       return <CreateStudentModal />;
-  //     case "Ambassadors":
-  //       return <CreateAmbassadorModal students={students} />;
-  //     case "Teachers":
-  //       return <CreateTeacherModal students={students} />;
-  //     default:
-  //       return [];
-  //   }
-  // };
 
   return (
     <>
@@ -64,11 +44,11 @@ const Dashboard = ({ students, teachers, ambassadors }) => {
             <h1 className="dashboard-header-title">
               Welcome {user ? <u>{firstName}</u> : null}!
             </h1>
-            {(role !== "admin") &&
-            <Button  onClick={() => setIsHelpModalOpen(true)}>
-              Need Help?
-            </Button>
-            }
+            {role !== "admin" && (
+              <Button onClick={() => setIsHelpModalOpen(true)}>
+                Need Help?
+              </Button>
+            )}
           </div>
           {role === "admin" ? <DashboardAdmin /> : <DashboardMain />}
         </Container>

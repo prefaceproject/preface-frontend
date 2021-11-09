@@ -1,25 +1,21 @@
-import React, { useMemo, useState } from "react";
+import React, { useState } from "react";
 
 // Redux
-import { connect, useDispatch, useSelector } from "react-redux";
+import { connect } from "react-redux";
 
 // Semantic
-import { Menu, Icon } from "semantic-ui-react";
+import { Menu } from "semantic-ui-react";
 
-// Card + Container Related
-import CardContainer from "../../CardContainer";
-import StudentCard from "../Cards/StudentCard";
-import AmbassadorCard from "../Cards/AmbassadorCard";
+import StudentList from "./StudentList";
+import AmbassadorList from "./AmbassadorList";
+import TeacherList from "./TeacherList";
 
 // Modals
 import CreateAmbassadorModal from "../../Modals/CreateAmbassadorModal";
 import CreateTeacherModal from "../../Modals/CreateTeacherModal";
 import CreateStudentModal from "../../Modals/CreateStudentModal";
 
-import UpdateTeacherModal from "../../Modals/UpdateTeacherModal";
-import TeacherCard from "../Cards/TeacherCard";
-
-const DashboardAdmin = ({ user, students, ambassadors, teachers }) => {
+const DashboardAdmin = ({ user }) => {
   const [menuState, setMenuState] = useState("Students");
 
   let role = null;
@@ -37,68 +33,20 @@ const DashboardAdmin = ({ user, students, ambassadors, teachers }) => {
     };
   };
 
-  const sortedStudents = useMemo(() => {
-    const sortedStudents = [...students].sort((s1, s2) => {
-      const { createdAt: s1CreatedAt } = s1;
-      const { createdAt: s2CreatedAt } = s2;
-
-      if (new Date(s1CreatedAt) > new Date(s2CreatedAt)) return -1;
-      return 1;
-    });
-    return sortedStudents;
-  }, [students]);
-
-  const sortedAmbassdors = useMemo(() => {
-    const sortedAmbassadors = [...ambassadors];
-    sortedAmbassadors.reverse();
-    return sortedAmbassadors;
-  });
-
-  const sortedTeachers = useMemo(() => {
-    const sortedTeachers = [...teachers];
-    sortedTeachers.reverse();
-    return sortedTeachers;
-  });
-
-  const getCards = (state) => {
-    switch (state) {
+  const getComponents = () => {
+    switch (menuState) {
       case "Students":
-        return sortedStudents && sortedStudents.length > 0
-          ? sortedStudents.map((profile) => {
-              return (
-                <StudentCard profile={profile} key={profile._id}></StudentCard>
-              );
-            })
-          : [];
+        return { List: StudentList, Modal: CreateStudentModal };
       case "Ambassadors":
-        return sortedAmbassdors && sortedAmbassdors.length > 0
-          ? sortedAmbassdors.map((profile) => {
-              return <AmbassadorCard profile={profile}></AmbassadorCard>;
-            })
-          : [];
+        return { List: AmbassadorList, Modal: CreateAmbassadorModal };
       case "Teachers":
-        return sortedTeachers && sortedTeachers.length > 0
-          ? sortedTeachers.map((profile) => {
-              return <TeacherCard profile={profile}></TeacherCard>;
-            })
-          : [];
-      default:
-        return [];
-    }
-  };
-
-  const getModals = (state) => {
-    switch (state) {
-      case "Students":
-        return <CreateStudentModal />;
-      case "Ambassadors":
-        return <CreateAmbassadorModal students={students} />;
-      case "Teachers":
-        return <CreateTeacherModal students={students} />;
+        return { List: TeacherList, Modal: CreateTeacherModal };
       default:
         return null;
     }
   };
+
+  const { List, Modal } = getComponents();
 
   return (
     <>
@@ -119,23 +67,18 @@ const DashboardAdmin = ({ user, students, ambassadors, teachers }) => {
           onClick={onClickMenuItem("Teachers")}
         />
         <Menu.Menu position="right">
-          <Menu.Item>{getModals(menuState)}</Menu.Item>
+          <Menu.Item>
+            <Modal />
+          </Menu.Item>
         </Menu.Menu>
       </Menu>
-      <CardContainer
-        title={`List of participating ${menuState.toLowerCase()}`}
-        cards={getCards(menuState)}
-        cardsPerPage={5}
-      />
+      <List />
     </>
   );
 };
 
 const mapStateToProps = (state) => ({
   user: state.user.data,
-  students: state.students.studentList,
-  ambassadors: state.user.ambassadorList,
-  teachers: state.user.teacherList,
 });
 
 export default connect(mapStateToProps)(DashboardAdmin);
