@@ -8,6 +8,9 @@ import { useDispatch, useSelector } from "react-redux";
 import * as userActions from "../store/user/actions";
 import * as userSelectors from "../store/user/selectors";
 
+import * as studentActions from "../store/students/actions";
+import * as studentSelectors from "../store/students/selectors";
+
 // SemanticUI + Components
 import { Button, Container } from "semantic-ui-react";
 import DashboardAdmin from "../components/Dashboard/Views/DashboardAdmin";
@@ -25,6 +28,7 @@ const Dashboard = () => {
   const { role, firstName } = user;
 
   useEffect(() => {
+    dispatch(studentActions.fetchAllStudents(user._id));
     dispatch(userActions.fetchAllAmbassadors());
     dispatch(userActions.fetchAllTeachers());
   }, []);
