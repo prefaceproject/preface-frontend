@@ -11,6 +11,27 @@ import {
 } from "../../constants";
 
 const fetchAllStudents = function* ({ payload }) {
+  const { userId } = payload;
+
+  const params = {
+    _id: userId,
+    limit: 0,
+  };
+
+  try {
+    const response = yield call(Axios.get, backend_url + "/api/students", {
+      params,
+    });
+
+    if (response.status == 200) {
+      yield put(actions.setAllStudents(response.data));
+    }
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+const fetchPaginatedStudents = function* ({ payload }) {
   const {
     userId,
     options: {
@@ -36,7 +57,9 @@ const fetchAllStudents = function* ({ payload }) {
     });
 
     if (response.status == 200) {
-      yield put(actions.setAllStudents(response.data, response.headers.total));
+      yield put(
+        actions.setPaginatedStudents(response.data, response.headers.total)
+      );
     }
   } catch (err) {
     console.log(err);
@@ -102,9 +125,10 @@ const fetchStudentById = function* ({ payload }) {
 
 export default function* StudentsSaga() {
   yield all([
-    takeLatest(actionTypes.FETCH_ALL_STUDENTS, fetchAllStudents),
+    takeLatest(actionTypes.FETCH_PAGINATED_STUDENTS, fetchPaginatedStudents),
     takeLatest(actionTypes.CREATE_STUDENT, createStudent),
     takeLatest(actionTypes.UPDATE_STUDENT, updateStudent),
     takeLatest(actionTypes.FETCH_STUDENT_BY_ID, fetchStudentById),
+    takeLatest(actionTypes.FETCH_ALL_STUDENTS, fetchAllStudents),
   ]);
 }

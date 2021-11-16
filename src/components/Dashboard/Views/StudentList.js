@@ -3,10 +3,10 @@ import { useSelector } from "react-redux";
 
 import StudentCard from "../Cards/StudentCard";
 import { PaginationContainer } from "../../Pagination";
-import { fetchAllStudents } from "../../../store/students/actions";
+import { fetchPaginatedStudents } from "../../../store/students/actions";
 import { getUser } from "../../../store/user/selectors";
 import {
-  getAllStudents,
+  getPaginatedStudents,
   getTotal,
   getCacheValid,
 } from "../../../store/students/selectors";
@@ -22,8 +22,8 @@ const StudentList = () => {
   ];
   return (
     <PaginationContainer
-      fetchResults={(options) => fetchAllStudents(user._id, options)}
-      retrieveResults={getAllStudents}
+      fetchResults={(options) => fetchPaginatedStudents(user._id, options)}
+      retrieveResults={getPaginatedStudents}
       getTotal={getTotal}
       sortByOptions={sortByOptions}
       getCacheValidStatus={getCacheValid}

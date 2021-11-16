@@ -1,19 +1,9 @@
 import React, { useState, useEffect } from "react";
-
-import {
-  Button,
-  Form,
-  Header,
-  Image,
-  Modal,
-  Checkbox,
-  Dropdown,
-  Icon,
-} from "semantic-ui-react";
-
+import { Button, Form, Modal, Dropdown, Icon } from "semantic-ui-react";
 import { useDispatch, useSelector } from "react-redux";
+
 import * as userActions from "../../store/user/actions";
-import * as studentsSelectors from "../../store/students/selectors";
+import { getAllStudents } from "../../store/students/selectors";
 import AdminResetPasswordModal from "./AdminResetPasswordModal";
 
 import "./UpdateAmbassadorModal.css";
@@ -45,7 +35,7 @@ function UpdateAmbassadorModal({ profile }) {
 
   const dispatch = useDispatch();
 
-  const students = useSelector(studentsSelectors.getAllStudents);
+  const students = useSelector(getAllStudents);
 
   useEffect(() => {
     setFirstName(profile.firstName);

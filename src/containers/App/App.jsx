@@ -15,8 +15,10 @@ import CreateAmbassadorModal from "../../components/Modals/CreateAmbassadorModal
 import Dashboard from "../../pages/Dashboard";
 import Sessions from "../../pages/Sessions";
 import Profile from "../../pages/Profile";
-import * as userSelectors from "../../store/user/selectors";
+import { getUser } from "../../store/user/selectors";
 import * as userActions from "../../store/user/actions";
+import * as studentActions from "../../store/students/actions";
+import { getCacheValid } from "../../store/students/selectors";
 
 import "./styles.css";
 import "semantic-ui-css/semantic.min.css";
@@ -27,11 +29,16 @@ import ToastError from "../../components/Alerts/ToastError";
 function App() {
   let [registerSuccess, setRegisterSuccess] = useState(false);
   const dispatch = useDispatch();
-  const user = useSelector(userSelectors.getUser);
+  const validStudentCache = useSelector(getCacheValid);
+  const user = useSelector(getUser);
 
   useEffect(() => {
     dispatch(userActions.autoLogin());
   }, []);
+
+  useEffect(() => {
+    if (user) dispatch(studentActions.fetchAllStudents(user._id));
+  }, [validStudentCache, user?._id]);
 
   return (
     <div className="App">

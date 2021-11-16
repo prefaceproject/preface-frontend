@@ -1,5 +1,7 @@
 export const SET_ALL_STUDENTS = "@@students/set_all_students";
+export const SET_PAGINATED_STUDENTS = "@@students/set_paginated_students";
 export const FETCH_ALL_STUDENTS = "@@students/fetch_all_students";
+export const FETCH_PAGINATED_STUDENTS = "@@students/fetch_paginated_students";
 export const CREATE_STUDENT = "@@students/create_student";
 export const UPDATE_STUDENT = "@@students/update_student";
 export const FETCH_STUDENT_BY_ID = "@@students/fetch_student_by_id";
