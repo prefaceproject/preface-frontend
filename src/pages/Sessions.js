@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useParams, Redirect } from "react-router-dom";
 
 import Layout from "../components/Layout";
-import StudentCard from "../components/StudentCard";
+import StudentProfile from "../components/StudentProfile";
 import SessionList from "../components/sessions/SessionsList";
 import * as sessionsSelectors from "../store/sessions/selectors";
 import * as sessionsActions from "../store/sessions/actions";
@@ -18,7 +18,7 @@ import CreateSessionModal from "../components/Modals/CreateSessionModal";
 import UpdateStudentModal from "../components/Modals/UpdateStudentModal";
 import ConfirmModal from "../components/Modals/ConfirmModal";
 
-const Sessions = (props) => {
+const Sessions = () => {
   const dispatch = useDispatch();
   const [createModalStatus, setCreateModalStatus] = useState(false);
   const [sessionEditing, setSessionEditing] = useState(null);
@@ -126,7 +126,7 @@ const Sessions = (props) => {
           />
           <Grid.Column width={4}>
             <div className="ui medium header"> Student Info</div>
-            <StudentCard userId={user?._id} profile={student}></StudentCard>
+            <StudentProfile student={student} id={id}></StudentProfile>
             {isAdmin ? (
               <UpdateStudentModal
                 userId={user?._id}
