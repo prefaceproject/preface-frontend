@@ -1,29 +1,18 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Button, Form, Modal, Dropdown } from "semantic-ui-react";
-import axios from "axios";
 
 import { useDispatch, useSelector } from "react-redux";
 import * as userActions from "../../store/user/actions";
-import * as userSelectors from "../../store/user/selectors";
-import { backend_url } from "../../constants";
+import { getAllStudents } from "../../store/students/selectors";
 
 function CreateTeacherModal({}) {
   const [open, setOpen] = useState(false);
   const [email, setEmail] = useState("");
-  const [students, setStudents] = useState([]);
   const [assignedStudents, setAssignedStudents] = useState([]);
   const [isActive, setIsActive] = useState(true);
   const dispatch = useDispatch();
 
-  const user = useSelector(userSelectors.getUser);
-
-  useEffect(() => {
-    axios
-      .get(backend_url + "/api/students", {
-        params: { _id: user._id, limit: 0 },
-      })
-      .then((res) => setStudents(res.data));
-  }, [user._id]);
+  const students = useSelector(getAllStudents);
 
   const assignedStudentsOptions = formatStudents();
 

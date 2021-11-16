@@ -8,10 +8,11 @@ export const initialState = {
   studentLoading: true,
   total: 0,
   validCache: true,
+  allStudents: [],
 };
 
 const reducerActions = {
-  [actionTypes.SET_ALL_STUDENTS](state, action) {
+  [actionTypes.SET_PAGINATED_STUDENTS](state, action) {
     return {
       ...state,
       studentList: action.payload.role,
@@ -30,6 +31,12 @@ const reducerActions = {
     return {
       ...state,
       validCache: false,
+    };
+  },
+  [actionTypes.SET_ALL_STUDENTS](state, action) {
+    return {
+      ...state,
+      allStudents: action.payload.students,
     };
   },
 };
