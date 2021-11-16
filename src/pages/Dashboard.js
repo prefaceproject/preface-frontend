@@ -1,20 +1,16 @@
 // React
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
 // Redux
 import { connect } from "react-redux";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
-import * as userActions from "../store/user/actions";
 import * as userSelectors from "../store/user/selectors";
-
-import * as studentActions from "../store/students/actions";
-import * as studentSelectors from "../store/students/selectors";
 
 // SemanticUI + Components
 import { Button, Container } from "semantic-ui-react";
 import DashboardAdmin from "../components/Dashboard/Views/DashboardAdmin";
-import DashboardMain from "../components/Dashboard/Views/DashboardMain";
+import StudentList from "../components/Dashboard/Views/StudentList";
 import Layout from "../components/Layout";
 import HelpModal from "../components/Modals/HelpModal";
 
@@ -23,15 +19,8 @@ import "./styles/Dashboard.css";
 
 const Dashboard = () => {
   // Global State
-  const dispatch = useDispatch();
   const user = useSelector(userSelectors.getUser);
   const { role, firstName } = user;
-
-  useEffect(() => {
-    dispatch(studentActions.fetchAllStudents(user._id));
-    dispatch(userActions.fetchAllAmbassadors());
-    dispatch(userActions.fetchAllTeachers());
-  }, []);
 
   // User Interface State
   const [isHelpModalOpen, setIsHelpModalOpen] = useState(false);
@@ -54,7 +43,7 @@ const Dashboard = () => {
               </Button>
             )}
           </div>
-          {role === "admin" ? <DashboardAdmin /> : <DashboardMain />}
+          {role === "admin" ? <DashboardAdmin /> : <StudentList />}
         </Container>
       </Layout>
       <HelpModal
