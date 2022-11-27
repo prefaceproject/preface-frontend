@@ -30,6 +30,7 @@ function UpdateAmbassadorModal({ profile }) {
 
   const [assignedStudents, setAssignedStudents] = useState(profile.students);
   const [isActive, setIsActive] = useState(profile.isActive);
+  const [isRegistered, setIsRegistered] = useState(profile.isRegistered);
   const [resetModalOpen, setResetModalOpen] = useState(false);
   const [isDirtyForm, setIsDirtyForm] = useState(false);
 
@@ -44,6 +45,7 @@ function UpdateAmbassadorModal({ profile }) {
     setLanguagesSpoken(profile.languagesSpoken);
     setAssignedStudents(profile.students);
     setIsActive(profile.isActive);
+    setIsRegistered(profile.isRegistered);
   }, [profile]);
 
   useEffect(() => {
@@ -217,7 +219,7 @@ function UpdateAmbassadorModal({ profile }) {
       <AdminResetPasswordModal
         isOpen={resetModalOpen}
         close={closeModal}
-        user={{ firstName, lastName, email }}
+        user={{ firstName, lastName, email, isRegistered }}
       />
     </>
   );
