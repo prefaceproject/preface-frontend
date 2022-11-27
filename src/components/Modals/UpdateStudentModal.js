@@ -6,7 +6,7 @@ import * as studentsActions from "../../store/students/actions";
 import * as userSelectors from "../../store/user/selectors";
 import * as studentsSelectors from "../../store/students/selectors";
 
-function UpdateStudentModal({ studentTest, loading }) {
+function UpdateStudentModal({ loading }) {
   const dispatch = useDispatch();
 
   const { id } = useParams();

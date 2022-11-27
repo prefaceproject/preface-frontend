@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react'
-import { Button, Modal, Form } from 'semantic-ui-react'
+import React, { useEffect, useState } from "react";
+import { Button, Modal, Form } from "semantic-ui-react";
 import { useDispatch, useSelector } from "react-redux";
 
 import * as userActions from "../../store/user/actions";
@@ -7,59 +7,59 @@ import * as userSelectors from "../../store/user/selectors";
 
 import "./ChangePasswordModal.css";
 
-const ChangePasswordModal = ({isOpen, close, setStatus}) => {
+const ChangePasswordModal = ({ isOpen, close, setStatus }) => {
   const dispatch = useDispatch();
   const { email } = useSelector(userSelectors.getUser);
   const passwordError = useSelector(userSelectors.getPasswordError);
 
-  const [currentPassword, setCurrentPassword] = useState('');
-  const [newPassword, setNewPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [error, setError] = useState('');
+  const [currentPassword, setCurrentPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     if (confirmPassword && newPassword !== confirmPassword) {
-      setError("Passwords do not match")
+      setError("Passwords do not match");
     } else {
-      setError("")
+      setError("");
     }
-  }, [newPassword, newPassword, confirmPassword])
+  }, [newPassword, newPassword, confirmPassword]);
 
   useEffect(() => {
     if (passwordError && passwordError.success) {
-      setIsLoading(false)
-      setStatus(passwordError)
-      resetFields()
+      setIsLoading(false);
+      setStatus(passwordError);
+      resetFields();
       close();
     } else if (
-      passwordError && 
-      !passwordError.success && 
-      passwordError.message !== "Incorrect password entered") {
-        setIsLoading(false)
-        setStatus(passwordError)
-        resetFields()
-        close();
-    } else if (
-      passwordError && 
+      passwordError &&
       !passwordError.success &&
-      passwordError.message === "Incorrect password entered") {
-        setIsLoading(false)
-        setError(passwordError.message)
+      passwordError.message !== "Incorrect password entered"
+    ) {
+      setIsLoading(false);
+      setStatus(passwordError);
+      resetFields();
+      close();
+    } else if (
+      passwordError &&
+      !passwordError.success &&
+      passwordError.message === "Incorrect password entered"
+    ) {
+      setIsLoading(false);
+      setError(passwordError.message);
     }
-  }, [passwordError])
+  }, [passwordError]);
 
   useEffect(() => {
-
-    console.log("in use effect", passwordError)
     setTimeout(() => {
-      setStatus("")
+      setStatus("");
       dispatch(userActions.removeErrorMessage({}));
     }, 1000);
 
     return () => {
       setTimeout(() => {
-        setStatus("")
+        setStatus("");
         dispatch(userActions.removeErrorMessage({}));
       }, 1000);
     };
@@ -69,22 +69,22 @@ const ChangePasswordModal = ({isOpen, close, setStatus}) => {
     const payload = {
       email: email,
       password: currentPassword,
-      newPassword: newPassword
-    }
-    dispatch(userActions.changePassword({user: payload}));
+      newPassword: newPassword,
+    };
+    dispatch(userActions.changePassword({ user: payload }));
     setIsLoading(true);
-  }
+  };
 
   const resetFields = () => {
     setConfirmPassword("");
     setNewPassword("");
     setCurrentPassword("");
-  }
+  };
 
   const closeModal = () => {
     resetFields();
-    close()
-  }
+    close();
+  };
 
   return (
     <Modal onClose={closeModal} open={isOpen} size="tiny">
@@ -93,13 +93,13 @@ const ChangePasswordModal = ({isOpen, close, setStatus}) => {
         <Form>
           <Form.Field>
             <label>Current Password</label>
-            <input 
-              type="password" 
-              placeholder="Current Password" 
+            <input
+              type="password"
+              placeholder="Current Password"
               value={currentPassword}
               onChange={(e) => setCurrentPassword(e.target.value)}
               onFocus={() => {
-                if (error === "Incorrect password entered") setError("")
+                if (error === "Incorrect password entered") setError("");
               }}
             />
           </Form.Field>
@@ -107,37 +107,38 @@ const ChangePasswordModal = ({isOpen, close, setStatus}) => {
             <label>New Password</label>
             <input
               type="password"
-              placeholder="New Password" 
+              placeholder="New Password"
               value={newPassword}
               onChange={(e) => setNewPassword(e.target.value)}
             />
           </Form.Field>
           <Form.Field>
             <label>Confirm Password</label>
-            <input 
-              type="password" 
-              placeholder="Confirm Password" 
+            <input
+              type="password"
+              placeholder="Confirm Password"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
             />
           </Form.Field>
-          <div className="error">
-            {error}
-          </div>
+          <div className="error">{error}</div>
         </Form>
       </Modal.Content>
       <Modal.Actions>
         <Button onClick={closeModal}>Cancel</Button>
-        <Button 
-          primary 
-          disabled={!!error || !currentPassword || !newPassword || !confirmPassword} 
+        <Button
+          primary
+          disabled={
+            !!error || !currentPassword || !newPassword || !confirmPassword
+          }
           loading={isLoading}
-          onClick={() => handleSubmit()}>
+          onClick={() => handleSubmit()}
+        >
           Update Password
         </Button>
       </Modal.Actions>
     </Modal>
-  )
-}
+  );
+};
 
 export default ChangePasswordModal;

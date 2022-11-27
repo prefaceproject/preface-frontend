@@ -10,16 +10,15 @@ import {
 import LoginRoute from "../../components/LoginRoute";
 import ProtectedRoute from "../../components/ProtectedRoute";
 import Registration from "../../authentication/Registration";
-import Login from "../../authentication/Login";
 import ProfileModal from "../../components/Modals/ProfileModal";
 import CreateAmbassadorModal from "../../components/Modals/CreateAmbassadorModal";
 import Dashboard from "../../pages/Dashboard";
 import Sessions from "../../pages/Sessions";
 import Profile from "../../pages/Profile";
-import StudentCard from "../../components/StudentCard";
-import * as userSelectors from "../../store/user/selectors";
+import { getUser } from "../../store/user/selectors";
 import * as userActions from "../../store/user/actions";
- 
+import * as studentActions from "../../store/students/actions";
+import { getCacheValid } from "../../store/students/selectors";
 
 import "./styles.css";
 import "semantic-ui-css/semantic.min.css";
@@ -27,15 +26,19 @@ import ToastWarning from "../../components/Alerts/ToastWarning";
 import ToastSuccess from "../../components/Alerts/ToastSuccess";
 import ToastError from "../../components/Alerts/ToastError";
 
-
 function App() {
   let [registerSuccess, setRegisterSuccess] = useState(false);
   const dispatch = useDispatch();
-  const user = useSelector(userSelectors.getUser);
+  const validStudentCache = useSelector(getCacheValid);
+  const user = useSelector(getUser);
 
   useEffect(() => {
     dispatch(userActions.autoLogin());
   }, []);
+
+  useEffect(() => {
+    if (user) dispatch(studentActions.fetchAllStudents(user._id));
+  }, [validStudentCache, user?._id]);
 
   return (
     <div className="App">
@@ -52,9 +55,6 @@ function App() {
                 <Registration setRegisterSuccess={setRegisterSuccess} />
               )}
             </Route>
-            {/* <Route path="/login">
-              {user ? <Redirect to="/dashboard" /> : <Login />}
-            </Route> */}
             <ProtectedRoute path="/toastwarning">
               <ToastWarning />
             </ProtectedRoute>
@@ -64,15 +64,11 @@ function App() {
             <ProtectedRoute path="/toasterror">
               <ToastError />
             </ProtectedRoute>
-
             <ProtectedRoute path="/dashboard">
               <Dashboard />
             </ProtectedRoute>
             <ProtectedRoute path="/profile">
               <Profile />
-            </ProtectedRoute>
-            <ProtectedRoute path="/card">
-              <StudentCard />
             </ProtectedRoute>
             <ProtectedRoute path="/students/:id/sessions">
               <Sessions />
