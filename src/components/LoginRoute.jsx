@@ -14,7 +14,7 @@ const LoginRoute = (props) => {
   const getRendering = () => {
     if (autoLoginError) return <Login />;
     if (loginError)
-      return <Login loginErrorMsg="Incorrect email/password combination" />;
+      return <Login loginErrorMsg="Incorrect email/password or user has not gone through registration yet." />;
     return user ? <Redirect to="/dashboard" /> : <Loading />;
   };
 

@@ -65,7 +65,13 @@ const AdminResetPasswordModal = ({isOpen, close, user}) => {
     <Modal onClose={closeModal} open={isOpen} size="tiny">
       <Modal.Header>Reset Password</Modal.Header>
       <Modal.Content>
-        {confirmReset ? 
+        {!user?.isRegistered ? 
+          <div className="form-content">
+            <div>
+              You cannot reset this user's password until they have gone through their registration process (available at the login page under 'Register').
+            </div>
+        </div>
+        : confirmReset ? 
         <div className="form-content">
             <div>
               Below is the new password for {user.firstName} {user.lastName}. Their old password will no longer work. Send them this temporary password, and have them change their password to something new. 
